@@ -5,8 +5,11 @@ index=1
 HOMEDIR=$PWD
 ALLCONFS=$(cat list_database_configs.txt)
 for CONFIG in $ALLCONFS; do
+    cd $CONFIG
     echo "conftool.py importConfiguration ${CONFIG}${index}-"
-    conftool.py importConfiguration ${CONFIG}${index}- |& tee importLog${CONFIG}.log
+    echo $PWD
+    conftool.py importConfiguration ${CONFIG}${index}- |& tee $HOMEDIR/importLog${CONFIG}.log
+    cd $HOMEDIR
 done
 echo "Done importing"
 for CONFIG in $ALLCONFS; do
