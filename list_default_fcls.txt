@@ -71,7 +71,6 @@ pmt_standard
 ptb01
 ptb01PULL
 RoutingManager_standard
-schema
 spectdc
 tpc01
 tpc02
