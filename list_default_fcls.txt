@@ -1,7 +1,6 @@
 crtEastWallNorthTopPULL
 crtEastWallSouthBottomPULL
 crt_ewall_ntop
-crt_ewall_pull
 crt_ewall_sbottom
 crt_feb_standard
 crtflat3_east
@@ -10,15 +9,9 @@ crtflat3_north
 crtflat3_northPULL
 crtflat3_southwest
 crtflat3_southwestPULL
-crtflat_east
-crtflat_eastPULL
-crtflat_west
-crtflat_westPULL
 crtNorthWallEastPULL
 crtNorthWallWestPULL
-crt_nwall_all
 crt_nwall_east
-crt_nwall_pull
 crt_nwall_west
 crt_pull_dummy
 crt_pull
@@ -27,7 +20,6 @@ crtSouthWallEastPULL
 crtSouthWallWestPULL
 crt_standard
 crt_swall_east
-crt_swall_pull
 crt_swall_west
 crtWestWallNorthTopPULL
 crtWestWallSouthBottomPULL
