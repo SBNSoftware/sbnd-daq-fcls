@@ -29,8 +29,8 @@ daq.fragment_receiver.board_config: @local::board_config
     daq.fragment_receiver.request_port: 3001   # UDP request port
     daq.fragment_receiver.request_mode: window # pull mode buffer or window
 
-    daq.fragment_receiver.request_window_width: 3e9 #5000000 # #5ms   #600us #300us window#3ms window
-    daq.fragment_receiver.request_window_offset: 1.5e9 #2500000 #7500000 # #2.5 ms # #30000000 #500us #400us early #1.5ms early offset
+    daq.fragment_receiver.request_window_width: 20000000 #20ms #3ms window
+    daq.fragment_receiver.request_window_offset: 10000000 #10 ms #1.5ms early offset
 
     daq.fragment_receiver.request_windows_are_unique: false
     #daq.fragment_receiver.request_windows_are_unique: true
