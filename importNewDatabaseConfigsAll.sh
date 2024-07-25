@@ -2,7 +2,17 @@
 
 
 index=1
-for config in list; do
-    conftool.py importConfiguration ${config}${index}-
-    #git commit -me "Added new configurations: " 
+HOMEDIR=$PWD
+ALLCONFS=$(cat list_default_fcls.txt)
+for CONFIG in ALLCONFS; do
+    #conftool.py importConfiguration ${CONFIG}${index}-
+    echo hi
 done
+read -p 'What changes were made? (git commit message): ' message
+#echo $message
+read -p 'What are the new configurations/numbers? ' configlist
+#echo $configlist 
+echo "${message}"
+echo 'git commit -a -m "'${message}'
+Associated database configurations: '${configlist}'"'
+git commit -a -m "${message} Associated database configurations: ${configlist}"
