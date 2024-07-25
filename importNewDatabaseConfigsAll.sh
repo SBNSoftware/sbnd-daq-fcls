@@ -3,10 +3,14 @@
 
 index=1
 HOMEDIR=$PWD
-ALLCONFS=$(cat list_default_fcls.txt)
-for CONFIG in ALLCONFS; do
-    #conftool.py importConfiguration ${CONFIG}${index}-
-    echo hi
+ALLCONFS=$(cat list_database_configs.txt)
+for CONFIG in $ALLCONFS; do
+    echo "conftool.py importConfiguration ${CONFIG}${index}-"
+    conftool.py importConfiguration ${CONFIG}${index}- |& tee importLog${CONFIG}.log
+done
+echo "Done importing"
+for CONFIG in $ALLCONFS; do
+    tail importLog${CONFIG}.log -n 5
 done
 read -p 'What changes were made? (git commit message): ' message
 #echo $message
