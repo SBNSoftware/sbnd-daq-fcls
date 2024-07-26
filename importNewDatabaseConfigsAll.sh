@@ -13,7 +13,7 @@ for CONFIG in $ALLCONFS; do
 done
 echo "Done importing"
 for CONFIG in $ALLCONFS; do
-    tail importLog${CONFIG}.log -n 5
+    tail importLog${CONFIG}.log -n 2
 done
 read -p 'What changes were made? (git commit message): ' message
 #echo $message

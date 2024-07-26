@@ -44,3 +44,4 @@
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_crossing_muon_allwalls.fcl" #
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_crossing_muon.fcl" #
 
+daq.fragment_receiver.board_config: @local::board_config 

@@ -20,7 +20,7 @@
 ##include "ptbmk2_nd_2hz.fcl" 
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_1hz.fcl"
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_5hz.fcl"
-#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_0p38115998028hz.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_0p38115998028hz.fcl"
 daq.fragment_receiver.board_config: @local::board_config
 
 ## Pull mode parameters
