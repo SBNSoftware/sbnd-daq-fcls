@@ -21,7 +21,7 @@ daq: {
     # Frequency in Hz of the CALIB trigger
     ControllerTriggerFrequency: -1 # Frequency in Hz of the Controller trigger
     # Frequency in Hz of the Controller trigger
-    DumpBinary: true # Write binary file before the artdaq back-end
+    DumpBinary: false # Write binary file before the artdaq back-end
     # Write binary file before the artdaq back-end
     DumpBinaryDir: "/data" 
 
