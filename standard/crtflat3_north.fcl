@@ -10,7 +10,6 @@ daq.fragment_receiver.ethernet_port: "ens4f2"
 daq.fragment_receiver.fragment_ids:                 [ 0xB05D, 0xB05E, 0xB05F, 0xB057, 0xB061, 0xB062, 0xB04D, 0xB04E ]
 
 # Number of FEBs
-daq.fragment_receiver.generated_fragments_per_event: 8
 
 # First board in the chain
 daq.fragment_receiver.ReaderID:                      93

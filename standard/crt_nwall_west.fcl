@@ -14,7 +14,6 @@
 daq.metrics.brFile.fileName : "/daq/log/metrics/crt01_metrics.log"
 daq.metrics.graphite.namespace: "sbnd.crtnorth02."
 
-daq.fragment_receiver.generated_fragments_per_event: 9 #number of FEBs
 
 #daq.fragment_receiver.fragment_ids: [ 58, 73, 149, 182, 158, 157, 136, 150, 151 ]
 daq.fragment_receiver.fragment_ids: [ 0xB23A, 0xB249, 0xB295, 0xB2B6, 0xB29E, 0xB29D, 0xB288, 0xB296, 0xB297 ]
