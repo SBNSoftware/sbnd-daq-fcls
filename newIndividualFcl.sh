@@ -21,6 +21,12 @@ for DIR in $ALLDIRS; do
     then
 	continue
     fi
+
+    if [ $DIR == "logs/" ]
+    then
+	continue
+    fi
+
     cd $DIR
     ln -s ../../standard/${FNAME}.fcl defaults/${FNAME}_default.fcl #create softlinks to all the fcls in standard 
     #(two up directories since its relative to the "<configname>/defaults directory not the current one)
