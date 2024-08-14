@@ -21,6 +21,10 @@
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_1hz.fcl"
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_5hz.fcl"
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_0p38115998028hz.fcl"
+
+#========================================================
+#Uncomment below if you are trying to directly run with this fcl (ie your not in fcl_configs_standard or using its soft link method)
+#========================================================
 #daq.fragment_receiver.board_config: @local::board_config
 
 ## Pull mode parameters
