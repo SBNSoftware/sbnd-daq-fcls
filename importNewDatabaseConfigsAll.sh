@@ -4,11 +4,12 @@
 index=1
 HOMEDIR=$PWD
 ALLCONFS=$(cat list_database_configs.txt)
+DATE=$(date '+%Y-%m-%d')
 for CONFIG in $ALLCONFS; do
     cd $CONFIG
     echo "conftool.py importConfiguration ${CONFIG}${index}-"
     echo $PWD
-    conftool.py importConfiguration ${CONFIG}${index}- |& tee $HOMEDIR/logs/${CONFIG}.log
+    conftool.py importConfiguration ${CONFIG}${index}_TMP$DATE- |& tee $HOMEDIR/logs/${CONFIG}.log
     cd $HOMEDIR
 done
 echo "Done importing"
