@@ -12,6 +12,7 @@ mkdir ${1}
 mkdir ${1}/defaults
 
 ALLFCLS=$(cat list_default_fcls.txt)
+ALLEDITABLEFCLS=$(cat list_overrideable_fcls.txt)
 PWD1=$PWD #remember where we started so we can return there when done
 cd ${1}
 
@@ -20,7 +21,7 @@ for FNAME in $ALLFCLS; do
     if [[ $FNAME == "feb"* ]]; then  
 	 ln -s ../../standard/${FNAME}.fcl ${FNAME}.fcl #create softlinks to all the fcls in standard, don't make a skeleton for the febs to try and cut down the number of total fcls (database seems to dislike it)
     else
-	ln -s ../../standard/${FNAME}.fcl defaults/${FNAME}_default.fcl #create softlinks to all the fcls in standard 
+	ln -s ../../standard/${FNAME}.fcl defaults/${FNAME} #_default.fcl #create softlinks to all the fcls in standard 
 	#(two up directories since its relative to the "<configname>/defaults directory not the current one)
 	
 	INCLUDE='#include "'${FNAME}'_default.fcl"'
@@ -28,6 +29,14 @@ for FNAME in $ALLFCLS; do
 	echo "#======Place override parameters below=========" >>${FNAME}.fcl
     fi
 done
+
+for FNAME in $ALLEDITABLEFCLS; do
+    ln -s ../../standard/${FNAME}.fcl defaults/${FNAME}_default.fcl #create softlinks to all the fcls in standard 
+    INCLUDE='#include "'${FNAME}'_default.fcl"'
+    echo $INCLUDE > ${FNAME}.fcl  #create a skeleton file that just includes the _default.fcl soft link
+    echo "#======Place override parameters below=========" >>${FNAME}.fcl
+done
+    
 
 mkdir febs
 mv feb*.fcl febs #clean up the list of fcls a bit
