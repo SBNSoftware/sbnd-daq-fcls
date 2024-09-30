@@ -21,7 +21,7 @@ for FNAME in $ALLFCLS; do
     if [[ $FNAME == "feb"* ]]; then  
 	 ln -s ../../standard/${FNAME}.fcl ${FNAME}.fcl #create softlinks to all the fcls in standard, don't make a skeleton for the febs to try and cut down the number of total fcls (database seems to dislike it)
     else
-	ln -s ../../standard/${FNAME}.fcl defaults/${FNAME} #_default.fcl #create softlinks to all the fcls in standard 
+	ln -s ../../standard/${FNAME}.fcl defaults/${FNAME}.fcl #_default.fcl #create softlinks to all the fcls in standard 
 	#(two up directories since its relative to the "<configname>/defaults directory not the current one)
 	
 	INCLUDE='#include "'${FNAME}'_default.fcl"'
