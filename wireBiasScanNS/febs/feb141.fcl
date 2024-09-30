@@ -1,2 +1,1 @@
-#include "feb141_default.fcl"
-#======Place override parameters below=========
+../../standard/feb141.fcl
