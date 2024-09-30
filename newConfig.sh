@@ -24,9 +24,9 @@ for FNAME in $ALLFCLS; do
 	ln -s ../../standard/${FNAME}.fcl defaults/${FNAME}.fcl #_default.fcl #create softlinks to all the fcls in standard 
 	#(two up directories since its relative to the "<configname>/defaults directory not the current one)
 	
-	INCLUDE='#include "'${FNAME}'_default.fcl"'
-	echo $INCLUDE > ${FNAME}.fcl  #create a skeleton file that just includes the _default.fcl soft link
-	echo "#======Place override parameters below=========" >>${FNAME}.fcl
+	#INCLUDE='#include "'${FNAME}'_default.fcl"'
+	#echo $INCLUDE > ${FNAME}.fcl  #create a skeleton file that just includes the _default.fcl soft link
+	#echo "#======Place override parameters below=========" >>${FNAME}.fcl
     fi
 done
 
