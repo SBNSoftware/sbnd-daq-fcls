@@ -24,6 +24,7 @@ NevisTPC2StreamEXT_driver
 NevisTPCNUStreamCALIB_driver
 NevisTPCNUStreamEXT_driver
 ntb01
+ptb01PULL
 pmtPULL
 pmt_standard
 tpc_standard

@@ -40,7 +40,6 @@ pmt07
 pmt08
 pmt09
 ptb01
-ptb01PULL
 RoutingManager_standard
 spectdc
 tpc01
