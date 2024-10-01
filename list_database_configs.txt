@@ -2,5 +2,3 @@ bnbZeroBias
 ewCrossingMuon
 nsCrossingMuon
 offbeamZeroBias
-nsCrossingMuonAndSunset
-bnbZeroBiasAndSunset

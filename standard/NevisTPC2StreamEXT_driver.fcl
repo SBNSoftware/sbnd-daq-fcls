@@ -121,7 +121,7 @@ daq: {
     ##3502   # UDP request port
     request_mode: sequence #match sequenceID of request
     #match sequenceID of request
-    data_buffer_depth_fragments: 200 
+    data_buffer_depth_fragments: 10000 #200 
     data_buffer_depth_mb: 2000 #6000 # 1000 # 800
 
   }
