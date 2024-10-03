@@ -3,17 +3,10 @@ crt_standard
 DataLogger_standard
 Dispatcher1
 Dispatcher_standard
-EventBuilder1_CRTmetric
 EventBuilder1
-EventBuilder1_PMTmetric
 EventBuilder2
-EventBuilder2_PMTmetric
-EventBuilder3_CRTmetric
 EventBuilder3
-EventBuilder3_PMTmetric
 EventBuilder4
-EventBuilder_CRTmetric
-EventBuilder_PMTmetric
 EventBuilder_standard
 fake_NevisTPC2StreamCALIB_driver
 fake_NevisTPC2StreamEXT_driver
