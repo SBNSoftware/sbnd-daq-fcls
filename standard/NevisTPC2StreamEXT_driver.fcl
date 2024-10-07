@@ -23,7 +23,7 @@ daq: {
     # Frequency in Hz of the Controller trigger
     DumpBinary: false # Write binary file before the artdaq back-end
     # Write binary file before the artdaq back-end
-    DumpBinaryDir: "/data" 
+    DumpBinaryDir: "/data/NevisDebugging" 
 
     DoSNReadout: false # Do continuous readout
     # Do continuous readout
