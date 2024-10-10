@@ -30,15 +30,6 @@ Dispatcher2
 EventBuilder3_nustream
 fake_NevisTPC2StreamCTRL_driver
 gps
-pmt01
-pmt02
-pmt03
-pmt04
-pmt05
-pmt06
-pmt07
-pmt08
-pmt09
 ptb01
 RoutingManager_standard
 spectdc
