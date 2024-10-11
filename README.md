@@ -8,7 +8,7 @@ If you are trying to directly use a copy of `standard` to run out of a personal 
 ## Bash scripts
 ### newConfig.sh
 `source newConfig.sh <configName>`
-This will create a new directory with soft links to standard, and skeleton fcls that can override the default fcl settings.
+This will create a new directory with soft links to standard, and skeleton fcls that can override the default fcl settings. Generally used for a specific trigger configuration
 
 ### newIndividualFcl.sh
 `source newIndividualFcl.sh <fclName>  `                                                          
