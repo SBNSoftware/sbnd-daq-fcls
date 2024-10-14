@@ -33,7 +33,8 @@
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/bslater/ptbmk2_crt_5.fcl" # W&E -- prescale 2
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/crt/ptbmk2_crt_14.fcl" #N&S but no top or other sides-- prescale 1
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/crt/ptbmk2_crt_15.fcl" #W&E but no top or other sides -- prescale 4
-#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/crt/ptbmk2_crt_14_prescale6.fcl" # ns anti airshower (no other crts) and prescale of 6
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/crt/ptbmk2_crt_14_prescale6.fcl" # ns anti airshower (no other crts) and prescale of 6
+#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/crt/ptbmk2_crt_14_prescale6_flash.fcl" # ns anti airshower (no other crts) and prescale of 6 with flashes
 
 #===================== Strobe Triggers  =====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_1hz.fcl" #
