@@ -47,7 +47,8 @@
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_crossing_muon.fcl" #
 
 #========================Flash triggers =================
-#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/light_trigger_testing/ptbmk2_nd_off_beam_zero_bias_20pair_flash_noprescale_noBNBinhibit.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/light_trigger_testing/ptbmk2_nd_off_beam_zero_bias_20pair_flash_noprescale_noBNBinhibit.fcl" # ~10 flashes/event
+#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/light_trigger_testing/ptbmk2_nd_off_beam_zero_bias_4pair_flash_noprescale_noBNBinhibit.fcl" # ~20 flashes/event
 
 
 
