@@ -2,5 +2,8 @@ bnbZeroBias
 ewCrossingMuon
 nsCrossingMuon
 offbeamZeroBias
-wireBiasScanNS
 offBeamZeroBiasFlash
+caenPUSHbnbZeroBias
+fullCommTriggerMenuNS
+bnbLight_zerobias2Prescale
+bnbLight_offBeamZeroBias
