@@ -10,7 +10,7 @@ services: {
 daq: {
   event_builder: {
 
-    stale_buffer_timeout_usec: 10000000 #1000000 #was commented out and 1000000, Gennadiy said to set high (5s) for debugging
+    stale_buffer_timeout_usec: 3000000 #3s for normal running #10000000 #10s for bad running #1000000 #was commented out and 1000000, Gennadiy said to set high (5s) for debugging
     expected_fragments_per_event: 0  # Will be set by DAQInterface
     use_art: true
     print_event_store_stats: true
