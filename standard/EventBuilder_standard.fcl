@@ -135,7 +135,7 @@ physics: {
   producers: {
     crttriggerproducer: {
       module_type: "CRTMetricProducer"
-      is_persistable: true
+      is_persistable: false
       BeamWindowStart: 1530000
       BeamWindowEnd: 1550000
       Verbose: false  

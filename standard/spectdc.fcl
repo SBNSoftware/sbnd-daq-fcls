@@ -90,6 +90,7 @@ daq: {
 	    time_offset_ps: 0 
 	    monitor_only: false 
 	    terminated: true 
+	    buffer_length: 128
 	  }, {
 	    id: 4 
 	    name: etrig 
