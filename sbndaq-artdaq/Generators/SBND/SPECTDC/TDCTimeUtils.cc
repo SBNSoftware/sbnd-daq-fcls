@@ -10,24 +10,28 @@ using std::chrono::nanoseconds;
 using std::chrono::seconds;
 
 using clk = std::chrono::system_clock;
+using namespace sbndaq::SPECTDCInterface;
 
 uint64_t utls::elapsed_time_ns(uint64_t sample_time_ns) {
   uint64_t host_time_ns =
       std::chrono::duration_cast<nanoseconds>(clk::time_point{clk::now()}.time_since_epoch()).count();
+  
+ // if (host_time_ns > sample_time_ns) {
+ // }
 
-  //pull window is +-10ms so what do I expect of host_time to server_time?
   if (sample_time_ns > host_time_ns){
+    
+    //if((sample_time_ns - host_time_ns) > fmctdc.max_sample_time_lag_ns ) {
+    //  TLOG(TLVL_WARNING) << "Wrong TDC sample time. Sample time > host time; sample_time-host_time = "<< sample_time_ns - host_time_ns << " ns. NTP drift is larger than 100 ms! Check White Rabbit and NTP synchronisation.";
+    //}
+ 
+    //if((sample_time_ns - host_time_ns) > utls::onesecond_ns) {
+    //  TLOG(TLVL_ERROR) << "Wrong TDC sample time. Sample time > host time; sample_time-host_time = "<< (sample_time_ns - host_time_ns) / utils::onesecond_ns << " ns. NTP drift is larger than 1s! Check White Rabbit and NTP synchronisation.";
+    //}
 
-    //TLOG(TLVL_WARN) << "Wrong TDC sample time, check the NTP and WhiteRabbit timing systems; sample_time-host_time="
-    //                   << sample_time_ns - host_time_ns << " ns.";
-
-    TLOG(TLVL_WARN) << " !!! Sample time > host time; sample_time-host_time = "<< sample_time_ns - host_time_ns << " ns. Sample time = " << sample_time_ns << " ns. Host time = " << host_time_ns << " ns.";
-
-    //for debugging: just so not giving bogus number for monitoring timestamp
-    //return sample_time_ns - host_time_ns; 
+    return 0;
   }
-
-  //expect host_time > server_time, otherwise bogus number subtracting uint64_t to negative number
+  
   return host_time_ns - sample_time_ns;
 }
 
