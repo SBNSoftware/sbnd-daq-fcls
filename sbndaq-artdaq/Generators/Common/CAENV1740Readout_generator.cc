@@ -924,6 +924,18 @@ void sbndaq::CAENV1740Readout::ConfigureRecordFormat()
   sbndaq::CAENDecoder::checkError(retcode,"GetRecordLength",fBoardID);
   CheckReadback("RECORD_LENGTH", fBoardID, fCAEN.recordLength, readback);
 
+  // jcrespo: setting the decimation factor explicitly is required before setting the post trigger
+  // (following /home/nfs/sbnd/wavedump-3.10.6/src/WaveDump.c)
+  uint16_t decimationFactor = 1;
+  //uint16_t readDecimationFactor;
+  TLOG_ARB(TCONFIG,TRACE_NAME) << "SetDecimation " << decimationFactor << TLOG_ENDL;
+  retcode = CAEN_DGTZ_SetDecimationFactor(fHandle, decimationFactor);
+  sbndaq::CAENDecoder::checkError(retcode,"SetDecimationFactor",fBoardID);
+  // Function is not used in /home/nfs/sbnd/wavedump-3.10.6/src/WaveDump.c
+  //retcode = CAEN_DGTZ_GetDecimationFactor(fHandle,&readDecimationFactor); // function requires a *uint16_t
+  //sbndaq::CAENDecoder::checkError(retcode,"GetDecimationFactor",fBoardID);
+  //CheckReadback("DECIMATION_FACTOR", fBoardID, decimationFactor, readDecimationFactor);
+
   //post trigger size
   TLOG_ARB(TCONFIG,TRACE_NAME) << "SetPostTriggerSize " << (unsigned int)(fCAEN.postPercent) << TLOG_ENDL;
   retcode = CAEN_DGTZ_SetPostTriggerSize(fHandle,(unsigned int)(fCAEN.postPercent));
@@ -932,6 +944,22 @@ void sbndaq::CAENV1740Readout::ConfigureRecordFormat()
   sbndaq::CAENDecoder::checkError(retcode,"GetPostTriggerSize",fBoardID);
   CheckReadback("POST_TRIGGER_SIZE", fBoardID, fCAEN.postPercent, readback);
 
+  // Test: scan over percentages
+  /*
+  for(int percent = 100; percent >= 0; percent--){
+    std::cout << "SetPostTriggerSize " << (unsigned int)(percent) << "\n";
+    retcode = CAEN_DGTZ_SetPostTriggerSize(fHandle,percent);
+    std::cout << "   retcode   " << retcode << "\n";
+    sbndaq::CAENDecoder::checkError(retcode,"SetPostTriggerSize",fBoardID);
+
+    retcode = CAEN_DGTZ_GetPostTriggerSize(fHandle,&readback);
+    std::cout << "GotPostTriggerSize " << readback << "\n";
+    std::cout << "   retcode   " << retcode << std::endl;
+    sbndaq::CAENDecoder::checkError(retcode,"GetPostTriggerSize",fBoardID);
+
+    CheckReadback("POST_TRIGGER_SIZE", fBoardID, percent, readback);
+  }
+  */
   TLOG_ARB(TCONFIG,TRACE_NAME) << "ConfigureRecordFormat() done." << TLOG_ENDL;
 }
 
@@ -1341,8 +1369,8 @@ void sbndaq::CAENV1740Readout::start()
     // Get timestamp for binary file name
     time_t t = time(0);
     struct tm ltm = *localtime( &t );
-    sprintf(binFileName, "%s/rawbin_V1740_%4i.%02i.%02i-%02i.%02i.%02i.dat",
-	    fDumpBinaryDir.c_str(),
+    sprintf(binFileName, "%s/rawbin_V1740_ID%05i_run%06i_%4i.%02i.%02i-%02i.%02i.%02i.dat",
+	    fDumpBinaryDir.c_str(), fBoardID, artdaq::CommandableFragmentGenerator::run_number(),
 	    ltm.tm_year + 1900, ltm.tm_mon + 1, ltm.tm_mday, ltm.tm_hour, ltm.tm_min, ltm.tm_sec);
     
     TLOG(TINFO) << "Opening raw binary file " << binFileName;
