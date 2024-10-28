@@ -70,7 +70,7 @@ daq: {
 	    time_offset_ps: 0 
 	    monitor_only: false 
 	    terminated: true 
-	    buffer_length: 64 #expected rate 5Hz
+	    buffer_length: 64 #expected rate 1Hz
 	  }, {
 	    id: 1 
 	    name: bes 
@@ -86,7 +86,7 @@ daq: {
 	    time_offset_ps: 0 
 	    monitor_only: false 
 	    terminated: true 
-	    buffer_length: 64 #expected rate 5Hz
+	    buffer_length: 256 #expected rate 5Hz
 	  }, {
 	    id: 3 
 	    name: ftrig 
@@ -102,7 +102,7 @@ daq: {
 	    time_offset_ps: 0 
 	    monitor_only: false 
 	    terminated: true 
-	    buffer_length: 64 #expected rate 5Hz
+	    buffer_length: 256 #expected rate 5~10Hz
 	  }] 
       }
     }
