@@ -22,13 +22,13 @@ uint64_t utls::elapsed_time_ns(uint64_t sample_time_ns) {
 
     if ( lag_ns < utls::max_sample_time_lag_ns) return 0;       
  
-    if ( lag_ns <= utls::onesecond_ns ) {
+    if ( lag_ns < utls::onesecond_ns ) {
 
-      TLOG(TLVL_WARNING) << "Wrong TDC sample time. Sample time > host time; sample_time-host_time = "<< lag_ns - utls::as_seconds << " ms. NTP drift is larger than 100 ms! Check White Rabbit and NTP synchronisation.";
+      TLOG(TLVL_WARNING) << "Wrong TDC sample time. Sample time > host time; sample_time-host_time = "<< lag_ns - utls::as_seconds << " ms. NTP drift > 100 ms! Check White Rabbit and NTP synchronisation.";
 
     } else {
  
-      TLOG(TLVL_ERROR) << "Wrong TDC sample time. Sample time > host time; sample_time-host_time = "<< lag_ns / utls::as_seconds << " s. NTP drift is larger than 1s! Check White Rabbit and NTP synchronisation.";
+      TLOG(TLVL_ERROR) << "Wrong TDC sample time. Sample time > host time; sample_time-host_time = "<< lag_ns / utls::as_seconds << " s. NTP drift >= 1s! Check White Rabbit and NTP synchronisation.";
 
     }
 
