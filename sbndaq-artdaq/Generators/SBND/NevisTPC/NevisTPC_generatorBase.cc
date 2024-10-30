@@ -344,13 +344,13 @@ bool sbndaq::NevisTPC_generatorBase::FillFragment(artdaq::FragmentPtrs &frags, b
   if ( prevFrame > frame )
   {
     rollCounter +=1;
-    TLOG(TLVL_INFO) << "TPC boardreader: Trigger frames rolled over!!!! " << " this many times: " << rollCounter;
+    TLOG(TLVL_INFO) << "TPC boardreader: Trigger frames rolled over " << "this many times: " << rollCounter;
   }
 
-  corrFrame = frame + rollCounter*16777216;
+  corrFrame = frame + rollCounter*16777216;  //new frame is uncorrected frame + 2^24 * number_of_rollovers
   prevFrame = frame;
 
-  metadata_ = NevisTPCFragmentMetadata(header->getEventNum(),corrFrame,fNChannels,fSamplesPerChannel,fUseCompression, frame);
+  metadata_ = NevisTPCFragmentMetadata(header->getEventNum(),corrFrame,fNChannels,fSamplesPerChannel,fUseCompression);
   frags.emplace_back( artdaq::Fragment::FragmentBytes(expected_size,
                                                       metadata_.EventNumber(),          // Sequence ID
 						      fragment_id,                      // Fragment ID

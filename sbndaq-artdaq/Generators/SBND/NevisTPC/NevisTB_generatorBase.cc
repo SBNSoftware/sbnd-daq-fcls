@@ -258,7 +258,7 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
   // Sweet, now, let's actually fill stuff                                                                                                              
   _this_event = ntbmetadata_.EventNumber();                                                                                                             
           
-  TLOG(TLVL_DEBUG+13) << "NTB Event number from pseudo counter " << _this_event;                                                                                                                                              
+  //TLOG(TLVL_DEBUG+13) << "NTB Event number from pseudo counter " << _this_event;                                                                                                                                              
 
   // set the subrun event 0 if it has never been set before
   if (_subrun_event_0 == -1) {
@@ -271,8 +271,8 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
     struct timespec unixtime;
     clock_gettime(CLOCK_REALTIME, &unixtime);
 
-    //When the nevis clock rolls over (frames go back to 0) 
-    //treat the timestamp appropriately
+    //When the nevis clock rolls over (frames go back to 0) in between a PPS and a trigger
+    //catch the rollover by calculating the difference between PPS tagged time and trigger tagged time
     int32_t   frame_diff = abs(ntbheader->getFrame() - GPSframe);
     //long long tolerance  = 16777216 - FramesPerSecond_ - 10; //16777216 = 2^24 is when the rollover happens. frame numbers are stored in 24 bits
     int32_t   tolerance  = 16770000;
@@ -281,7 +281,7 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
     TLOG(TLVL_INFO) << "Frame difference (between GPS and trigger): " << frame_diff;
 
     if(tframe < prevFrame){
-
+      //If rollover happens, current frame number will be smaller than previous frame number. in that case, increment the rollover counter
       rollCounter+=1;
       TLOG(TLVL_INFO) << "Trigger frames rolled over!!!! " << " this many times: " << rollCounter;
     }
@@ -290,19 +290,18 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
     TLOG(TLVL_INFO) << " Corrected Frame:  " << corrFrame <<  " Uncorrected Frame: " << tframe;
 
 
-    if(frame_diff > tolerance){  //looks like we rolled over
+    if(frame_diff > tolerance){  //PPS and trigger offset shows a rollover happened in between the two
 
-      TLOG(TLVL_INFO) << "Rolling Over!!!!  Fixing timestamp. trigger frame is "<< tframe << " but will now be: "<< tframe+16777216<<" GPS frame is: " << GPSframe;
       if(tframe < GPSframe){
           tframe += 16777216;
       }
       else{
           GPSframe += 16777216;
       }
+      TLOG(TLVL_INFO) << "Fixing timestamp due to Nevis clock frame rollover. trigger frame is "<< tframe << "  GPS frame is: " << GPSframe;
       TLOG(TLVL_INFO) << "Last PPS time: " << GPSframe << " " << GPSsample << " " << GPSdiv ;
       TLOG(TLVL_INFO) << "Trigger  time: " << ntbheader->getFrame() << " " << ntbheader->get2MHzSampleNumber() << " " << ntbheader->get16MHzRemainderNumber();
       TLOG(TLVL_INFO) << "Frame difference: " << frame_diff << " " <<  "Tolerance: " << tolerance;
- 
     }
 
     long long t_trig = static_cast<long long>((static_cast<double>(tframe * (framesize_ + 1)   + tsamp * 8 + tdiv) / NevisClockFreq_) * 1000000000);
@@ -332,7 +331,6 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
     if(pps_offset < static_cast<long long>(1000)){
       TLOG(TLVL_WARN) << "NTB Timestamp: Trigger - PPS difference is less than 1us. pps offset: " << pps_offset << " NTP second: " << receivedNTPsecond << " t_trig: " << t_trig;
     }
-    //TRACE(TFILLFRAG,"Trigger - PPS difference is %llu ns.",pps_offset); 
  
     prev_timestamp = new_timestamp;
     prevFrame = ntbheader->getFrame();
@@ -348,7 +346,7 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
     //auto ns1 = ns_since_epoch1.count();
     //TLOG(TLVL_INFO) << "Current time in nanoseconds in ntb (when getting corrected time): " << ns1;
                                                
-    ntbmetadata_ = NevisTBFragmentMetadata(ntbheader->getTriggerNumber(), corrFrame, ntbheader->get2MHzSampleNumber(), ntbheader->getFrame());  
+    ntbmetadata_ = NevisTBFragmentMetadata(ntbheader->getTriggerNumber(), corrFrame, ntbheader->get2MHzSampleNumber());  
     //ntbmetadata_ = NevisTBFragmentMetadata(_this_event,ntbheader->getFrame(), ntbheader->get2MHzSampleNumber());
     frags.emplace_back( artdaq::Fragment::FragmentBytes(expected_size,
 							ntbmetadata_.EventNumber(), //_this_event,//Sequence ID 
