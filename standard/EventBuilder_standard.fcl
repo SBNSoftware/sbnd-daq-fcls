@@ -140,6 +140,36 @@ physics: {
       BeamWindowEnd: 1550000
       Verbose: false  
     }
+    pmtmetricproducer: {
+      is_persistable: false
+      module_type: "PMTMetricProducer"
+      
+      CAENInstanceLabels: ["ContainerCAENV1730" ]
+      ## debug mode is Verbose = 3 
+      Verbose: 1
+
+      # fcl parameters to debug for memory usage
+      
+      ## skip basically everything... should doing this should produce empty metrics off the bat
+      ## any value >= 4 will skip everything
+      ## default fcl param: 
+      # TimingType: 0
+      ## low memory fcl param: 
+      TimingType: 0
+
+      ## remove FragIDs to see if number of CAENs/waveforms is the issue
+      ## add them back and see if it makes a difference
+      ## default fcl param:
+      # FragIDs: [40960,40961,40962,40963,40964,40965,40966,40967]
+      ## low memory fcl param: 
+      FragIDs: [40960,40961,40962,40963,40964,40965,40966,40967]
+
+      ## turn off all algos (all others are off by default) 
+      ## default fcl param:
+      # FindFlashInfo: true
+      ## low memory fcl param:
+      FindFlashInfo: true
+    }
 
   }
 
@@ -170,7 +200,7 @@ physics: {
     }
   }
 
-  softwaretrig: [ prescale1, crttriggerproducer ]
+  softwaretrig: [ prescale1, crttriggerproducer, pmtmetricproducer ]
 
   p0: [ ]
   p1: [ prescale1 ]
