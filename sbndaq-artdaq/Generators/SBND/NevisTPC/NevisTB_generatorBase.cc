@@ -327,10 +327,6 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
                         << receivedNTPsecond << " t_pps: " << t_pps <<  " tframe: " << tframe << " tsamp: " << tsamp << " tdiv: " << tdiv << " t_trig: " << t_trig << " GPSframe: " << GPSframe << " GPSsample: " << GPSsample << " GPSdiv: " << GPSdiv;
 
     }
-
-    if(pps_offset < static_cast<long long>(1000)){
-      TLOG(TLVL_WARN) << "NTB Timestamp: Trigger - PPS difference is less than 1us. pps offset: " << pps_offset << " NTP second: " << receivedNTPsecond << " t_trig: " << t_trig;
-    }
  
     prev_timestamp = new_timestamp;
     prevFrame = ntbheader->getFrame();
@@ -345,7 +341,7 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
     //auto ns_since_epoch1 = std::chrono::time_point_cast<std::chrono::nanoseconds>(now1).time_since_epoch();
     //auto ns1 = ns_since_epoch1.count();
     //TLOG(TLVL_INFO) << "Current time in nanoseconds in ntb (when getting corrected time): " << ns1;
-                                               
+      
     ntbmetadata_ = NevisTBFragmentMetadata(ntbheader->getTriggerNumber(), corrFrame, ntbheader->get2MHzSampleNumber());  
     //ntbmetadata_ = NevisTBFragmentMetadata(_this_event,ntbheader->getFrame(), ntbheader->get2MHzSampleNumber());
     frags.emplace_back( artdaq::Fragment::FragmentBytes(expected_size,
