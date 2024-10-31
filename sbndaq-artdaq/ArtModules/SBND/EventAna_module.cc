@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <memory>
 #include <fstream>
 #include <iomanip>
 #include <vector>
@@ -325,6 +326,7 @@ private:
   std::vector<uint64_t> llt_ts;
   std::vector<uint64_t> hlt_trigger;
   std::vector<uint64_t> hlt_ts;
+  std::vector<uint64_t> hlt_gateCount;
   std::vector<uint16_t> crt_status;
   std::vector<uint16_t> beam_status;
   std::vector<uint16_t> mtca_status;
@@ -514,6 +516,7 @@ void sbndaq::EventAna::beginJob()
     // Trigger words and TS
     events->Branch("hlt_trigger", &hlt_trigger);
     events->Branch("hlt_ts",      &hlt_ts);
+    events->Branch("hlt_gateCount", &hlt_gateCount);
     events->Branch("llt_trigger", &llt_trigger);
     events->Branch("llt_ts",      &llt_ts);
     // Channel status words & TS
@@ -1371,15 +1374,39 @@ void sbndaq::EventAna::analyze_bern_fragment(artdaq::Fragment & frag)  {
 
 }//analyze_bern_fragment
 
+
+void print_fragment_words(artdaq::Fragment& frag, size_t wordNum, size_t bitsPerWord ) {
+  
+  const __uint8_t* data_ptr = reinterpret_cast<const __uint8_t*>(frag.dataBegin());
+  size_t wordCount = frag.dataSizeBytes() / (bitsPerWord / 8);
+  for (size_t w = 0; w < wordCount; w++) {
+    // Check if the current word index matches the specified word index
+    if (w == wordNum) {
+        // Print the bits for the specified n-bit word
+      for (int i = (bitsPerWord-1); i >= 0; --i) {
+            // Calculate the byte index and bit index
+	size_t byteIndex = w * (bitsPerWord / 8) + (i / 8);
+	int bitIndex = (i % 8); // Get the correct bit position in the byte
+	// Print the bit
+	std::cout << static_cast<int>((data_ptr[byteIndex] >> bitIndex) & 1);
+	if (i % 8 == 0) {
+	  std::cout << " "; 
+	}
+      }
+      std::cout << std::endl; // New line after printing the word
+    }
+  }      
+}
+
 // Extract the PTB words/data from the artDAQ fragments
 void sbndaq::EventAna::extract_triggers(artdaq::Fragment & frag) {
 
   // Construct PTB fragment overlay class giving us access to all the helpful decoder functions
   CTBFragment ptb_fragment(frag);
-  
+
   if(fverbose){
     std::cout << "PTB Fragment ID: " << frag.sequenceID() << " TS: " << frag.timestamp()
-         << " Containing " << ptb_fragment.NWords() << " words" << std::endl;
+	      << " Containing " << ptb_fragment.NWords() << " words" << std::endl;
   }
 
   /*********************
@@ -1415,7 +1442,7 @@ void sbndaq::EventAna::extract_triggers(artdaq::Fragment & frag) {
   // one of the 5 word types. The 3 Msb hold the word type
   for ( size_t i = 0; i < ptb_fragment.NWords(); i++ ) {
     if (fverbose) std::cout << "PTB Word type [" << ptb_fragment.Word(i)->word_type << "]" << std::endl;
-    std::cout << "PTB Word type [" << ptb_fragment.Word(i)->word_type << "]" << std::endl;
+    //std::cout << "PTB Word type [" << ptb_fragment.Word(i)->word_type << "]" ;
     switch ( ptb_fragment.Word(i)->word_type ) {
       case 0x0 : // Feedback (errors) Word
         // Only get this word if something goes wrong at the firmware level requires expert knowledge
@@ -1430,24 +1457,25 @@ void sbndaq::EventAna::extract_triggers(artdaq::Fragment & frag) {
         if (fverbose) std::cout << "LLT Payload: " << ptb_fragment.Trigger(i)->trigger_word << std::endl;
         llt_trigger.emplace_back( ptb_fragment.Trigger(i)->trigger_word & 0x1FFFFFFFFFFFFFFF ); // bit map of asserted LLTs
         llt_ts.emplace_back( ptb_fragment.TimeStamp(i) * 20 ); // Timestamp of the word
-	//std::cout <<ptb_fragment.Trigger(i)->trigger_word << "  LLT Timestamp: " <<  ptb_fragment.TimeStamp(i) * 20 << "  " <<std::bitset<64>( ptb_fragment.TimeStamp(i) * 20) <<  std::endl;
+	//std::cout <<ptb_fragment.Trigger(i)->trigger_word << "  LLT Timestamp: " <<  ptb_fragment.TimeStamp(i) << "  " <<std::bitset<64>( ptb_fragment.TimeStamp(i) ) <<  std::endl;
         break;
       case 0x2 : // HL Trigger
         if (fverbose) std::cout << "HLT Payload: " << ptb_fragment.Trigger(i)->trigger_word << std::endl;
 	if (fverbose) std::cout << "HLT ts: " << ptb_fragment.TimeStamp(i) << std::endl;
-	std::cout <<ptb_fragment.Trigger(i)->trigger_word << "  HLT Timestamp: " <<  ptb_fragment.TimeStamp(i) * 20 << "  " <<std::bitset<64>( ptb_fragment.TimeStamp(i) * 20) <<  std::endl;
+        hlt_gateCount.emplace_back(ptb_fragment.Trigger(i)->gate_counter & 0xFF);
         hlt_trigger.emplace_back( ptb_fragment.Trigger(i)->trigger_word & 0x1FFFFFFFFFFFFFFF );
         hlt_ts.emplace_back( ptb_fragment.TimeStamp(i) * 20 );
         ptb_frag_ts = frag.timestamp();
         hlt_word_count++;
-        break;
+	//std::cout << "HLT Word: " << ptb_fragment.Trigger(i)->trigger_word << " HLT GateCount: " << ptb_fragment.Trigger(i)->gate_counter  << " TS: " << ptb_fragment.TimeStamp(i) * 20<< " Prev TS: " <<ptb_fragment.PTBWord(i)->prevTS *20<< std::endl;
+	break;
       case 0x3 : // Channel Status
         // Each PTB input gets a bit map e.g. CRT has 14 inputs and is 14b
         // (1 is channel asserted 0 otherwise)
         // TODO add MTCA and NIM channel status words
         auxpds_status.emplace_back( ptb_fragment.ChStatus(i)->pds & 0x3FF );
         crt_status.emplace_back( ptb_fragment.ChStatus(i)->crt & 0x3FFF );
-	std::cout <<ptb_fragment.ChStatus(i)->crt << "                        CRT Timestamp: " <<  ptb_fragment.TimeStamp(i) * 20 << "  " <<std::bitset<64>( ptb_fragment.TimeStamp(i) * 20) <<  std::endl;
+	//std::cout <<std::bitset<14>(ptb_fragment.ChStatus(i)->crt) << "                        CRT Timestamp: " <<  ptb_fragment.TimeStamp(i) << "  " <<std::bitset<64>( ptb_fragment.TimeStamp(i)) <<  std::endl;
         beam_status.emplace_back( ptb_fragment.ChStatus(i)->beam & 0x3 );
         chan_stat_ts.emplace_back( ptb_fragment.TimeStamp(i) * 20 );
         break;
@@ -1474,6 +1502,7 @@ void sbndaq::EventAna::reset_ptb_variables() {
   llt_trigger.clear();
   llt_ts.clear();
   hlt_trigger.clear();
+  hlt_gateCount.clear();
   hlt_ts.clear();
   crt_status.clear();
   beam_status.clear();
