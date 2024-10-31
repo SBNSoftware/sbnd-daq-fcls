@@ -26,11 +26,16 @@
 #include <iterator>
 #include <iostream>
 #include <string>
+#include <bitset>
 
 #include <unistd.h>
 #include <thread>
 
 int numGates =0;
+uint64_t prevHLT01TS =0;
+uint64_t prevHLT02TS =0;
+uint64_t prevHLT03TS =0;
+uint64_t prevHLT04TS =0;
 
 sbndaq::TriggerBoardReader::TriggerBoardReader(fhicl::ParameterSet const & ps)
   :
@@ -188,16 +193,43 @@ bool sbndaq::TriggerBoardReader::getNext_(artdaq::FragmentPtrs & frags) {
 }
 
 
+void print_fragment_words(artdaq::Fragment& frag, size_t wordNum, size_t bitsPerWord ) {
+  
+  const __uint8_t* data_ptr = reinterpret_cast<const __uint8_t*>(frag.dataBegin());
+  size_t wordCount = frag.dataSizeBytes() / (bitsPerWord / 8);
+  for (size_t w = 0; w < wordCount; w++) {
+    // Check if the current word index matches the specified word index
+    if (w == wordNum) {
+        // Print the bits for the specified 128-bit word
+      for (int i = (bitsPerWord-1); i >= 0; --i) {
+            // Calculate the byte index and bit index
+	size_t byteIndex = w * (bitsPerWord / 8) + (i / 8); // Each 128-bit word is 16 bytes
+	int bitIndex = (i % 8); // Get the correct bit position in the byte
+	// Print the bit
+	std::cout << static_cast<int>((data_ptr[byteIndex] >> bitIndex) & 1);
+	if (i % 8 == 0) {
+	  std::cout << " "; 
+	}
+      }
+      std::cout << std::endl; // New line after printing the word
+    }
+  }      
+}
+
+
 artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
 //sbndaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
 
   static ptb::content::word::word_t temp_word ;
+  static ptb::content::word::PTBBoardReaderWord_t temp_PTBBR_word ;
 
   static const constexpr std::size_t word_bytes = sizeof( ptb::content::word::word_t ) ;
+  static const std::size_t word_BR_bytes = sizeof(ptb::content::word::PTBBoardReaderWord_t );
 
   const std::size_t n_words = _receiver -> Buffer().read_available() ;
 
   std::size_t initial_bytes = n_words * word_bytes ;
+  std::size_t initial_BR_bytes = n_words * word_BR_bytes ;
 
   artdaq::Fragment::timestamp_t timestamp = artdaq::Fragment::InvalidTimestamp ;
   bool has_TS = false ;
@@ -207,18 +239,31 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
     timestamp = _last_timestamp ;
   }
 
+  //From PR 155
+  //borrowed from the CAEN code
+  boost::posix_time::ptime fTimeServer = boost::posix_time::microsec_clock::universal_time();
+ //get the server time so we can use the second part
+  boost::posix_time::ptime fTimeEpoch = boost::posix_time::ptime(boost::gregorian::date(1970,1,1));
+  boost::posix_time::time_duration fTimeDiff= fTimeServer-fTimeEpoch;//current time since last epoch
+  uint64_t fServerStartLoopTime=fTimeDiff.total_nanoseconds();//put it in ns
+  uint64_t fServerStartLoopTimeNS=fServerStartLoopTime%(1000000000);//take just the ns (subsecond) part
+
   unsigned int word_counter = 0 ;
   unsigned int group_counter = 0 ;
   
 
   artdaq::Fragment* fragptr = artdaq::Fragment::FragmentBytes( initial_bytes ).release() ;
-  // artdaq::Fragment* artfragptr = artdaq::Fragment::FragmentBytes( initial_bytes ).release() ;
-  //sbndaq::CTBFragment * ctbfrag(artfragptr);
+  artdaq::Fragment* BRfragptr = artdaq::Fragment::FragmentBytes( initial_BR_bytes ).release() ;
 
   for ( word_counter = 0 ; word_counter < n_words ; ) {
 
     _receiver -> Buffer().pop( temp_word ) ;
+
+    temp_PTBBR_word.setPrevTimestamp(0); //set default previous timestamp for exposure accounting
+
     memcpy( fragptr->dataBeginBytes() + word_counter * word_bytes, & temp_word, word_bytes ) ;
+    memcpy( BRfragptr->dataBeginBytes() + word_counter * word_BR_bytes+8, & temp_word, word_bytes ) ; //save in the correct location but don't save the last 64b timestamp yet 
+
     ++word_counter ;
     ++_metric_Word_counter ;
 
@@ -387,11 +432,42 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
       //const ptb::content::word::trigger_t * t = reinterpret_cast<const ptb::content::word::trigger_t *>( & temp_word  ) ;
       ptb::content::word::trigger_t * t = reinterpret_cast<ptb::content::word::trigger_t *>( & temp_word  ) ;
       
-      if (t -> IsTrigger(1)) { //if HLT is an HLT 1 
+      //Setting the gate Counter
+      int HLTGateTrigger =1; //Might be an HLT 1 or 2 depending on what the config is
+      if (t -> IsTrigger(HLTGateTrigger)) { //if HLT is an HLT 1 
 	t -> setGateCounter(numGates);
-	std::cout <<"Number of Gates since last HLT 1" << t -> gate_counter << std::endl;
-	numGates=0;
+	numGates=0; //reset counter
       }
+
+
+      //Setting the previous HLT timestamp and adding it to the new HLT word
+      if (t -> IsTrigger(1)){
+	temp_PTBBR_word.setPrevTimestamp(prevHLT01TS);
+	//std::cout << "Previous HLT 1 TS: " << prevHLT01TS << std::endl; 
+	prevHLT01TS = t->timestamp;
+      }
+
+      if (t -> IsTrigger(2)){
+	temp_PTBBR_word.setPrevTimestamp(prevHLT02TS);
+	//std::cout << "Previous HLT 2 TS: " << prevHLT02TS << std::endl; 
+	prevHLT02TS = t->timestamp;
+      }
+      
+      if (t -> IsTrigger(3)){
+	temp_PTBBR_word.setPrevTimestamp(prevHLT03TS);
+	//std::cout << "Previous HLT 3 TS: " << prevHLT03TS << std::endl; 
+	prevHLT03TS = t->timestamp;
+      }
+      
+      if (t -> IsTrigger(4)){
+	temp_PTBBR_word.setPrevTimestamp(prevHLT04TS);
+	//std::cout << "Previous HLT 4 TS: " << prevHLT04TS << std::endl; 
+	prevHLT04TS = t->timestamp;
+      }
+      
+      //Adding the gate count to the HLT words
+      memcpy( BRfragptr->dataBeginBytes() + (word_counter-1) * word_BR_bytes + 8, &temp_word, word_bytes );    
+      memcpy( fragptr->dataBeginBytes() + (word_counter-1) * word_bytes, &temp_word, word_bytes ); 
 
       if ( t -> trigger_word & 0xEE )  // request at least a trigger not cosmic trigger nor random triggers
 	++ _metric_beam_trigger_counter ;    // count beam related HLT
@@ -416,24 +492,71 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
       _error_state.store( true ) ;
     }
 
+    //add 64b to all of the words
+    uint64_t BRprevTS = temp_PTBBR_word.prevTS;
+    memcpy( BRfragptr->dataBeginBytes() + (word_counter-1) * word_BR_bytes, &BRprevTS, 8 );  
+
+  }//End of word counter
+
+
+  //Make a hybrid timestamp that uses the PTB server time for the second part of the ptb fragment timestamp and info from the PTB itself for the sub-second part
+
+  long timestampPTB_ns= timestamp%(1000000000);//take just hte ns part of the timestamp from the PTB
+  artdaq::Fragment::timestamp_t timestampPTB = artdaq::Fragment::InvalidTimestamp ;
+  timestampPTB=timestamp;
+  // Scheme borrowed from what Antoni developed for CRT.                                                          
+  // See https://sbn-docdb.fnal.gov/cgi-bin/private/DisplayMeeting?sessionid=7783
+
+  timestamp= fServerStartLoopTime - fServerStartLoopTimeNS + timestampPTB_ns
+    + (timestampPTB_ns - (long)fServerStartLoopTimeNS < -500000000) * 1000000000
+    - (timestampPTB_ns - (long)fServerStartLoopTimeNS >  500000000) * 1000000000;  
+
+  //more code from the CAENs to check for time drifts
+  artdaq::Fragment::timestamp_t ts_now; //server time
+  {
+    using namespace boost::gregorian;
+    using namespace boost::posix_time;
+
+    ptime t_now(microsec_clock::universal_time());
+    ptime time_t_epoch(date(1970,1,1));
+    time_duration diff = t_now - time_t_epoch;
+
+    ts_now = diff.total_nanoseconds();
   }
 
 
-  fragptr -> resizeBytes( word_counter * word_bytes ) ;
-  fragptr -> setUserType( detail::FragmentType::PTB ) ;
-  fragptr -> setSequenceID( ev_counter_inc() ) ;
-  fragptr -> setFragmentID( fragment_id() ) ;
-  
-  //fragptr -> SetGateCount( numGates );
+  //timestamp=the timestamp from the fragment I think
+  if( timestamp>(ts_now+1e6) ){
+    TLOG(TLVL_WARNING) << "Fragment assigned timestamp is after timestamp from fragment creation! Something funky is happening with the clocks/timing."
+		       << "ts_frag (PTB hybrid timestamp) - ts_now (Server NTP timestamp) = " << timestamp - ts_now << " ns! ts_frag= "<<timestamp<<"  ts_now= "<<ts_now
+      <<"\n ptb_self_timestamp = "<<timestampPTB<<"  ptb_self_timestamp-hybrid_ts=  "<< timestampPTB-timestamp
+		       << TLOG_ENDL;
 
-  fragptr -> setTimestamp( timestamp ) ;
+  }
+  else if( ts_now>timestamp+5e9 ){
+    TLOG(TLVL_ERROR) << "Fragment being packged more than 5 seconds after timestamp: "
+		     << "ts_now - ts_frag = " << (long long)ts_now-(long long)timestamp << " ns!"
+		     << TLOG_ENDL;
+  }
+  else if( ts_now>timestamp+1e9 ){
+    TLOG(TLVL_WARNING) << "Fragment being packged more than 1 second after timestamp: "
+		       << "ts_now - ts_frag = " << ts_now-timestamp << " ns!"
+		       << TLOG_ENDL;
+  }
+
+  BRfragptr -> resizeBytes( word_counter * word_BR_bytes ) ;
+  BRfragptr -> setUserType( detail::FragmentType::PTB ) ;
+  BRfragptr -> setSequenceID( ev_counter_inc() ) ;
+  BRfragptr -> setFragmentID( fragment_id() ) ; 
+  BRfragptr -> setTimestamp( timestamp ) ;
+
   TLOG( 20, "TriggerBoardReader") << "fragment created with TS " << timestamp << " containing " << word_counter << " words" << std::endl ;
 
   if ( ! has_TS ) {
     TLOG( 20, "TriggerBoardReader") << "Created fragment with invalid TimeStamp" << std::endl ;
   }
 
-  return fragptr ;
+  return BRfragptr ;
 
 }
 
