@@ -13,14 +13,18 @@ for CONFIG in $ALLCONFS; do
     cd $HOMEDIR
 done
 echo "Done importing"
+ALLNAMES=""
 for CONFIG in $ALLCONFS; do
     tail logs/${CONFIG}.log -n 2
+    NAME=$(grep -nF -B 1 "None" logs/${CONFIG}.log | grep "New configuration" | awk -F ' ' '{print $3}')
+    ALLNAMES+=$NAME+", "
+
 done
 read -p 'What changes were made? (git commit message): ' message
 #echo $message
-read -p 'What are the new configurations/numbers? ' configlist
-#echo $configlist 
+#read -p 'What are the new configurations/numbers? ' ALLNAMES
+#echo $ALLNAMES 
 echo "${message}"
 echo 'git commit -a -m "'${message}'
-Associated database configurations: '${configlist}'"'
-git commit -a -m "${message} Associated database configurations: ${configlist}"
+Associated database configurations: '${ALLNAMES}'"'
+git commit -a -m "${message} Associated database configurations: ${ALLNAMES}"

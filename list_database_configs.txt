@@ -5,8 +5,6 @@ offbeamZeroBias
 offBeamZeroBiasFlash
 caenPUSHbnbZeroBias
 fullCommTriggerMenuNS
-bnbLight_zerobias2Prescale
-bnbLight_offBeamZeroBias
 nsCrossingMuonFlash
 ewCrossingMuonFlash
 fullCommTriggerMenuEW-NS
