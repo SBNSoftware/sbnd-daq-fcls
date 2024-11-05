@@ -1,0 +1,4 @@
+#include "pmtPULL_default.fcl"
+#======Place override parameters below=========
+daq.fragment_receiver.data_buffer_depth_fragments: 100000 #600
+daq.fragment_receiver.data_buffer_depth_mb : 30000 #30000 #20000 ## -- data_buffer_depth_fragments*max_fragment_size_bytes[MB]    
