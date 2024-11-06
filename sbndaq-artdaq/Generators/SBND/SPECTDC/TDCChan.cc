@@ -140,7 +140,7 @@ void TDCChan::monitor_timestamp(uint64_t timestamp_ns, int ch_id) const {
 
   if (lag_ns < utls::onesecond_ns) {
 
-    TLOG(TLVL_WARN) << "Channel " << ch_id << ". Wrong TDC sample time. Host time > sample time; host_time-sample_time = " << lag_ns / utls::as_milliseconds << " ms. NTP drift > 100 ms! Check White Rabbit and NTP synchronisation.";
+    TLOG(TLVL_WARN) << "Channel " << ch_id << ". Wrong TDC sample time. Host time > sample time; host_time-sample_time = " << lag_ns / utls::as_milliseconds << " ms. NTP drift > 300 ms! Check White Rabbit and NTP synchronisation.";
 
   } else {
 
