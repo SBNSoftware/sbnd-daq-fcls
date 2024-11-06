@@ -432,7 +432,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
       trig_metrics.peakPE = flash_peakPE;
       trig_metrics.peaktime = flash_peaktime;
     }
-    if (fVerbose>=1){
+    if (fVerbose>=2){
       if (fCountPMTs) TLOG(TLVL_INFO) << "nPMTs Above Threshold: " << nAboveThreshold ;
       if (fCalculatePEMetrics){
         TLOG(TLVL_INFO)  << "prelim pe: " << prelimPE;
