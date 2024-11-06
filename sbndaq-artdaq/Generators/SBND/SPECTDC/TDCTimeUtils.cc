@@ -24,7 +24,7 @@ uint64_t utls::elapsed_time_ns(uint64_t sample_time_ns) {
  
     if ( lag_ns < utls::onesecond_ns ) {
 
-      TLOG(TLVL_WARNING) << "Wrong TDC sample time. Sample time > host time; sample_time-host_time = "<< lag_ns - utls::as_seconds << " ms. NTP drift > 100 ms! Check White Rabbit and NTP synchronisation.";
+      TLOG(TLVL_WARNING) << "Wrong TDC sample time. Sample time > host time; sample_time-host_time = "<< lag_ns - utls::as_seconds << " ms. NTP drift > 300 ms! Check White Rabbit and NTP synchronisation.";
 
     } else {
  
