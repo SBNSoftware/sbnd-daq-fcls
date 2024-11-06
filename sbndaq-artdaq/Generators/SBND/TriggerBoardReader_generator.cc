@@ -398,6 +398,7 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
 
       if (t ->IsTrigger(30) ) {
 	numGates++;
+	std::cout << "LLT 30 occurred at timestamp:  " << t->timestamp << " and incrementing number of gates by 1 so numGates: " << numGates << std::endl ;
       }
 
       std::set<unsigned short> trigs = t -> Triggers(32) ;
@@ -549,6 +550,10 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
   BRfragptr -> setSequenceID( ev_counter_inc() ) ;
   BRfragptr -> setFragmentID( fragment_id() ) ; 
   BRfragptr -> setTimestamp( timestamp ) ;
+  BRfragptr -> setMetadata(ptb::content::version);
+
+  //How to print out the metadata to check the versioning of PTB_content.h
+  //std::cout << "Has Metadata: " << BRfragptr -> hasMetadata() << "   Metadata: " << *BRfragptr->metadata<int>() << std::endl; 
 
   TLOG( 20, "TriggerBoardReader") << "fragment created with TS " << timestamp << " containing " << word_counter << " words" << std::endl ;
 
