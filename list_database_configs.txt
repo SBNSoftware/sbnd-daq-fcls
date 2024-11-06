@@ -1,10 +1,10 @@
+fullCommTriggerMenuEW-NS
+fullCommTriggerMenuNS
+nsCrossingMuonFlash
+ewCrossingMuonFlash
 bnbZeroBias
 ewCrossingMuon
 nsCrossingMuon
 offbeamZeroBias
 offBeamZeroBiasFlash
 caenPUSHbnbZeroBias
-fullCommTriggerMenuNS
-nsCrossingMuonFlash
-ewCrossingMuonFlash
-fullCommTriggerMenuEW-NS
