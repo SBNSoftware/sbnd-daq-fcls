@@ -349,7 +349,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
 
     // store timestamp of trigger (where the 0 is the reference time stamp, in ns)
     trig_metrics.trig_ts = (float)etrig_frag_dt;
-    if (fVerbose>=1) TLOG(TLVL_INFO) << "Saving timestamp: " << etrig_frag_dt << " ns";
+    if (fVerbose>=2) TLOG(TLVL_INFO) << "Saving timestamp: " << etrig_frag_dt << " ns";
 
     float promptPE = 0;
     float prelimPE = 0;
@@ -371,7 +371,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
     int windowEndBin = windowStartBin + int(fWindowLength*us_to_ticks);
     auto prelimStart = (windowStartBin - fPrelimWindow*us_to_ticks) < 0 ? 0 : windowStartBin - fPrelimWindow*us_to_ticks;
     auto promptEnd   = windowStartBin + fPromptWindow*us_to_ticks;  
-    if ((fVerbose>=1) && (fCountPMTs | fCalculatePEMetrics | fFindFlashInfo)){
+    if ((fVerbose>=2) && (fCountPMTs | fCalculatePEMetrics | fFindFlashInfo)){
       TLOG(TLVL_INFO) << "Using postpercent: " << fWvfmPostPercent << "\n"
                       << "Window start-end bins: [" << windowStartBin << " " << windowEndBin << "]\n" 
                       << "Window start-end times: [" 
