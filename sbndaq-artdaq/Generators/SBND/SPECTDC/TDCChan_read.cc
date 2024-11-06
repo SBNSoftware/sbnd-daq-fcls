@@ -98,7 +98,7 @@ void TDCChan::read() {
     last_seen_sample_ts = ts.timestamp_ns();
 
     if (ts_gap < fmctdc.max_time_gap_ns ) {
-      TLOG(TLVL_WARNING) << "Detected a time gap " << fmctdc.max_time_gap_ns << " in the channel " << int{id}
+      TLOG(TLVL_WARNING) << "Detected a time gap < " << fmctdc.max_time_gap_ns << " in the channel " << int{id}
                          << "; ts gap = " << ts_gap << " us.";
     }
     if (metricMan) {
