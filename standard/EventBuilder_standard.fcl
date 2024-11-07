@@ -123,9 +123,9 @@ outputs: {
     SelectEvents: [offbeamlight] 
   }
 
-  normalOutputNSCrossingMuon: {
+  normalOutputCrossingMuon: {
     module_type: RootDAQOut
-    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmNSCrossingMuon_%to.root"
+    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmCrossingMuon_%to.root"
     fileProperties: {
       maxSubRuns: 1
       maxRuns: 1
@@ -133,7 +133,7 @@ outputs: {
     }
     fastCloning: false
     compressionLevel: 501 #0
-    SelectEvents: [nscrossingmuon] 
+    SelectEvents: [crossingmuon] 
   }
 
   normalOutputCrossingMuon: {
@@ -290,7 +290,8 @@ physics: {
     offbeamzerobiasfilter: @local::offbeamzerobiasfilter
     bnblightfilter: @local::bnblightfilter
     offbeamlightfilter: @local::offbeamlightfilter
-    nscrossingmuonfilter: @local::nscrossingmuonfilter
+    #nscrossingmuonfilter: @local::nscrossingmuonfilter
+    crossingmuonfilter: @local::crossingmuonfilter
 
   }
 
@@ -305,10 +306,10 @@ physics: {
   bnblight: [bnblightfilter, crttriggerproducer, pmtmetricproducer]
   offbeamlight: [offbeamlightfilter, crttriggerproducer, pmtmetricproducer]
   crossingmuon: [crossingmuonfilter, crttriggerproducer, pmtmetricproducer]
-  nscrossingmuon: [nscrossingmuonfilter, crttriggerproducer, pmtmetricproducer]
-  filterfail: ["!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter", "!nscrossingmuonfilter"]
+  #nscrossingmuon: [nscrossingmuonfilter, crttriggerproducer, pmtmetricproducer]
+  filterfail: ["!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter", "!crossingmuonfilter"]
 
-  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, nscrossingmuon, filterfail] #pdisp -- a prescale of 2?
+  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail] #pdisp -- a prescale of 2?
 #trigger_paths: [bnbzerobias, offbeamzerobias] #pdisp --     a prescale of 2?
 
   a1: [ fragWatcher ]
@@ -317,7 +318,7 @@ physics: {
   #my_output_modules: [ rootNetOutput ]
   #my_output_modules: [ normalOutput ]
   #my_output_modules: [ normalOutput , rootNetOutput ]
-  my_output_modules: [ rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputNSCrossingMuon]#, normalOutputFilterFail ]
+  my_output_modules: [ rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail ]
   #my_output_modules: [ rootNetOutput, normalOutput, normalOutputBNBZeroBias]
   
   end_paths: [ a1, my_output_modules ]
