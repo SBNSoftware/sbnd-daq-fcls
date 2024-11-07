@@ -37,6 +37,8 @@ uint64_t prevHLT02TS =0;
 uint64_t prevHLT03TS =0;
 uint64_t prevHLT04TS =0;
 
+bool isVerbose;
+
 sbndaq::TriggerBoardReader::TriggerBoardReader(fhicl::ParameterSet const & ps)
   :
   CommandableFragmentGenerator(ps),
@@ -44,6 +46,10 @@ sbndaq::TriggerBoardReader::TriggerBoardReader(fhicl::ParameterSet const & ps)
   _fragment_buffer( ps.get<unsigned int>( "data_buffer_depth_fragments", 1000 ) ),
   throw_exception_(ps.get<bool>("throw_exception",true) )
 {
+
+  //get options for printing information (isVerbose)
+  isVerbose = ps.get<bool>("isVerbose", false);
+	
   //get board address and control port from the fhicl file
   const unsigned int control_port = ps.get<uint16_t>("control_port", 8991 ) ;
   const std::string address = ps.get<std::string>( "board_address", "sbnd-ptbmk2-01" );
@@ -398,7 +404,7 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
 
       if (t ->IsTrigger(30) ) {
 	numGates++;
-	std::cout << "LLT 30 occurred at timestamp:  " << t->timestamp << " and incrementing number of gates by 1 so numGates: " << numGates << std::endl ;
+	if (isVerbose) TRACE(TLVL_INFO, "LLT 30 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates: %d ", t-timestamp, numGates); 
       }
 
       std::set<unsigned short> trigs = t -> Triggers(32) ;
@@ -552,6 +558,8 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
   BRfragptr -> setTimestamp( timestamp ) ;
   BRfragptr -> setMetadata(ptb::content::version);
 
+  if (isVerbose) TRACE(TLVL_INFO, "Has Metadata: %d   Metadata: %d", BRfragptr ->hasMetadata(), *BRfragptr->metadata<int>() );
+	
   //How to print out the metadata to check the versioning of PTB_content.h
   //std::cout << "Has Metadata: " << BRfragptr -> hasMetadata() << "   Metadata: " << *BRfragptr->metadata<int>() << std::endl; 
 
