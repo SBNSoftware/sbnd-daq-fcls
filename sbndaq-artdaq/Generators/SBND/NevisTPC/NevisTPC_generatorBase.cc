@@ -350,7 +350,7 @@ bool sbndaq::NevisTPC_generatorBase::FillFragment(artdaq::FragmentPtrs &frags, b
   corrFrame = frame + rollCounter*16777216;  //new frame is uncorrected frame + 2^24 * number_of_rollovers
   
   prevFrame = frame;
-  TLOG(TLVL_DEBUG) << "TPC boardreader: Uncorrected frame number:  " << frame << " Corrected Frame number: " << corrFrame;
+  //TLOG(TLVL_INFO) << "TPC boardreader: Uncorrected frame number:  " << frame << " Corrected Frame number: " << corrFrame;
 
   metadata_ = NevisTPCFragmentMetadata(header->getEventNum(),corrFrame,fNChannels,fSamplesPerChannel,fUseCompression);
   frags.emplace_back( artdaq::Fragment::FragmentBytes(expected_size,
