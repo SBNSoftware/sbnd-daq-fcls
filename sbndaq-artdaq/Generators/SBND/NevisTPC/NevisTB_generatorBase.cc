@@ -287,7 +287,7 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
     }
 
     corrFrame = tframe + rollCounter*16777216;
-    TLOG(TLVL_DEBUG) << " Corrected Frame:  " << corrFrame <<  " Uncorrected Frame: " << tframe;
+    //TLOG(TLVL_INFO) << " Corrected Frame:  " << corrFrame <<  " Uncorrected Frame: " << tframe;
 
 
     if(frame_diff > tolerance){  //PPS and trigger offset shows a rollover happened in between the two
