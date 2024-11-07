@@ -278,7 +278,7 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
     int32_t   tolerance  = 16770000;
     int32_t   corrFrame;
 
-    TLOG(TLVL_INFO) << "Frame difference (between GPS and trigger): " << frame_diff;
+    //TLOG(TLVL_DEBUG) << "Frame difference (between GPS and trigger): " << frame_diff;
 
     if(tframe < prevFrame){
       //If rollover happens, current frame number will be smaller than previous frame number. in that case, increment the rollover counter
@@ -287,7 +287,7 @@ bool sbndaq::NevisTB_generatorBase::FillNTBFragment(artdaq::FragmentPtrs &frags,
     }
 
     corrFrame = tframe + rollCounter*16777216;
-    TLOG(TLVL_INFO) << " Corrected Frame:  " << corrFrame <<  " Uncorrected Frame: " << tframe;
+    TLOG(TLVL_DEBUG) << " Corrected Frame:  " << corrFrame <<  " Uncorrected Frame: " << tframe;
 
 
     if(frame_diff > tolerance){  //PPS and trigger offset shows a rollover happened in between the two
