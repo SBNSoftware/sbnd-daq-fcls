@@ -123,9 +123,9 @@ outputs: {
     SelectEvents: [offbeamlight] 
   }
 
-  normalOutputCrossingMuon: {
+  normalOutputNSCrossingMuon: {
     module_type: RootDAQOut
-    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmCrossingMuon_%to.root"
+    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmNSCrossingMuon_%to.root"
     fileProperties: {
       maxSubRuns: 1
       maxRuns: 1
@@ -133,7 +133,7 @@ outputs: {
     }
     fastCloning: false
     compressionLevel: 501 #0
-    SelectEvents: [crossingmuon] 
+    SelectEvents: [nscrossingmuon] 
   }
 
   normalOutputCrossingMuon: {
@@ -307,7 +307,9 @@ physics: {
   offbeamlight: [offbeamlightfilter, crttriggerproducer, pmtmetricproducer]
   crossingmuon: [crossingmuonfilter, crttriggerproducer, pmtmetricproducer]
   #nscrossingmuon: [nscrossingmuonfilter, crttriggerproducer, pmtmetricproducer]
-  filterfail: ["!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter", "!crossingmuonfilter"]
+  #filterfail: ["!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter", "!crossingmuonfilter"]
+  filterfail: ["!crossingmuonfilter", "!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter"]
+
 
   trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail] #pdisp -- a prescale of 2?
 #trigger_paths: [bnbzerobias, offbeamzerobias] #pdisp --     a prescale of 2?
