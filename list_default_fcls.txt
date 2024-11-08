@@ -233,3 +233,4 @@ xarapuca02
 xarapuca03
 xarapuca04
 xarapuca_standard
+xarapucaPULL
