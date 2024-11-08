@@ -258,7 +258,7 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
   unsigned int group_counter = 0 ;
   
 
-  artdaq::Fragment* fragptr = artdaq::Fragment::FragmentBytes( initial_bytes ).release() ;
+  //artdaq::Fragment* fragptr = artdaq::Fragment::FragmentBytes( initial_bytes ).release() ;
   artdaq::Fragment* BRfragptr = artdaq::Fragment::FragmentBytes( initial_BR_bytes ).release() ;
 
   for ( word_counter = 0 ; word_counter < n_words ; ) {
@@ -267,7 +267,7 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
 
     temp_PTBBR_word.setPrevTimestamp(0); //set default previous timestamp for exposure accounting
 
-    memcpy( fragptr->dataBeginBytes() + word_counter * word_bytes, & temp_word, word_bytes ) ;
+    //memcpy( fragptr->dataBeginBytes() + word_counter * word_bytes, & temp_word, word_bytes ) ;
     memcpy( BRfragptr->dataBeginBytes() + word_counter * word_BR_bytes+8, & temp_word, word_bytes ) ; //save in the correct location but don't save the last 64b timestamp yet 
 
     ++word_counter ;
@@ -474,7 +474,7 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
       
       //Adding the gate count to the HLT words
       memcpy( BRfragptr->dataBeginBytes() + (word_counter-1) * word_BR_bytes + 8, &temp_word, word_bytes );    
-      memcpy( fragptr->dataBeginBytes() + (word_counter-1) * word_bytes, &temp_word, word_bytes ); 
+      //memcpy( fragptr->dataBeginBytes() + (word_counter-1) * word_bytes, &temp_word, word_bytes ); 
 
       if ( t -> trigger_word & 0xEE )  // request at least a trigger not cosmic trigger nor random triggers
 	++ _metric_beam_trigger_counter ;    // count beam related HLT
