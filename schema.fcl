@@ -52,6 +52,11 @@ artdaq_processes: [{
     collection: PMTs 
 
     pattern: '(.*/)(pmt.*)(\.fcl$)' 
+  }, {
+
+    collection: XArapucas 
+
+    pattern: '(.*/)(xarapuca.*)(\.fcl$)' 
 
   }, {
 

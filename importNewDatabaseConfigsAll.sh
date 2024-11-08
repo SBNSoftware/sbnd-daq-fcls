@@ -7,6 +7,8 @@ ALLCONFS=$(cat list_database_configs.txt)
 DATE=$(date '+%Y-%m-%d')
 for CONFIG in $ALLCONFS; do
     cd $CONFIG
+    cp ../schema.fcl .
+    rm *~
     echo "conftool.py importConfiguration ${CONFIG}${index}-"
     echo $PWD
     conftool.py importConfiguration ${CONFIG}${index}_TMP$DATE- |& tee $HOMEDIR/logs/${CONFIG}.log
