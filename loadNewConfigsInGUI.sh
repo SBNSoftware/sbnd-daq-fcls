@@ -2,7 +2,7 @@
 
 
 HOMEDIR=/tmp/artdaq-runcontrol-gui/db/
-ALLCONFS=("fullCommTriggerMenuNS2-00001" "nsCrossingMuonFlash2-00001" "ewCrossingMuonFlash2-00001" "bnbZeroBias2-00001" "ewCrossingMuon2-00001" "nsCrossingMuon2-00001" "offbeamZeroBias2-00001" "offBeamZeroBiasFlash2-00001" "caenPUSHbnbZeroBias2-00001") #"fullCommTriggerMenuEW-NS2-00001"
+ALLCONFS=("fullCommTriggerMenuEW-NS2-00005" "fullCommTriggerMenuNS2-00005" "nsCrossingMuonFlash2-00005" "ewCrossingMuonFlash2-00005" "bnbZeroBias2-00005" "ewCrossingMuon2-00005" "nsCrossingMuon2-00005" "offbeamZeroBias2-00005" "offBeamZeroBiasFlash2-00005" "caenPUSHbnbZeroBias2-00005") #
 
 #$(cat list_database_configs.txt)
 for CONFIG in ${ALLCONFS[@]}; do
