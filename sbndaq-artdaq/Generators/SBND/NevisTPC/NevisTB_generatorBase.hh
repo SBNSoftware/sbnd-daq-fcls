@@ -118,6 +118,7 @@ namespace sbndaq
 
     uint32_t framesize_;
     double NevisClockFreq_;
+    uint32_t FramesPerSecond_;
 
     bool GetNTBData();
     share::WorkerThreadUPtr GetNTBData_thread_;
@@ -131,7 +132,8 @@ namespace sbndaq
     int current_ntbevent, current_ntbframenum; // for checking consistency between FEMs within a run
     bool desyncCrash;
     uint64_t pseudo_ntbfragment; 
-
+    int rollCounter;
+    int prevFrame;
     long long GPSframe;
     long long GPSsample;
     long long GPSdiv;
