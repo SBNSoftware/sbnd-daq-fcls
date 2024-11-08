@@ -150,7 +150,7 @@ bool sbndaq::NevisTPC_generatorBase::GetData(){
     if (elapsed_time > fTimeoutSec){ //fcl configurable timeout (in seconds) for more ability to do low rate nonstandard trigger configurations
 
       char line[132];
-      sprintf(line,"There is no data for 60 seconds"); //,current_event,header->getEventNum());                                                                 
+      sprintf(line,"There is no data for %d seconds", fTimeoutSec); //,current_event,header->getEventNum());                                                                 
       TRACE(TERROR,line);
       throw std::runtime_error(line);
 
