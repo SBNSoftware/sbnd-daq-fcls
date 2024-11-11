@@ -90,10 +90,15 @@ std::vector<uint64_t> sbnd::SBNDGateFilter::GetHLT(sbndaq::CTBFragment ptb_fragm
   for ( size_t i = 0; i < ptb_fragment.NWords(); i++ ) {//loop over words in fragment       
     //if  (ptb_fragment.Word(i)->IsHLT()==false) continue;  
     if  (ptb_fragment.Word(i)->word_type !=0x2 ) continue; //0x2 is the type for an HLT (0x1 for LLT) 
-    uint64_t hlttrigger=ptb_fragment.Trigger(i)->trigger_word & 0x1FFFFFFFFFFFFFFF;
-    hlttrigger= log(1.*hlttrigger)/log(2.) ; 
-    if(hlttrigger>=20) continue; //HLT triggers greater then 20 are reserved for non event triggers
-    triggers.emplace_back(hlttrigger);
+    //uint64_t hlttrigger=ptb_fragment.Trigger(i)->trigger_word & 0x1FFFFFFFFFFFFFFF;
+    uint64_t hlt_mask = ptb_fragment.Trigger(i)->trigger_word & 0x1FFFFFFFFFFFFFFF;
+    // Process each set bit in hlt_mask as a separate HLT trigger
+    while (hlt_mask) {
+            uint64_t hlttrigger = __builtin_ctzll(hlt_mask); // Find the least significant set bit
+            hlt_mask &= (hlt_mask - 1); // Clear the least significant set bit
+            if (hlttrigger >= 20) continue;  //HLT triggers greater then 20 are reserved for non event triggers
+            triggers.emplace_back(hlttrigger);
+    }
   }
   
   return triggers;
