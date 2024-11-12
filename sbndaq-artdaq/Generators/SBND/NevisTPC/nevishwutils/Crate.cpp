@@ -100,8 +100,8 @@ This function is added to debug FEMs is software but hasnot tested yet
     // (skip this part if only using one FEM)
     
     if(getNumberOfTPCFEMs() > 1){
-      //for(size_t iFEM = getNumberOfTPCFEMs()-1; iFEM != 0; iFEM--){
-      for(size_t iFEM = getNumberOfTPCFEMs(); iFEM != 0; iFEM--){
+      for(size_t iFEM = getNumberOfTPCFEMs()-1; iFEM != 0; iFEM--){
+      //for(size_t iFEM = getNumberOfTPCFEMs(); iFEM != 0; iFEM--){
 	getTPCFEM(iFEM-1)->resetPLLLink();
 	usleep(1000);
       }
@@ -469,8 +469,8 @@ This function is added to debug FEMs is software but hasnot tested yet
     assert( getControllerModule() );
     getControllerModule()->initialize(); //v
     getControllerModule()->testOn(); //
-    getControllerModule()->runOff(); // this is used to finish run???
-    getControllerModule()->testOff();
+    //getControllerModule()->runOff(); // this is used to finish run???
+    //getControllerModule()->testOff();
 
     // Set up Trigger Module
     if( hasTrigger ){
