@@ -53,8 +53,42 @@ void sbndaq::NevisTPC_generatorBase::Initialize(){
   // initialize event and frame counting                                                                                                       
   _subrun_event_0 = -1;
   _this_event = -1;
-  rollCounter = 0;
-  prevFrame = 0;
+  std::map<uint32_t, uint32_t> rollCounters = {
+    {3, 0},
+    {4, 0},
+    {5, 0},
+    {6, 0},
+    {7, 0},
+    {8, 0},
+    {9, 0},
+    {10, 0},
+    {11, 0},
+    {12, 0},
+    {13, 0},
+    {14, 0},
+    {15, 0},
+    {16, 0},
+    {17, 0},
+    {18, 0},
+  };
+  std::map<uint32_t, uint32_t> prevFrames = {
+    {3, 0},
+    {4, 0},
+    {5, 0},
+    {6, 0},
+    {7, 0},
+    {8, 0},
+    {9, 0},
+    {10, 0},
+    {11, 0},
+    {12, 0},
+    {13, 0},
+    {14, 0},
+    {15, 0},
+    {16, 0},
+    {17, 0},
+    {18, 0},
+  };
   
 
   // Build our buffer
@@ -261,8 +295,6 @@ bool sbndaq::NevisTPC_generatorBase::FillFragment(artdaq::FragmentPtrs &frags, b
     expected_size += sizeof(uint16_t);
   }
 
-  int32_t frame = header->getFrameNum();
-
   /*
   TRACE(TFILLFRAG,"TPC data with total expected size %lu,FEMID=%u,Slot=%u,ADCWordCount=%u,Event=%u,Frame=%u",
 	expected_size,
@@ -340,17 +372,19 @@ bool sbndaq::NevisTPC_generatorBase::FillFragment(artdaq::FragmentPtrs &frags, b
   }
   
   // Check if frame has rolled over and correct
-  int32_t corrFrame;
-  if ( prevFrame > frame )
+  uint32_t frame = header->getFrameNum();
+  uint32_t slot = header->getSlot();
+  uint32_t corrFrame;
+  if ( prevFrames[slot] > frame )
   {
-    rollCounter +=1;
-    TLOG(TLVL_INFO) << "TPC boardreader: Trigger frames rolled over " << "this many times: " << rollCounter;
+    rollCounters[slot] +=1;
+    TLOG(TLVL_INFO) << "TPC boardreader: Trigger frames rolled over this many times: " << rollCounters[slot] << "for FEM Slot: " << slot;
   }
 
-  corrFrame = frame + rollCounter*16777216;  //new frame is uncorrected frame + 2^24 * number_of_rollovers
+  corrFrame = frame + rollCounters[slot]*16777216;  //new frame is uncorrected frame + 2^24 * number_of_rollovers
   
-  prevFrame = frame;
-  //TLOG(TLVL_INFO) << "TPC boardreader: Uncorrected frame number:  " << frame << " Corrected Frame number: " << corrFrame;
+  prevFrames[slot] = frame;
+  //TLOG(TLVL_INFO) << "TPC boardreader: FEM Slot: " << slot << "Uncorrected frame number:  " << frame << " Corrected Frame number: " << corrFrame;
 
   metadata_ = NevisTPCFragmentMetadata(header->getEventNum(),corrFrame,fNChannels,fSamplesPerChannel,fUseCompression);
   frags.emplace_back( artdaq::Fragment::FragmentBytes(expected_size,
