@@ -1,3 +1,4 @@
+fullCommTriggerMenuEW-NS8Hz
 fullCommTriggerMenuEW-NS
 fullCommTriggerMenuNS
 nsCrossingMuonFlash
