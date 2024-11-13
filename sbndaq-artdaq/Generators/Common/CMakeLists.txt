@@ -36,17 +36,25 @@ list(APPEND LIBRARY_CORE_LIB_LIST sbndaq-artdaq_Common_Utilities )
 
 cet_make_library(
   LIBRARY_NAME
-    sbndaq-artdaq_Common_CAENV17X0_GeneratorBase
+    sbndaq-artdaq_Common_CAEN_GeneratorBase
   SOURCE
     CAENDecoder.cc
-    CAENConfiguration.cc
-    CAENV1740Configuration.cc
     CAENException.cc
   LIBRARIES
     ${LIBRARY_CORE_LIB_LIST}
     CAENComm
     CAENVME
     CAENDigitizer
+)
+
+cet_make_library(
+  LIBRARY_NAME
+    sbndaq-artdaq_Common_CAENV1730_GeneratorBase
+  SOURCE
+    CAENConfiguration.cc
+  LIBRARIES
+    ${LIBRARY_CORE_LIB_LIST}
+    sbndaq-artdaq_Common_CAEN_GeneratorBase
 )
 
 cet_make_library(
@@ -115,20 +123,11 @@ cet_make_library(
     cetlib_except::cetlib_except
 )
 
-
 cet_build_plugin(CAENV1730Readout artdaq::commandableGenerator
   LIBRARIES REG
     ${BUILD_PLUGIN_CORE_LIB_LIST}
-    sbndaq-artdaq_Common_CAENV17X0_GeneratorBase
-    CAENComm
-    CAENVME
-    CAENDigitizer
-  )
-
-cet_build_plugin(CAENV1740Readout artdaq::commandableGenerator
-  LIBRARIES REG
-    ${BUILD_PLUGIN_CORE_LIB_LIST}
-    sbndaq-artdaq_Common_CAENV17X0_GeneratorBase
+    sbndaq-artdaq_Common_CAENV1730_GeneratorBase
+    sbndaq-artdaq_Common_CAEN_GeneratorBase
     CAENComm
     CAENVME
     CAENDigitizer

@@ -1,12 +1,11 @@
 //
-//  CAENV1740Configuration.h   (based on CAENConfiguration.h)
-//  jcrespo: to do: generalize CAENConfiguration for both V1730 and V1740?
+//  CAENV1740Configuration.h   (based on sbndaq-artdaq/Generators/Commmon/CAENConfiguration.h)
 //
 
 #ifndef _CAENV1740Configuration_h
 #define _CAENV1740Configuration_h
 
-#include "CAENDecoder.hh"
+#include "sbndaq-artdaq/Generators/Common/CAENDecoder.hh"
 #include "fhiclcpp/ParameterSet.h"
 #include <iostream>
 

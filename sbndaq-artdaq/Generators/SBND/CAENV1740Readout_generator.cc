@@ -1,12 +1,12 @@
 //
-//  sbndaq-artdaq/Generators/Common/CAENV1740Readout_generator.cc
+//  sbndaq-artdaq/Generators/SBND/CAENV1740Readout_generator.cc
 //
 
 #define TRACE_NAME "CAENV1740Readout"
 #include "artdaq/DAQdata/Globals.hh"
 
 #include "artdaq/Generators/GeneratorMacros.hh"
-#include "sbndaq-artdaq/Generators/Common/CAENV1740Readout.hh"
+#include "sbndaq-artdaq/Generators/SBND/CAENV1740Readout.hh"
 
 #include <iostream>
 #include <sstream>
@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 #include <algorithm>
-#include "CAENDecoder.hh"
+#include "sbndaq-artdaq/Generators/Common/CAENDecoder.hh"
 #include "sbndaq-artdaq-core/Overlays/FragmentType.hh"
 
 #include "boost/date_time/microsec_time_clock.hpp"
@@ -1398,7 +1398,7 @@ void sbndaq::CAENV1740Readout::stop()
   }
   
   if( fDumpBinary ){
-    TLOG(TINFO) << "Closig raw binary file " << binFileName;
+    TLOG(TINFO) << "Closing raw binary file " << binFileName;
     binFile.close(); // temp
   }
 
@@ -1633,9 +1633,9 @@ bool sbndaq::CAENV1740Readout::readWindowDataBlocks() {
 
     const auto header = reinterpret_cast<CAENV1740EventHeader const *>(block->begin);
     
-    //TLOG(TGETDATA) << "(FragID=" << fFragmentID << ")" 
+    TLOG(TGETDATA) << "(FragID=" << fFragmentID << ")" 
     // jcrespo: promote fragment message to TINFO
-    TLOG(TINFO) << "(FragID=" << fFragmentID << ")"
+    //TLOG(TINFO) << "(FragID=" << fFragmentID << ")"
 		   << ": XA_EVENT_COUNTER=" << header->eventCounter
 		   << ", XA_EVENT_SIZE=" << header->eventSize
 		   << ", XA_TIME_TAG=" << header->triggerTimeTag;
@@ -1927,9 +1927,9 @@ bool sbndaq::CAENV1740Readout::readSingleWindowFragments(artdaq::FragmentPtrs & 
     // throw errors if gap > 1 or order is not correct
     auto readoutwindow_sequence_id_gap= readoutwindow_sequence_id - last_sent_seqid;
 
-    //TLOG(TMAKEFRAG)<<"Created fragment " << fFragmentID << " sequenceID " << readoutwindow_sequence_id << " for event " << readoutwindow_event_counter
+    TLOG(TMAKEFRAG)<<"Created fragment " << fFragmentID << " sequenceID " << readoutwindow_sequence_id << " for event " << readoutwindow_event_counter
     // jcrespo: promote fragment message to TINFO
-    TLOG(TINFO)<<"Created fragment " << fFragmentID << " sequenceID " << readoutwindow_sequence_id << " for event " << readoutwindow_event_counter
+    //TLOG(TINFO)<<"Created fragment " << fFragmentID << " sequenceID " << readoutwindow_sequence_id << " for event " << readoutwindow_event_counter
                    << " triggerTimeTag " << header->triggerTimeTag << " ts=" << ts_frag;
     
     if( readoutwindow_sequence_id_gap > 1u ){

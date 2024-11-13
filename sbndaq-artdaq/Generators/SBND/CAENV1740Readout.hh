@@ -1,5 +1,5 @@
 //
-//  sbndaq-artdaq/Generators/Common/CAENV1740Readout.hh
+//  sbndaq-artdaq/Generators/SBND/CAENV1740Readout.hh
 //
 
 #ifndef sbndaq_artdaq_Generators_CAENV1740Readout_hh
@@ -12,13 +12,13 @@
 
 #include "CAENDigitizer.h"
 #include "CAENDigitizerType.h"
-#include "sbndaq-artdaq-core/Overlays/Common/CAENV1740Fragment.hh"
+#include "sbndaq-artdaq-core/Overlays/SBND/CAENV1740Fragment.hh"
 
 #include "CAENV1740Configuration.hh"
 
 //#include "CircularBuffer.hh"
-#include "PoolBuffer.hh"
-#include "workerThread.hh"
+#include "sbndaq-artdaq/Generators/Common/PoolBuffer.hh"
+#include "sbndaq-artdaq/Generators/Common/workerThread.hh"
 
 #include <string>
 #include <unordered_map>
