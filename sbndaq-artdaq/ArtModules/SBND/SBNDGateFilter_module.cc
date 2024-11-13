@@ -123,7 +123,7 @@ bool sbnd::SBNDGateFilter::ApplyGateFilter(std::vector<uint64_t> triggers)//artd
 
 
   if(triggers.size()==0){
-    TLOG(TLVL_WARNING) << "This event has no HLT fragments or none with trigger numbers then 20. It fails filter.";
+    TLOG(TLVL_ERROR) << "This event has no HLT fragments or none with trigger numbers then 20. It fails filter.";
     return false;
   }
 
@@ -199,7 +199,7 @@ bool sbnd::SBNDGateFilter::filter(art::Event & evt)
   
 
   else if(!cont_frags) {
-    TLOG(TLVL_WARN) << "Run " << evt.run() << ", subrun " << evt.subRun() << ", event " << eventNumber << " has zero HLT word Fragments in module, not separating by beam type!";
+    TLOG(TLVL_ERROR) << "Run " << evt.run() << ", subrun " << evt.subRun() << ", event " << eventNumber << " has zero HLT word Fragments in module, not separating by beam type!";
   }
 
   TLOG(TLVL_DEBUG) << "filter:l89";
