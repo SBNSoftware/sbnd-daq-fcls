@@ -125,7 +125,7 @@ outputs: {
 
       maxRuns: 1 
 
-      maxEvents: 5 #20 #close files out a little faster for the prescaled stream
+      maxEvents: 50 #close files out a little faster for the prescaled stream
 
     }
     fastCloning: false 
@@ -147,7 +147,7 @@ outputs: {
 
       maxRuns: 1 
 
-      maxEvents: 5 #20 #close files out a little faster for the prescaled stream
+      maxEvents: 50 #close files out a little faster for the prescaled stream
 
     }
     fastCloning: false 
@@ -169,7 +169,7 @@ outputs: {
 
       maxRuns: 1 
 
-      maxEvents: 5 #20 #close files out a little faster for the prescaled stream
+      maxEvents: 50 #close files out a little faster for the prescaled stream
 
     }
     fastCloning: false 
@@ -191,7 +191,7 @@ outputs: {
 
       maxRuns: 1 
 
-      maxEvents: 5 #20 #close files out a little faster for the prescaled stream
+      maxEvents: 50 #close files out a little faster for the prescaled stream
 
     }
     fastCloning: false 
@@ -213,7 +213,7 @@ outputs: {
 
       maxRuns: 1 
 
-      maxEvents: 5 #20 #close files out a little faster for the prescaled stream
+      maxEvents: 50 #close files out a little faster for the prescaled stream
 
     }
     fastCloning: false 
@@ -235,7 +235,7 @@ outputs: {
 
       maxRuns: 1 
 
-      maxEvents: 5 #20 #close files out a little faster for the prescaled stream
+      maxEvents: 50 #close files out a little faster for the prescaled stream
 
     }
     fastCloning: false 
@@ -257,7 +257,7 @@ outputs: {
 
       maxRuns: 1 
 
-      maxEvents: 5 #20 #close files out a little faster for the prescaled stream
+      maxEvents: 50 #close files out a little faster for the prescaled stream
 
     }
     fastCloning: false 

@@ -2,14 +2,16 @@
 
 
 HOMEDIR=/tmp/artdaq-runcontrol-gui/db/
-ALLCONFS=("fullCommTriggerMenuEW-NS2-00005" "fullCommTriggerMenuNS2-00005" "nsCrossingMuonFlash2-00005" "ewCrossingMuonFlash2-00005" "bnbZeroBias2-00005" "ewCrossingMuon2-00005" "nsCrossingMuon2-00005" "offbeamZeroBias2-00005" "offBeamZeroBiasFlash2-00005" "caenPUSHbnbZeroBias2-00005") #
+ALLCONFS=$1 #("fullCommTriggerMenuEW-NS8Hz2-00002" "fullCommTriggerMenuNS2-00006" "nsCrossingMuonFlash2-00006" "ewCrossingMuonFlash2-00006" "bnbZeroBias2-00006" "ewCrossingMuon2-00006" "nsCrossingMuon2-00006" "offbeamZeroBias2-00006" "offBeamZeroBiasFlash2-00006" "caenPUSHbnbZeroBias2-00006") ##$1 #
 
 #$(cat list_database_configs.txt)
+echo "ALLCONFS list:" ${ALLCONFS[@]}
+cd $HOMDIR
 for CONFIG in ${ALLCONFS[@]}; do
     echo "Making directory and exporting" $CONFIG
     mkdir $CONFIG
     cd $CONFIG
     conftool.py exportConfiguration ${CONFIG}
-    #cd $HOMEDIR
+    cd $HOMEDIR
 done
 echo "Done exporting"
