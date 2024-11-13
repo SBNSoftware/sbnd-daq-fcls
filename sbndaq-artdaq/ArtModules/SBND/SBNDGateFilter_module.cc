@@ -123,7 +123,7 @@ bool sbnd::SBNDGateFilter::ApplyGateFilter(std::vector<uint64_t> triggers)//artd
 
 
   if(triggers.size()==0){
-    TLOG(TLVL_ERROR) << "This event has no HLT fragments or none with trigger numbers then 20. It fails filter.";
+    TLOG(TLVL_ERROR) << "This event has no HLT fragments or none with trigger numbers less than 20. It fails filter.";
     return false;
   }
 
