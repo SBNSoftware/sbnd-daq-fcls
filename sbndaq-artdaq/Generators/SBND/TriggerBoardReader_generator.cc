@@ -31,11 +31,12 @@
 #include <unistd.h>
 #include <thread>
 
-int numGates[4] ={0,0,0,0}; //Index is numGate for different HLT--> numGates[0] = HLT 1, numGates[1] = HLT 2, numGates[2] = HLT 3, numGates[3] = HLT 6 
+int numGates[5] ={0,0,0,0,0}; //Index is numGate for different HLT--> numGates[0] = HLT 1, numGates[1] = HLT 2, numGates[2] = HLT 3, numGates[3] = HLT 4, numGates[4] = HLT 6
 uint64_t prevHLT01TS =0;
 uint64_t prevHLT02TS =0;
 uint64_t prevHLT03TS =0;
 uint64_t prevHLT04TS =0;
+uint64_t prevHLT06TS =0;
 
 bool isVerbose;
 
@@ -405,12 +406,13 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
       if (t ->IsTrigger(30) ) {
 	numGates[0]++;
 	numGates[1]++;
-	numGates[3]++;
+	numGates[4]++;
 	if (isVerbose) TRACE(TLVL_INFO, "LLT 30 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates[0]: %d , numGates[1]: %d , numGates[3]: %d ", t->timestamp, numGates[0], numGates[1], numGates[3]); 
       }
 
       if (t -> IsTrigger(26)){
 	numGates[2]++;
+	numGates[3]++;
 	if (isVerbose) TRACE(TLVL_INFO, "LLT 30 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates[2]: %d ", t->timestamp, numGates[2]); 
       }
 
@@ -472,14 +474,18 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
       }
       
       if (t -> IsTrigger(4)){
+	t -> setGateCounter(numGates[3]);
+	numGates[3]=0;
 	temp_PTBBR_word.setPrevTimestamp(prevHLT04TS);
 	//std::cout << "Previous HLT 4 TS: " << prevHLT04TS << std::endl; 
 	prevHLT04TS = t->timestamp;
       }
 
       if(t -> IsTrigger(6)){
-	t -> setGateCounter(numGates[3]);      //Setting the gate Counters for HLT 6
-	numGates[3]=0; //reset counter
+	t -> setGateCounter(numGates[4]);      //Setting the gate Counters for HLT 6
+	numGates[4]=0; //reset counter
+	temp_PTBBR_word.setPrevTimestamp(prevHLT06TS);
+	prevHLT06TS = t->timestamp;
       }
       
       //Adding the gate count to the HLT words
