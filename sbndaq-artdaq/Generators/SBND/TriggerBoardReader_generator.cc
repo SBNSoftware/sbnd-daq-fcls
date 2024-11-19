@@ -409,13 +409,7 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
 	numGates[4]++;
 	if (isVerbose) TRACE(TLVL_INFO, "LLT 30 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates[0]: %d , numGates[1]: %d , numGates[4]: %d ", t->timestamp, numGates[0], numGates[1], numGates[4]); 
       }
-
-      if (t -> IsTrigger(26)){
-	numGates[2]++;
-	numGates[3]++;
-	if (isVerbose) TRACE(TLVL_INFO, "LLT 26 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates[2]: %d , numGates[3]: %d", t->timestamp, numGates[2], numGates[3]);
-      }
-
+      
       std::set<unsigned short> trigs = t -> Triggers(32) ;
       for ( auto it = trigs.begin(); it != trigs.end() ; ++it ) {
 	++ _metric_LLT_counters[*it] ;
@@ -448,6 +442,13 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
       //const ptb::content::word::trigger_t * t = reinterpret_cast<const ptb::content::word::trigger_t *>( & temp_word  ) ;
       ptb::content::word::trigger_t * t = reinterpret_cast<ptb::content::word::trigger_t *>( & temp_word  ) ;
       
+      // Incrementing gate counter for off-beam gates using HLT 27, which should be issued when there is an off-beam gate that has *not* been inhibited by the beam protection logic
+      if (t -> IsTrigger(27)){
+	numGates[2]++;
+	numGates[3]++;
+	if (isVerbose) TRACE(TLVL_INFO, "HLT 27 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates[2]: %d , numGates[3]: %d", t->timestamp, numGates[2], numGates[3]);
+      }
+
       //Setting the previous HLT timestamp and adding it to the new HLT word
       if (t -> IsTrigger(1)){
 	t -> setGateCounter(numGates[0]);      //Setting the gate Counters for HLT 1
