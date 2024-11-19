@@ -407,13 +407,13 @@ artdaq::Fragment* sbndaq::TriggerBoardReader::CreateFragment() {
 	numGates[0]++;
 	numGates[1]++;
 	numGates[4]++;
-	if (isVerbose) TRACE(TLVL_INFO, "LLT 30 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates[0]: %d , numGates[1]: %d , numGates[3]: %d ", t->timestamp, numGates[0], numGates[1], numGates[3]); 
+	if (isVerbose) TRACE(TLVL_INFO, "LLT 30 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates[0]: %d , numGates[1]: %d , numGates[4]: %d ", t->timestamp, numGates[0], numGates[1], numGates[4]); 
       }
 
       if (t -> IsTrigger(26)){
 	numGates[2]++;
 	numGates[3]++;
-	if (isVerbose) TRACE(TLVL_INFO, "LLT 30 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates[2]: %d ", t->timestamp, numGates[2]); 
+	if (isVerbose) TRACE(TLVL_INFO, "LLT 26 occurred at timestamp: %lu and incrementing number of gates by 1 so numGates[2]: %d , numGates[3]: %d", t->timestamp, numGates[2], numGates[3]);
       }
 
       std::set<unsigned short> trigs = t -> Triggers(32) ;
