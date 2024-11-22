@@ -78,6 +78,7 @@ private:
   // fhicl parameters
   art::Persistable is_persistable_;
   std::vector<std::string> fCAENInstanceLabels; // instance labels for the CAEN V1730 modules
+  std::string fMetricInstanceLabel;
 
   float    fWvfmPostPercent; // post percent of wvfm, 8 us after trigger = 0.8
   float    fWindowStart;     // fraction of wvfm to start window for metrics, default is as 1-fWvfmPostPercent
@@ -94,6 +95,9 @@ private:
   int32_t   fSPECTDCDelay; // in ns, time difference between tdc ftrig and caen ftrig 
 
   std::vector<uint16_t> fFragIDs;
+  // the bottom two vectors MUST be the same size!
+  std::vector<uint8_t>  fignorePMT_board; // specify the board of a pmt to ignore
+  std::vector<uint8_t>  fignorePMT_channel; // specify the digitizer ch of a pmt to ignore
 
   uint16_t fVerbose;
 
@@ -141,7 +145,7 @@ sbnd::trigger::pmtSoftwareTriggerProducer::pmtSoftwareTriggerProducer(fhicl::Par
   {
     this->reconfigure(p);
     // Call appropriate produces<>() functions here.
-    produces< std::vector<sbnd::trigger::pmtSoftwareTrigger>>("", is_persistable_);
+    produces< std::vector<sbnd::trigger::pmtSoftwareTrigger>>(fMetricInstanceLabel, is_persistable_);
     // map from fragID to array index 0-7
     for (size_t i=0;i<fFragIDs.size();++i){
       map_fragid_index.insert(std::make_pair(fFragIDs[i],i));
@@ -156,8 +160,9 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
 {
   // Initialize member data here
   is_persistable_     = p.get<bool>("is_persistable", true) ? art::Persistable::Yes : art::Persistable::No;
-
   fCAENInstanceLabels = p.get<std::vector<std::string>>("CAENInstanceLabels", {"ContainerCAENV1730"});
+  fMetricInstanceLabel= p.get<std::string>("MetricInstanceLabel", ""); // default is empty, if running offline should add an instance label
+
   fWvfmPostPercent    = p.get<float>("WvfmPostPercent", 0.8); // trigger is 20% of the way into the wvfm 
   fWindowStart        = p.get<float>("WindowStart", 1-fWvfmPostPercent); // start of window for metrics, default is 1-fWvfmPostPercent (starts at FTRIG)
   fWindowLength       = p.get<float>("WindowLength", 1.8); // in us, window after fWindowStart to look at metrics
@@ -176,6 +181,8 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
   fSPECTDCDelay          = p.get<int32_t>("SPECTDCDelay", 140); // difference between caen ftrig and tdc ftrig in ns
 
   fFragIDs            = p.get<std::vector<uint16_t>>("FragIDs", {40960,40961,40962,40963,40964,40965,40966,40967});
+  fignorePMT_board     = p.get<std::vector<uint8_t>>("IgnorePMTBoard", {}); 
+  fignorePMT_channel   = p.get<std::vector<uint8_t>>("IgnorePMTChannel", {});
 
   // relevant for offline debugging only
   fVerbose            = p.get<uint8_t>("Verbose", 0);
@@ -275,7 +282,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
   }
   if (timing_type>1){
     if (fVerbose>=1) TLOG(TLVL_WARNING)<< "No valid timing reference found. Producing empty PMT metrics." ;
-    e.put(std::move(trig_metrics_v));
+    e.put(std::move(trig_metrics_v),fMetricInstanceLabel);
     return;
   }
 
@@ -323,7 +330,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
             auto min_idx = getClosestFTrig(refTimestamp, caen_ftrig_v);
             if (min_idx<0){
               if (fVerbose>=1) TLOG(TLVL_WARNING) << "No matching CAEN FTrig found" ;
-              e.put(std::move(trig_metrics_v));
+              e.put(std::move(trig_metrics_v),fMetricInstanceLabel);
               return;
             }
             else{
@@ -332,6 +339,20 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
             }
           }
           getWaveforms(*contf[etrig_frag_idx].get(), wvfms_v);
+          // zero out any PMTs that we're supposed to ignore
+          auto board_id = contf[0].get()->fragmentID() - 40960;
+          if (std::find(fignorePMT_board.begin(), fignorePMT_board.end(), board_id) != fignorePMT_board.end()){
+            for (size_t i=0; i < fignorePMT_channel.size(); i++){
+              auto ignore_board = fignorePMT_board[i];
+              auto ignore_channel = fignorePMT_channel[i];
+              if (ignore_board==board_id){
+                auto findex = map_fragid_index.find(contf[0].get()->fragmentID())->second;
+                auto ignore_index = ignore_channel + 15*findex;
+                auto nsamples = wvfms_v[ignore_index].size();
+                wvfms_v[ignore_index] = std::vector<uint16_t>(nsamples,fInputBaseline.at(0));
+              }
+            }
+          } // end ignorePMTs block
         }
       } // loop over containers
       if (fVerbose>=2)
@@ -342,7 +363,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
 
   if (foundfragments==false){
       TLOG(TLVL_WARNING)<< "No CAEN fragments found... producing empty PMT metrics." << std::endl;
-      e.put(std::move(trig_metrics_v));
+      e.put(std::move(trig_metrics_v),fMetricInstanceLabel);
       return;
   }
   
@@ -461,7 +482,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
     trig_metrics.peakPE   = -9999;
     trig_metrics.peaktime = -9999;
   }
-  e.put(std::move(trig_metrics_v));
+  e.put(std::move(trig_metrics_v),fMetricInstanceLabel);
 }
 
 bool sbnd::trigger::pmtSoftwareTriggerProducer::getTDCTime(artdaq::Fragment & frag, std::vector<double> & tdcTime, uint8_t tdcChannel ) {
