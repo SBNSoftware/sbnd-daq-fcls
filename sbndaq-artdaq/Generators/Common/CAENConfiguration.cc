@@ -1,7 +1,7 @@
 //
 //  CAENConfiguration.cc
 //
-//  Class to read and contain SBND CAEN V1730SB configuration
+//  Class to read and contain CAEN V1730SB configuration
 //   parameters
 //
 //
