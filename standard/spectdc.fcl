@@ -24,9 +24,9 @@ daq: {
     # UDP request port
     request_mode: window # pull mode
     # pull mode
-    request_window_width: 4e6 #4ms window 
+    request_window_width: 5e6 #4ms window 
     #5ms window 
-    request_window_offset: 2e6 #2ms offset
+    request_window_offset: 2.5e6 #2ms offset
     #2.5ms offset
     request_windows_are_unique: false #true
     #true
@@ -70,7 +70,7 @@ daq: {
 	    time_offset_ps: 0 
 	    monitor_only: false 
 	    terminated: true 
-	    buffer_length: 64 #expected rate 1Hz
+	    buffer_length: 256 #expected rate 8Hz
 	  }, {
 	    id: 1 
 	    name: bes 
@@ -78,7 +78,7 @@ daq: {
 	    time_offset_ps: 0 
 	    monitor_only: false 
 	    terminated: true 
-	    buffer_length: 64 #expected rate 5Hz
+	    buffer_length: 256 #64 #expected rate 5Hz
 	  }, {
 	    id: 2 
 	    name: rwm 
@@ -94,7 +94,7 @@ daq: {
 	    time_offset_ps: 0 
 	    monitor_only: false 
 	    terminated: true 
-	    buffer_length: 512 #expected rate 200Hz
+	    buffer_length: 1024 #expected rate 100Hz
 	  }, {
 	    id: 4 
 	    name: etrig 

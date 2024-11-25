@@ -237,6 +237,7 @@ physics: {
     pmtmetricproducer: {
       is_persistable: true #false 
       module_type: "PMTMetricProducer" 
+      CalculateBaseline: true 
       CAENInstanceLabels: ["ContainerCAENV1730"] 
       ## debug mode is Verbose = 3 
       Verbose: 1 
