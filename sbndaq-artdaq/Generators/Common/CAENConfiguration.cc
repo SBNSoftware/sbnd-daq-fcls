@@ -37,7 +37,7 @@ sbndaq::CAENConfiguration::CAENConfiguration(fhicl::ParameterSet const & ps):
   majorityCoincidenceWindow(0),
   maxTemp(80),
   temperatureCheckMask(0xFFFF),
-  aX818(3),
+  aX818(3)
 {
   link                 = ps.get<int>("link");
   enableReadout        = ps.get<int>("enableReadout");
