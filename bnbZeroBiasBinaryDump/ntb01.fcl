@@ -1,0 +1,3 @@
+#include "ntb01_default.fcl"
+#======Place override parameters below=========
+daq.fragment_receiver.DumpNTBBinary: true
