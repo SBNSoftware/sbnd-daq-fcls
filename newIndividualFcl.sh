@@ -10,7 +10,7 @@ fi
 ALLDIRS=$(ls -d */)
 FNAME=$1
 echo "Add fcl to list_default_fcls.txt"
-echo $FNAME >> list_default_fcls.txt
+#echo $FNAME >> list_default_fcls.txt
 PWD1=$PWD #remember where we started so we can return there when done
 
 for DIR in $ALLDIRS; do 

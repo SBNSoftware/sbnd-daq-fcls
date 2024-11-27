@@ -52,6 +52,11 @@ artdaq_processes: [{
     collection: PMTs 
 
     pattern: '(.*/)(pmt.*)(\.fcl$)' 
+  }, {
+
+    collection: XArapucas 
+
+    pattern: '(.*/)(xarapuca.*)(\.fcl$)' 
 
   }, {
 
@@ -108,6 +113,9 @@ artdaq_processes: [{
     pattern: '(.*/)(EventBuilder.*)(\.fcl$)' 
 
   }, {
+    collection: FileStreaming
+    pattern: '(.*/)(filters.*)(\.fcl$)' 
+  },  {
 
     collection: DataLoggers 
 
@@ -164,6 +172,7 @@ artdaq_processes: [{
   }] 
 
 artdaq_includes: [] 
+
 
 run_history: [{
 
