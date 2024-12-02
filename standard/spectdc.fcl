@@ -23,10 +23,10 @@ daq: {
     window_close_timeout_us: 2000000 #2s
     missing_request_window_timeout_us: 2500000 #2.5s
     buffer_mode_keep_latest: true
-    circular_buffer_mode: true
+    circular_buffer_mode: false #true
     poll_hardware_status: true
     hardware_poll_interval_us: 300000000 #30s
-    #stale_fragment_timeout: 25000000000 #25s
+    stale_fragment_timeout: 25000000000 #25s
     separate_monitoring_thread: true
     separate_data_thread: true
     destinations: {
