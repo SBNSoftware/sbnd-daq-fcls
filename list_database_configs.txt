@@ -1,14 +1,3 @@
-fullCommTriggerMenuEW-NS8Hz
-fullCommTriggerMenuEW-NS
-fullCommTriggerMenuNS
-nsCrossingMuonFlash
-ewCrossingMuonFlash
-bnbZeroBias
-ewCrossingMuon
-nsCrossingMuon
-offbeamZeroBias
-offBeamZeroBiasFlash
-caenPUSHbnbZeroBias
 thresholdScanADC12Offbeam
 thresholdScanADC25Offbeam
 thresholdScanADC38Offbeam
