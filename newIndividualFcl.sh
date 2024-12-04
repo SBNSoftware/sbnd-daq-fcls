@@ -7,7 +7,7 @@ fi
 
 
 
-ALLDIRS=$(ls -d */)
+ALLDIRS=$(cat list_database_configs.txt) #$(ls -d */)
 FNAME=$1
 echo "Add fcl to list_default_fcls.txt"
 #echo $FNAME >> list_default_fcls.txt
