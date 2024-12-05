@@ -45,7 +45,7 @@ cp ../ptb01PULL.fcl . #specially copy the ptb01PULL.fcl which is also just an in
 
 cd $PWD1
 cp standard/flags.fcl ${1}
-cp standard/schema.fcl ${1}
+cp schema.fcl ${1}
 
 
 echo "Directory created and filled with symbolic links to configs/standard and editable skeleton fcls"
