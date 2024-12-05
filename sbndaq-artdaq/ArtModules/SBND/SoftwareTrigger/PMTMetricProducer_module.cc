@@ -324,8 +324,8 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
             for (size_t ii = 0; ii < contf.block_count(); ++ii){
               // find the absolute time difference between the fragment trigger time and the reference time stamp 
               auto len = getLength(*contf[ii].get());
-              if (len<fWvfmLength) continue;  // ignore extended triggers!!!
-              caen_ftrig_v.push_back(getTriggerTime(*contf[ii].get()));
+              if (len<fWvfmLength) caen_ftrig_v.push_back(-1e12);
+              else caen_ftrig_v.push_back(getTriggerTime(*contf[ii].get()));
             }
             auto min_idx = getClosestFTrig(refTimestamp, caen_ftrig_v);
             if (min_idx<0){
