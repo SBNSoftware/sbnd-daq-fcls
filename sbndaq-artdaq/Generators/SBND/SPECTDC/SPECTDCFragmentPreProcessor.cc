@@ -11,6 +11,20 @@
 
 using sbndaq::SPECTDCFragmentPreProcessor;
 
+/*
+The SPECTDCFragmentPreProcessor takes incoming TDC data fragments and orders them by timestamp while buffering 
+fragments that arrive too early. The main algorithm first validates all fragments, merges any previously pending 
+fragments with new incoming ones, and sorts them by timestamp. It then determines a partition point using 
+the "oldest-most-recent" approach - for each TDC channel, it finds the most recent timestamp and then takes 
+the oldest timestamp from this set of recent timestamps. This partition point, combined with a timeout threshold, 
+determines which fragments are processed immediately versus held back. Fragments older than the partition point 
+move forward for processing while newer ones are stored in a pending queue. This buffering prevents out-of-order 
+processing while the timeout mechanism (default 1.25s) ensures fragments aren't held indefinitely if a channel 
+stops receiving data. The processor assigns sequential IDs to fragments that pass through and maintains counters 
+to track processed and pending fragments. The system handles thread safety through mutex locking and includes 
+error handling for failed processing attempts.
+*/
+
 SPECTDCFragmentPreProcessor::~SPECTDCFragmentPreProcessor() {
   if (fragmentCounter_ + pendingFragments_.size() != seenFragmentCount_) {
     TLOG(TLVL_INFO) << "Processed fragments (" << fragmentCounter_ << " processed + " << pendingFragments_.size()
