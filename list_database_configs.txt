@@ -1,11 +1,8 @@
+triggerLightScanD_3PE-
 fullCommTriggerMenuEW-NS8Hz
 fullCommTriggerMenuEW-NS
-fullCommTriggerMenuNS
-nsCrossingMuonFlash
-ewCrossingMuonFlash
 bnbZeroBias
 ewCrossingMuon
 nsCrossingMuon
 offbeamZeroBias
-offBeamZeroBiasFlash
 caenPUSHbnbZeroBias
