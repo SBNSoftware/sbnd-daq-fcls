@@ -87,6 +87,7 @@ private:
 
   uint8_t  fStreamType;  // 0 is random, 1 is beam zero bias, 2 is 1+light, 3 is offbeam zero bias, 4 is 3+light, 5 is crt crossing muon
   uint8_t  fTimingType;  // 0 for SPEC TDC,  1 for rawheader
+  bool     fAllowNTB;    // allow NTB to be used as a timing reference
   uint32_t fNTBDelay;    // in ns, NTB offset
   
   std::string              fSPECTDCModuleLabel;
@@ -101,6 +102,7 @@ private:
 
   uint16_t fVerbose;
 
+  bool fIncludeExtensions;
   bool fCalculateBaseline;  
   bool fCountPMTs;          
   bool fCalculatePEMetrics; 
@@ -130,6 +132,7 @@ private:
                       uint8_t tdcChannel);
   int8_t   getClosestFTrig(double refTime, std::vector<double> & ftrig_v);
   void     getWaveforms(const artdaq::Fragment &frag, std::vector<std::vector<uint16_t>> &wvfm_v);
+  void     insertWaveforms(const artdaq::Fragment &frag, std::vector<std::vector<uint16_t>> &wvfm_v);
   uint32_t getStartTime(const artdaq::Fragment &frag);
   uint32_t getTriggerTime(const artdaq::Fragment &frag);
   uint32_t getLength   (const artdaq::Fragment &frag);
@@ -172,6 +175,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
   fStreamType         = p.get<uint8_t>("StreamType", 1); 
   // SPEC TDC ETT [0] -> NTB (RawEventHeader) [1]
   fTimingType         = p.get<uint8_t>("TimingType", 0);
+  fAllowNTB           = p.get<bool>("AllowNTB", true);
   fNTBDelay           = p.get<uint32_t>("NTBDelay", 365000); // units of ns
 
   fSPECTDCModuleLabel    = p.get<std::string>("SPECTDCModuleLabel", "daq");
@@ -188,6 +192,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
   fVerbose            = p.get<uint8_t>("Verbose", 0);
 
   // most likely these will all be off...
+  fIncludeExtensions  = p.get<bool>("IncludeExtensions",false);
   fCalculateBaseline  = p.get<bool>("CalculateBaseline",false);
   fCountPMTs          = p.get<bool>("CountPMTs",false);
   fCalculatePEMetrics = p.get<bool>("CalculatePEMetrics",false);
@@ -224,7 +229,6 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
   }
 
   if (timing_type==0){
-    bool found_tdc_timing_ch = false;
     std::vector<double> tdc_etrig_v;
     tdc_etrig_v.reserve(2);
     for(const std::string &SPECTDCInstanceLabel : fSPECTDCInstanceLabels){
@@ -239,17 +243,18 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
           artdaq::ContainerFragment contf(cont);
           if(contf.fragment_type() == sbndaq::detail::FragmentType::TDCTIMESTAMP){
             for(unsigned i = 0; i < contf.block_count(); ++i)
-              found_tdc_timing_ch = getTDCTime(*contf[i].get(),tdc_etrig_v,fSPECTDCTimingChannel);
+              getTDCTime(*contf[i].get(),tdc_etrig_v,fSPECTDCTimingChannel);
+
           }
         }
       }
-      else if((tdcHandle->front().type() == sbndaq::detail::FragmentType::TDCTIMESTAMP) && (found_tdc_timing_ch==false)){
+      else if((tdcHandle->front().type() == sbndaq::detail::FragmentType::TDCTIMESTAMP)){
         for(auto frag : *tdcHandle)
-          found_tdc_timing_ch = getTDCTime(frag,tdc_etrig_v,fSPECTDCTimingChannel);
+          getTDCTime(frag,tdc_etrig_v,fSPECTDCTimingChannel);
       }
     }
     tdc_etrig_v.shrink_to_fit();
-    if ((found_tdc_timing_ch) && (tdc_etrig_v.size()>0)){
+    if (tdc_etrig_v.size()>0){
       double tdc_etrig = 1e9; // used to **find** the reference time stamp (closest ftrig)
       int32_t min_raw_tdc_diff = 1e9;
       // if there is more than one etrig, use the one closest to the raw timestamp (NTB)
@@ -276,7 +281,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
     }
   }
   if (timing_type==1){
-    if ((header_handle.isValid()) & (raw_timestamp!=0))
+    if ((header_handle.isValid()) && (raw_timestamp!=0) && (fAllowNTB))
       refTimestamp = raw_timestamp;
     else timing_type++;
   }
@@ -293,6 +298,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
 
   // variables to find the beam fragment index 
   std::vector<double> caen_ftrig_v;
+  std::vector<uint32_t> caen_length_v;
   // storage for the beam fragments 
   // the index inside a container to find the "beam" fragment (closest to the event trigger time)
   size_t etrig_frag_idx = 0;
@@ -324,7 +330,9 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
             for (size_t ii = 0; ii < contf.block_count(); ++ii){
               // find the absolute time difference between the fragment trigger time and the reference time stamp 
               auto len = getLength(*contf[ii].get());
-              if (len<fWvfmLength) caen_ftrig_v.push_back(-1e12);
+              caen_length_v.push_back(len);
+
+              if ((len<fWvfmLength) && (fIncludeExtensions==false)) caen_ftrig_v.push_back(-1e12);
               else caen_ftrig_v.push_back(getTriggerTime(*contf[ii].get()));
             }
             auto min_idx = getClosestFTrig(refTimestamp, caen_ftrig_v);
@@ -339,6 +347,15 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
             }
           }
           getWaveforms(*contf[etrig_frag_idx].get(), wvfms_v);
+          
+          if (fIncludeExtensions && (caen_length_v[etrig_frag_idx] < fWvfmLength)){
+            auto current_length = caen_length_v[etrig_frag_idx];
+            for (int8_t ii = etrig_frag_idx-1; ii >=0; --ii){
+              insertWaveforms(*contf[ii].get(), wvfms_v);
+              current_length += caen_length_v[ii];
+              if (current_length >= fWvfmLength) break;
+            }
+          }
           // zero out any PMTs that we're supposed to ignore
           auto board_id = contf[0].get()->fragmentID() - 40960;
           if (std::find(fignorePMT_board.begin(), fignorePMT_board.end(), board_id) != fignorePMT_board.end()){
@@ -368,7 +385,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
   }
   
     // calculate metrics
-  if ((refTimestamp!=0) & (etrig_frag_dt!=1e9)) {    
+  if ((refTimestamp!=0) && (etrig_frag_dt!=1e9)) {    
     trig_metrics.foundBeamTrigger = false;
 
     // store the difference between the reference time stamp and the closest CAEN FTrig
@@ -440,10 +457,10 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
       flash_prelimPE = (flash_baseline-(*std::min_element(wvfm_sum.begin()+prelimStart,wvfm_sum.begin()+windowStartBin)))/fADCtoPE;
       flash_promptPE = (flash_baseline-(*std::min_element(wvfm_sum.begin()+windowStartBin,wvfm_sum.begin()+promptEnd)))/fADCtoPE;
       flash_peakPE   = (flash_baseline-(*std::min_element(wvfm_sum.begin(),wvfm_sum.end())))/fADCtoPE;
-      auto flash_peak_it = std::min_element(wvfm_sum.begin(),wvfm_sum.end());
+      auto flash_peak_it = std::min_element(wvfm_sum.end() - fWvfmLength,wvfm_sum.end());
 
-      // time is referenced to the start of the waveform; this is correct assuming we grabbed the right fragment!  
-      flash_peaktime = ((std::distance(wvfm_sum.begin(), flash_peak_it)) - wvfm_sum.size()*(1-fWvfmPostPercent))*ticks_to_us; // us
+      // time is referenced to the end of the waveform; this is correct assuming we grabbed the right fragment!  
+      flash_peaktime = (fWvfmLength*fWvfmPostPercent - (wvfm_sum.end() -  flash_peak_it))*ticks_to_us; // us
     }
     trig_metrics.nAboveThreshold = nAboveThreshold;
     if (fCalculatePEMetrics){
@@ -514,6 +531,8 @@ int8_t sbnd::trigger::pmtSoftwareTriggerProducer::getClosestFTrig(double refTime
   for (size_t i=0; i<ftrig_v.size(); i++){
     auto iftrig = ftrig_v[i];
     double diff = ftrig_v[i] - refTime;
+
+    std::cout << "FTrig: " << int(iftrig) << " ns, diff: " << int(diff) << " ns" << std::endl;
     if ((fStreamType==1) || (fStreamType==3) || (fStreamType==5)){
       // if zero bias (without light) or CRT crossing, simply find the closest
       if (std::abs(diff) < min_diff){
@@ -588,6 +607,45 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::getWaveforms(const artdaq::Fragm
       wvfm_v[i_ch + nChannels*findex][i_t] = value;
     } //--end loop samples
   } //--end loop channels
+}
+
+void sbnd::trigger::pmtSoftwareTriggerProducer::insertWaveforms(const artdaq::Fragment &frag, std::vector<std::vector<uint16_t>> & wvfm_v)
+{
+  sbndaq::CAENV1730Fragment bb(frag);
+  auto const* md = bb.Metadata();
+  sbndaq::CAENV1730Event const* event_ptr = bb.Event();
+  sbndaq::CAENV1730EventHeader header = event_ptr->Header;
+  
+  int fragId = static_cast<int>(frag.fragmentID());
+  int findex = map_fragid_index.find(fragId)->second;
+
+  size_t nChannels = md->nChannels;
+  uint32_t ev_size_quad_bytes = header.eventSize;
+  uint32_t evt_header_size_quad_bytes = sizeof(sbndaq::CAENV1730EventHeader)/sizeof(uint32_t);
+  uint32_t data_size_double_bytes = 2*(ev_size_quad_bytes - evt_header_size_quad_bytes);
+  uint32_t wvfm_length = data_size_double_bytes/nChannels;
+
+  //--access waveforms in fragment and save
+  const uint16_t* data_begin = reinterpret_cast<const uint16_t*>(frag.dataBeginBytes()
+					+ sizeof(sbndaq::CAENV1730EventHeader));
+  const uint16_t* value_ptr =  data_begin;
+  uint16_t value = 0;
+  size_t ch_offset = 0;
+  if (nChannels==16) nChannels--; // last waveform isn't a PMT
+  for (size_t i_ch = 0; i_ch < nChannels; ++i_ch){
+    auto wvfm_insert = std::vector<uint16_t>(wvfm_length,0);
+    ch_offset = (size_t)(i_ch * wvfm_length);
+    for(size_t i_t = 0; i_t < wvfm_length; ++i_t){
+      value_ptr = data_begin + ch_offset + i_t; // pointer arithmetic
+      value = *(value_ptr);
+      wvfm_insert[i_t] = value;
+    }
+
+    // insert the waveform into the vector
+    auto wvfm_orig = wvfm_v[i_ch + nChannels*findex];
+    wvfm_orig.insert(wvfm_orig.end(),wvfm_insert.begin(),wvfm_insert.end());
+    wvfm_v[i_ch + nChannels*findex] = wvfm_orig;
+  } // loop over channels
 }
 
 uint32_t sbnd::trigger::pmtSoftwareTriggerProducer::getStartTime(const artdaq::Fragment &frag){
