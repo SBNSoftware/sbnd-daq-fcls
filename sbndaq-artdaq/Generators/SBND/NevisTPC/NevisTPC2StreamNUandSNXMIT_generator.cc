@@ -131,6 +131,26 @@ void sbndaq::NevisTPC2StreamNUandSNXMIT::ConfigureStart() {
 
 }
 
+void sbndaq::NevisTPC2StreamNUandSNXMIT::runonsyncon() {
+  if( fCALIBFreq > 0 ){
+    fCrate->getTriggerModule()->runOnSyncOn();
+    TLOG(TLVL_INFO) << "called runonsyncon for CALIB trigger" << TLOG_ENDL;
+  }
+
+  if( fCALIBFreq < 0 and fControllerTriggerFreq < 0 ){
+    if(fCrate->hasTrigger){
+      fCrate->getTriggerModule()->enableTriggers();
+      fCrate->getTriggerModule()->runOnSyncOn();
+
+      TLOG(TLVL_INFO) << "called runonsyncon for EXT trigger" << TLOG_ENDL;
+    }}
+
+  if( fControllerTriggerFreq > 0 ){
+    fCrate->getControllerModule()->runOn();
+    TLOG(TLVL_INFO) << "called runonsyncon for Controller trigger" << TLOG_ENDL;
+  }
+}
+
 void sbndaq::NevisTPC2StreamNUandSNXMIT::startFireCalibTrig() {
   if( fCALIBFreq > 0 ){                                                                                         
     FireCALIB_thread_->start();
@@ -152,19 +172,22 @@ void sbndaq::NevisTPC2StreamNUandSNXMIT::ConfigureStop() {
     WriteSNData_thread_->stop();
   }
   //  FireCALIB_thread_->stop();
-  FireController_thread_->stop();
+  if( fControllerTriggerFreq > 0 ){//only stop thread if it met conditions to get started
+    FireController_thread_->stop();
+  }
   MonitorCrate_thread_->stop();
 
   if( fDumpBinary ){
-    TLOG(TLVL_INFO)<< "Closig raw binary file " << binFileNameNU;
+    TLOG(TLVL_INFO)<< "Closing raw binary file " << binFileNameNU;
     binFileNU.close(); // temp
 
     if( fSNReadout ){
-      TLOG(TLVL_INFO)<< "Closig raw binary file " << binFileNameSN;
+      TLOG(TLVL_INFO)<< "Closing raw binary file " << binFileNameSN;
       binFileSN.close(); // temp
     }
   }
   delete[] SNBuffer_;
+  fNUXMITReader->dmaStop();
 
   TLOG(TLVL_INFO)<< "Successful " << __func__ ;
   mf::LogInfo("NevisTPC2StreamNUandSNXMIT") << "Successful " << __func__;
