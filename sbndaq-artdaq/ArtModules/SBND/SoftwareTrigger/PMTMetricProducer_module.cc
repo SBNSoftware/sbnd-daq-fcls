@@ -182,7 +182,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
   fSPECTDCInstanceLabels = p.get<std::vector<std::string>>("SPECTDCInstanceLabels", {"TDCTIMESTAMP", "ContainerTDCTIMESTAMP" }); 
   // 1 is bes, 2 is rwm, 3 is ftrig, 4 is ett 
   fSPECTDCTimingChannel  = p.get<uint8_t>("SPECTDCTimingChannel", 4);
-  fSPECTDCDelay          = p.get<int32_t>("SPECTDCDelay", 140); // difference between caen ftrig and tdc ftrig in ns
+  fSPECTDCDelay          = p.get<int32_t>("SPECTDCDelay", 120); // difference between caen ftrig and tdc ftrig in ns, factor in additional 20 for PTB 
 
   fFragIDs            = p.get<std::vector<uint16_t>>("FragIDs", {40960,40961,40962,40963,40964,40965,40966,40967});
   fignorePMT_board     = p.get<std::vector<uint8_t>>("IgnorePMTBoard", {}); 
@@ -457,7 +457,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
       flash_prelimPE = (flash_baseline-(*std::min_element(wvfm_sum.begin()+prelimStart,wvfm_sum.begin()+windowStartBin)))/fADCtoPE;
       flash_promptPE = (flash_baseline-(*std::min_element(wvfm_sum.begin()+windowStartBin,wvfm_sum.begin()+promptEnd)))/fADCtoPE;
       flash_peakPE   = (flash_baseline-(*std::min_element(wvfm_sum.begin(),wvfm_sum.end())))/fADCtoPE;
-      auto flash_peak_it = std::min_element(wvfm_sum.end() - fWvfmLength,wvfm_sum.end());
+      auto flash_peak_it = std::min_element(wvfm_sum.begin(),wvfm_sum.end());
 
       // time is referenced to the end of the waveform; this is correct assuming we grabbed the right fragment!  
       flash_peaktime = (fWvfmLength*fWvfmPostPercent - (wvfm_sum.end() -  flash_peak_it))*ticks_to_us; // us
@@ -528,27 +528,32 @@ bool sbnd::trigger::pmtSoftwareTriggerProducer::getTDCTime(artdaq::Fragment & fr
 int8_t sbnd::trigger::pmtSoftwareTriggerProducer::getClosestFTrig(double refTime, std::vector<double> & ftrig_v){
   double min_diff = 1e9;
   int8_t min_idx = -1;
+  int8_t returned_idx = -1;
+  std::vector<double> diff_v(ftrig_v.size(),1e9);
+
   for (size_t i=0; i<ftrig_v.size(); i++){
     auto iftrig = ftrig_v[i];
     double diff = ftrig_v[i] - refTime;
+    diff_v[i] = std::abs(diff);
 
     std::cout << "FTrig: " << int(iftrig) << " ns, diff: " << int(diff) << " ns" << std::endl;
-    if ((fStreamType==1) || (fStreamType==3) || (fStreamType==5)){
-      // if zero bias (without light) or CRT crossing, simply find the closest
-      if (std::abs(diff) < min_diff){
+    if (std::abs(diff) < min_diff){
         min_idx = int8_t(i);
         min_diff = std::abs(diff);
-      }
-    }
-    if ((fStreamType==2) || (fStreamType==4)){
-      // if zero bias (with light), FTRIG should be before ETRIG
-      if ((diff < 0) && (std::abs(diff) < min_diff)){ 
-        min_idx = int8_t(i);
-        min_diff = std::abs(diff);
-      }
     }
   }
-  return min_idx;
+  if ((fStreamType==1) || (fStreamType==3) || (fStreamType==5))
+    // if beam or offbeam zero bias, the closest FTRIG will be the gate FTRIG
+    returned_idx = min_idx;
+
+  if ( (fStreamType==2) || (fStreamType==4)){
+    // if +light stream, the 2nd closest FTRIG will be the gate FTRIG, 
+    // which can be immediately before or after the closest
+    if (min_idx > 0 && (min_idx < (int8_t)ftrig_v.size()-1)){
+      returned_idx = (diff_v[min_idx-1] < diff_v[min_idx+1]) ? min_idx-1 : min_idx+1;
+    } 
+  }
+  return returned_idx;
 }
 
 std::vector<uint32_t> sbnd::trigger::pmtSoftwareTriggerProducer::sumWvfms(const std::vector<uint32_t>& v1, const std::vector<uint16_t>& v2) 
@@ -643,7 +648,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::insertWaveforms(const artdaq::Fr
 
     // insert the waveform into the vector
     auto wvfm_orig = wvfm_v[i_ch + nChannels*findex];
-    wvfm_orig.insert(wvfm_orig.end(),wvfm_insert.begin(),wvfm_insert.end());
+    wvfm_orig.insert(wvfm_orig.begin(),wvfm_insert.begin(),wvfm_insert.end());
     wvfm_v[i_ch + nChannels*findex] = wvfm_orig;
   } // loop over channels
 }
