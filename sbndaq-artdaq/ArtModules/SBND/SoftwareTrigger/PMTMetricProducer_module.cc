@@ -270,12 +270,12 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
       if (tdc_etrig!=1e9)
         refTimestamp = tdc_etrig - fSPECTDCDelay;
       else{
-        if (fVerbose>=2) TLOG(TLVL_INFO) << "No valid TDC timestamp found. Using NTB..." ;
+        if (fVerbose>=2) TLOG(TLVL_WARNING) << "No valid TDC timestamp found. Using NTB..." ;
         timing_type++;
       }
     }
     else{
-      if (fVerbose>=2) TLOG(TLVL_INFO) << "No valid TDC timestamp found. Using NTB..." ;
+      if (fVerbose>=2) TLOG(TLVL_WARNING) << "No valid TDC timestamp found. Using NTB..." ;
       timing_type++;
     }
   }
