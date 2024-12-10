@@ -210,7 +210,6 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
 
 void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
 {
-  if (fVerbose==1) std::cout << "Processing Run: " << e.run() << ", Subrun: " <<  e.subRun() << ", Event: " << e.id().event() << std::endl;
   // object to store trigger metrics in
   std::unique_ptr<std::vector<sbnd::trigger::pmtSoftwareTrigger>> trig_metrics_v = std::make_unique<std::vector<sbnd::trigger::pmtSoftwareTrigger>>();
   sbnd::trigger::pmtSoftwareTrigger trig_metrics;
@@ -536,7 +535,6 @@ int8_t sbnd::trigger::pmtSoftwareTriggerProducer::getClosestFTrig(double refTime
     double diff = ftrig_v[i] - refTime;
     diff_v[i] = std::abs(diff);
 
-    std::cout << "FTrig: " << int(iftrig) << " ns, diff: " << int(diff) << " ns" << std::endl;
     if (std::abs(diff) < min_diff){
         min_idx = int8_t(i);
         min_diff = std::abs(diff);
