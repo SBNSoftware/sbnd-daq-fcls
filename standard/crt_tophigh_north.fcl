@@ -27,13 +27,13 @@ daq.fragment_receiver.FEBConfigurationMAC183: @local::FEB183Configuration
 daq.fragment_receiver.FEBConfigurationMAC72: @local::FEB072Configuration
 daq.fragment_receiver.FEBConfigurationMAC216: @local::FEB216Configuration
 
-daq.fragment_receiver.FEBConfigurationMAC185.charge_threshold: 250
-daq.fragment_receiver.FEBConfigurationMAC185.time_threshold: 250
-daq.fragment_receiver.FEBConfigurationMAC184.charge_threshold: 250
-daq.fragment_receiver.FEBConfigurationMAC184.time_threshold: 250
-daq.fragment_receiver.FEBConfigurationMAC183.charge_threshold: 250
-daq.fragment_receiver.FEBConfigurationMAC183.time_threshold: 250
-daq.fragment_receiver.FEBConfigurationMAC72.charge_threshold: 250
-daq.fragment_receiver.FEBConfigurationMAC72.time_threshold: 250
-daq.fragment_receiver.FEBConfigurationMAC216.charge_threshold: 250
-daq.fragment_receiver.FEBConfigurationMAC216.time_threshold: 250
+daq.fragment_receiver.FEBConfigurationMAC185.charge_threshold: 235
+daq.fragment_receiver.FEBConfigurationMAC185.time_threshold: 235
+daq.fragment_receiver.FEBConfigurationMAC184.charge_threshold: 235
+daq.fragment_receiver.FEBConfigurationMAC184.time_threshold: 235
+daq.fragment_receiver.FEBConfigurationMAC183.charge_threshold: 235
+daq.fragment_receiver.FEBConfigurationMAC183.time_threshold: 235
+daq.fragment_receiver.FEBConfigurationMAC72.charge_threshold: 235
+daq.fragment_receiver.FEBConfigurationMAC72.time_threshold: 235
+daq.fragment_receiver.FEBConfigurationMAC216.charge_threshold: 235
+daq.fragment_receiver.FEBConfigurationMAC216.time_threshold: 235
