@@ -88,7 +88,7 @@ void SPECTDCFragmentPreProcessor::filterFragmentsByTimestamp(artdaq::FragmentPtr
   partitionPoint_ = std::max(acceptBeforeTimestamp, oldestMostRecentPoint_);
   for (auto& fragment : fragments) {
     if (!fragment) continue;
-    if (fragment->timestamp() <= partitionPoint_) {
+    if (fragment->timestamp() < partitionPoint_) {
       acceptedFragments.push_back(std::move(fragment));
     } else {
       pendingFragments_.push_back(std::move(fragment));
