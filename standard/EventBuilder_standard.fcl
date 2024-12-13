@@ -168,6 +168,20 @@ outputs: {
     #0
     SelectEvents: [filterfail] 
   }
+  
+  nustreamOutput: {
+    module_type: RootDAQOut
+    fileName: "/data/neutrino_stream/data_${app name}_%p_run%R_%#_nustream_%to.root"
+
+    fileProperties: {
+      maxSubRuns: 1
+      maxRuns: 1
+      maxEvents: 50 #close files out a little faster for the prescaled stream
+    }
+    fastCloning: false
+    compressionLevel: 501
+    SelectEvents: [ nustream ]
+  }
 
   testOutput: {
     module_type: RootDAQOut 
@@ -284,6 +298,16 @@ physics: {
     offbeamlightfilter: @local::offbeamlightfilter 
     #nscrossingmuonfilter: @local::nscrossingmuonfilter 
     crossingmuonfilter: @local::crossingmuonfilter 
+    neutrinostream:
+    {
+        module_type: "NeutrinoStreamFilter"
+        CRTInputModule: "crttriggerproducer"
+        PMTInputModule: "pmttriggerproducer"
+        NumCRTPlanes: 7
+        ExcludeCRTPlanes: [2]
+        NPMTHits: 200
+        Verbose: true
+    }
   }
   
   p0: [] 
@@ -291,6 +315,7 @@ physics: {
   p5: [prescale5] 
 
   softwaretrig: [prescale1, crttriggerproducer, pmtmetricproducer] 
+  nustream: [prescale5, bnblightfilter, crttriggerproducer, pmtmetricproducer, neutrinostream]
   bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
   offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
   bnblight: [bnblightfilter, crttriggerproducer, pmtmetricproducer] 
@@ -300,7 +325,7 @@ physics: {
   filterfail: ["!crossingmuonfilter", "!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter"] 
 
 
-  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail] #pdisp -- a prescale of 2?
+  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail, nustream] #pdisp -- a prescale of 2?
   a1: [fragWatcher] 
 
 

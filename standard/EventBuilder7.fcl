@@ -8,4 +8,5 @@ outputs.normalOutput.fileName: "/data/sbndraw/fts_dropbox/data_evb07_${app_name}
 
 outputs.testOutput.fileName: "/scratch/test_data/data_evb07_run%R_%#_%to.root"
 #physics.my_output_modules: [ normalOutput, rootNetOutput ]
+my_output_modules: [rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail, nustreamOutput]
 process_name: DAQEVB07
