@@ -315,7 +315,7 @@ physics: {
   p5: [prescale5] 
 
   softwaretrig: [prescale1, crttriggerproducer, pmtmetricproducer] 
-  nustream: [prescale5, bnblightfilter, crttriggerproducer, pmtmetricproducer, neutrinostream]
+  nustream: [prescale5, bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer, neutrinostream]
   bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
   offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
   bnblight: [bnblightfilter, crttriggerproducer, pmtmetricproducer] 
