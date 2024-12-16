@@ -171,7 +171,7 @@ outputs: {
   
   nustreamOutput: {
     module_type: RootDAQOut
-    fileName: "/data/neutrino_stream/data_${app name}_%p_run%R_%#_nustream_%to.root"
+    fileName: "/data/neutrino_stream/data_${app name}_run%R_%#_nustream_%to.root"
 
     fileProperties: {
       maxSubRuns: 1
@@ -305,7 +305,7 @@ physics: {
         PMTInputModule: "pmtmetricproducer"
         NumCRTPlanes: 7
         ExcludeCRTPlanes: [2]
-	UseCRT: true
+	#UseCRT: true
 	UsePMT: false
         NPMTHits: 200
         Verbose: true
@@ -317,7 +317,7 @@ physics: {
   p5: [prescale5] 
 
   softwaretrig: [prescale1, crttriggerproducer, pmtmetricproducer] 
-  nustream: [prescale5, bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer, neutrinostream]
+  nustream: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer, neutrinostream]
   bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
   offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
   bnblight: [bnblightfilter, crttriggerproducer, pmtmetricproducer] 
@@ -327,12 +327,12 @@ physics: {
   filterfail: ["!crossingmuonfilter", "!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter"] 
 
 
-  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail, nustream] #pdisp -- a prescale of 2?
+  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail] #if you change this also change Eventbuilder7
   a1: [fragWatcher] 
 
 
   #my_output_modules: [ normalOutput , rootNetOutput ]
-  my_output_modules: [rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail ]
+  my_output_modules: [rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail ] #if you change this also change Eventbuilder7
 
   end_paths: [a1, my_output_modules] 
 }
