@@ -6,3 +6,4 @@ ewCrossingMuon
 nsCrossingMuon
 offbeamZeroBias
 caenPUSHbnbZeroBias
+wibsOnly
