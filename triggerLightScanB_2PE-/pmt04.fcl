@@ -2,21 +2,21 @@
 #======Place override parameters below=========
 # units of threshold are ADC counts (to be confirmed) from 0-16,383 (14 bits)
 #Baseline value is around 14250 ADC, so to set a 30 ADC threshold set the value to 14220
-daq.fragment_receiver.triggerThreshold0: 14212 
-daq.fragment_receiver.triggerThreshold1: 14212
-daq.fragment_receiver.triggerThreshold2: 14212
-daq.fragment_receiver.triggerThreshold3: 14212
-daq.fragment_receiver.triggerThreshold4: 14212
-daq.fragment_receiver.triggerThreshold5: 14212
-daq.fragment_receiver.triggerThreshold6: 14212
-daq.fragment_receiver.triggerThreshold7: 14212
-daq.fragment_receiver.triggerThreshold8: 14212
-daq.fragment_receiver.triggerThreshold9: 14212
-daq.fragment_receiver.triggerThreshold10: 14212
-daq.fragment_receiver.triggerThreshold11: 14212
-daq.fragment_receiver.triggerThreshold12: 14212
-daq.fragment_receiver.triggerThreshold13: 14212
-daq.fragment_receiver.triggerThreshold14: 14212
+daq.fragment_receiver.triggerThreshold0: 14225 
+daq.fragment_receiver.triggerThreshold1: 14225
+daq.fragment_receiver.triggerThreshold2: 14225
+daq.fragment_receiver.triggerThreshold3: 14225
+daq.fragment_receiver.triggerThreshold4: 14225
+daq.fragment_receiver.triggerThreshold5: 14225
+daq.fragment_receiver.triggerThreshold6: 14225
+daq.fragment_receiver.triggerThreshold7: 14225
+daq.fragment_receiver.triggerThreshold8: 14225
+daq.fragment_receiver.triggerThreshold9: 14225
+daq.fragment_receiver.triggerThreshold10: 14225
+daq.fragment_receiver.triggerThreshold11: 14225
+daq.fragment_receiver.triggerThreshold12: 14225
+daq.fragment_receiver.triggerThreshold13: 14225
+daq.fragment_receiver.triggerThreshold14: 14225
 daq.fragment_receiver.triggerThreshold15: 2000 #set this back to 2000 to prevent weird ghost MON out
 
 #May just change waveform saving rather than actual outputs

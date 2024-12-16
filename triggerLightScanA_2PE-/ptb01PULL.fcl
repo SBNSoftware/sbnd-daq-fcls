@@ -53,5 +53,4 @@
 #include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/3trigger_menu/ptbmk2_nd_mtca34_flash12.fcl"
 
 
-
 daq.fragment_receiver.board_config: @local::board_config 
