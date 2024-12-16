@@ -229,8 +229,8 @@ physics: {
     crttriggerproducer: {
       module_type: "CRTMetricProducer" 
       is_persistable: true
-      BeamWindowStart: 1000000 #huge window to find the right one #1530000 #number for 2024  
-      BeamWindowEnd: 2000000 #huge window to find the right one #1550000 #number for 2024 
+      BeamWindowStart: 1500000 #number for 2025 run #1000000 #huge window to find the right one #1530000 #number for 2024  
+      BeamWindowEnd: 1550000 #number for 2025 run #2000000 #huge window to find the right one #1550000 #number for 2024 
       Verbose: false 
     }
 
