@@ -52,5 +52,13 @@ coverage/
 *.tar.gz
 *.rar
 
-# History files?
-.history/
+# .history files?
+**/.history/ 
+
+*~
+#*#
+*.o
+*.lib 
+
+makeOldConfigsInactive/
+
