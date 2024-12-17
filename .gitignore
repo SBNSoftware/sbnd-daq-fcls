@@ -1,0 +1,8 @@
+*~
+#*#
+*.o
+*.lib
+*.log
+amy*
+officalImportNewDatabaseConfigsAll.sh
+makeOldConfigsInactive/
