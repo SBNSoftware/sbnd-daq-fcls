@@ -1,4 +1,12 @@
+triggerLightScanA_2PE-
+triggerLightScanB_2PE-
+triggerLightScanC_3PE-
 triggerLightScanD_3PE-
+triggerLightScanE_3PE-
+triggerLightScanF_4PE-
+triggerLightScanG_4PE-
+triggerLightScanH_5PE-
+triggerLightScanI_5PE-
 fullCommTriggerMenuEW-NS8Hz
 fullCommTriggerMenuEW-NS
 bnbZeroBias

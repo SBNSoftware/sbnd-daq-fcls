@@ -53,7 +53,7 @@ coverage/
 *.rar
 
 # .history files?
-**/.history/ 
+.history/ 
 
 *~
 #*#
