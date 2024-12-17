@@ -229,8 +229,8 @@ physics: {
     crttriggerproducer: {
       module_type: "CRTMetricProducer" 
       is_persistable: true
-      BeamWindowStart: 1500000 #number for 2025 run #1000000 #huge window to find the right one #1530000 #number for 2024  
-      BeamWindowEnd: 1550000 #number for 2025 run #2000000 #huge window to find the right one #1550000 #number for 2024 
+      BeamWindowStart: 1530000 #number for 2025 run #1000000 #huge window to find the right one #1530000 #number for 2024  
+      BeamWindowEnd: 1580000 #number for 2025 run #2000000 #huge window to find the right one #1550000 #number for 2024 
       Verbose: false 
     }
 
@@ -246,7 +246,7 @@ physics: {
       IncludeExtensions: true
       SPECTDCDelay: 140
       TimingType: 0
-      Verbose: 2
+      Verbose: 1
       is_persistable: true
       module_type: "PMTMetricProducer"
  
