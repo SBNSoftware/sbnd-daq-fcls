@@ -171,7 +171,7 @@ outputs: {
   
   nustreamOutput: {
     module_type: RootDAQOut
-    fileName: "/data/neutrino_stream/data_${app name}_run%R_%#_nustream_%to.root"
+    fileName: "/data/neutrino_stream/data_${app_name}_run%R_%#_nustream_%to.root"
 
     fileProperties: {
       maxSubRuns: 1
