@@ -168,6 +168,20 @@ outputs: {
     #0
     SelectEvents: [filterfail] 
   }
+  
+  nustreamOutput: {
+    module_type: RootDAQOut
+    fileName: "/data/neutrino_stream/data_${app_name}_run%R_%#_nustream_%to.root"
+
+    fileProperties: {
+      maxSubRuns: 1
+      maxRuns: 1
+      maxEvents: 50 #close files out a little faster for the prescaled stream
+    }
+    fastCloning: false
+    compressionLevel: 501
+    SelectEvents: [ nustream ]
+  }
 
   testOutput: {
     module_type: RootDAQOut 
@@ -230,7 +244,7 @@ physics: {
       module_type: "CRTMetricProducer" 
       is_persistable: true
       BeamWindowStart: 1530000 #number for 2025 run #1000000 #huge window to find the right one #1530000 #number for 2024  
-      BeamWindowEnd: 1580000 #number for 2025 run #2000000 #huge window to find the right one #1550000 #number for 2024 
+      BeamWindowEnd: 1580000 #number for 2025 run #2000000 #huge window to find the right one #1550000 #number for 2024
       Verbose: false 
     }
 
@@ -284,6 +298,18 @@ physics: {
     offbeamlightfilter: @local::offbeamlightfilter 
     #nscrossingmuonfilter: @local::nscrossingmuonfilter 
     crossingmuonfilter: @local::crossingmuonfilter 
+    neutrinostream:
+    {
+        module_type: "NeutrinoStreamFilter"
+        CRTInputModule: "crttriggerproducer"
+        PMTInputModule: "pmtmetricproducer"
+        NumCRTPlanes: 7
+        ExcludeCRTPlanes: [2]
+	#UseCRT: true
+	UsePMT: false
+        NPMTHits: 200
+        Verbose: true
+    }
   }
   
   p0: [] 
@@ -291,6 +317,7 @@ physics: {
   p5: [prescale5] 
 
   softwaretrig: [prescale1, crttriggerproducer, pmtmetricproducer] 
+  nustream: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer, neutrinostream]
   bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
   offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
   bnblight: [bnblightfilter, crttriggerproducer, pmtmetricproducer] 
@@ -300,12 +327,12 @@ physics: {
   filterfail: ["!crossingmuonfilter", "!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter"] 
 
 
-  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail] #pdisp -- a prescale of 2?
+  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail] #if you change this also change Eventbuilder7
   a1: [fragWatcher] 
 
 
   #my_output_modules: [ normalOutput , rootNetOutput ]
-  my_output_modules: [rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail ]
+  my_output_modules: [rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail ] #if you change this also change Eventbuilder7
 
   end_paths: [a1, my_output_modules] 
 }

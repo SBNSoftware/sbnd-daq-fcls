@@ -1,3 +1,12 @@
+*~
+#*#
+*.o
+*.lib
+*.log
+amy*
+officalImportNewDatabaseConfigsAll.sh
+makeOldConfigsInactive/
+
 S Files
 .DS_Store
 Thumbs.db
@@ -56,6 +65,7 @@ coverage/
 #*#
 *.o
 *.lib 
+# .history files?
+.history/ 
 
-makeOldConfigsInactive/
 
