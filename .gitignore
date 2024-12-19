@@ -61,9 +61,11 @@ coverage/
 *.tar.gz
 *.rar
 
+*~
+#*#
+*.o
+*.lib 
 # .history files?
 .history/ 
-
-
 
 
