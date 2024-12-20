@@ -120,7 +120,7 @@ void icarus::PhysCrateData::ReadFirmwareVersion()
     char driverRev  [100];
     CAENVME_BoardFWRelease(bdhandle, firmwareRev);
     CAENVME_DriverRelease (bdhandle, driverRev  );
-    TRACEN("PhysCrateData", TLVL_INFO, "A%d818 on link %d firmware revision: %s\n                  driver revision: %s", _AX818, link, firmwareRev, driverRev);
+    TRACEN("PhysCrateData", TLVL_INFO, "A%d818 on link %d firmware revision: %s\n                  driver revision: %s",int(_AX818), link, firmwareRev, driverRev);
     CAENVME_End(bdhandle);
   }
 
