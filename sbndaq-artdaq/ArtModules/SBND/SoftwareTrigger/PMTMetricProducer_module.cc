@@ -37,6 +37,7 @@
 #include "sbndaq-artdaq-core/Overlays/Common/CAENV1730Fragment.hh"
 #include "sbndaq-artdaq-core/Overlays/FragmentType.hh"
 #include "sbndaq-artdaq-core/Overlays/SBND/TDCTimestampFragment.hh"
+#include "sbndaq-artdaq-core/Overlays/SBND/PTBFragment.hh"
 #include "sbndaq-artdaq-core/Obj/SBND/pmtSoftwareTrigger.hh"
 
 // ROOT includes
@@ -86,7 +87,7 @@ private:
   uint16_t fWvfmLength;      // expected waveform length in samples
 
   uint8_t  fStreamType;  // 0 is random, 1 is beam zero bias, 2 is 1+light, 3 is offbeam zero bias, 4 is 3+light, 5 is crt crossing muon
-  uint8_t  fTimingType;  // 0 for SPEC TDC,  1 for rawheader
+  uint8_t  fTimingType;  // 0 for SPEC TDC/PTB,  1 for rawheader
   bool     fAllowNTB;    // allow NTB to be used as a timing reference
   uint32_t fNTBDelay;    // in ns, NTB offset
   
@@ -94,6 +95,10 @@ private:
   std::vector<std::string> fSPECTDCInstanceLabels;
   uint8_t   fSPECTDCTimingChannel; // 1 is bes, 2 is rwm, and 4 is ett
   int32_t   fSPECTDCDelay; // in ns, time difference between tdc ftrig and caen ftrig 
+
+  std::string              fPTBModuleLabel;
+  std::vector<std::string> fPTBInstanceLabels;
+  int32_t   fPTBDelay; // in ns
 
   std::vector<uint16_t> fFragIDs;
   // the bottom two vectors MUST be the same size!
@@ -130,6 +135,8 @@ private:
   bool     getTDCTime(artdaq::Fragment & frag, 
                       std::vector<double> & tdcTime,
                       uint8_t tdcChannel);
+  bool     getGateTime(art::Handle<std::vector<artdaq::Fragment> > ptb_handle,
+                      double & gateTime);
   int8_t   getClosestFTrig(double refTime, std::vector<double> & ftrig_v);
   void     getWaveforms(const artdaq::Fragment &frag, std::vector<std::vector<uint16_t>> &wvfm_v);
   void     insertWaveforms(const artdaq::Fragment &frag, std::vector<std::vector<uint16_t>> &wvfm_v);
@@ -173,7 +180,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
 
   // 0 is random, 1 is beam zero bias, 2 is 1+light, 3 is offbeam zero bias, 4 is 3+light, 5 is crt crossing muon
   fStreamType         = p.get<uint8_t>("StreamType", 1); 
-  // SPEC TDC ETT [0] -> NTB (RawEventHeader) [1]
+  // SPEC TDC ETT (or PTB gate HLT) [0] -> NTB (RawEventHeader) [1]
   fTimingType         = p.get<uint8_t>("TimingType", 0);
   fAllowNTB           = p.get<bool>("AllowNTB", true);
   fNTBDelay           = p.get<uint32_t>("NTBDelay", 365000); // units of ns
@@ -182,7 +189,11 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
   fSPECTDCInstanceLabels = p.get<std::vector<std::string>>("SPECTDCInstanceLabels", {"TDCTIMESTAMP", "ContainerTDCTIMESTAMP" }); 
   // 1 is bes, 2 is rwm, 3 is ftrig, 4 is ett 
   fSPECTDCTimingChannel  = p.get<uint8_t>("SPECTDCTimingChannel", 4);
-  fSPECTDCDelay          = p.get<int32_t>("SPECTDCDelay", 120); // difference between caen ftrig and tdc ftrig in ns, factor in additional 20 for PTB 
+  fSPECTDCDelay          = p.get<int32_t>("SPECTDCDelay", 140); // difference between caen ftrig and tdc ftrig in ns, factor in additional 20 for PTB 
+
+  fPTBModuleLabel    = p.get<std::string>("PTBModuleLabel", "daq");
+  fPTBInstanceLabels = p.get<std::vector<std::string>>("PTBInstance",{"ContainerPTB"});
+  fPTBDelay          = p.get<int32_t>("PTBDelay", -120); // in ns
 
   fFragIDs            = p.get<std::vector<uint16_t>>("FragIDs", {40960,40961,40962,40963,40964,40965,40966,40967});
   fignorePMT_board     = p.get<std::vector<uint8_t>>("IgnorePMTBoard", {}); 
@@ -217,6 +228,8 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
   // the reference time stamp, usually the event trigger time, used to find the right FTRIG
   double refTimestamp=0; 
   auto timing_type = fTimingType;
+  // if timing type is 2 or 4, +light streams need the gate hlt timestamp
+  bool islightstream = ((fStreamType==2) || (fStreamType==4))? true : false;
 
   // section to obtain global timing information 
   art::Handle<artdaq::detail::RawEventHeader> header_handle;
@@ -227,7 +240,17 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
     raw_timestamp = rawheader.timestamp()%int(1e9) - fNTBDelay;
   }
 
-  if (timing_type==0){
+  double gateTime = 1e9;
+  bool   foundgate = false;
+  if (islightstream){
+    for (const std::string &PTBInstanceLabel : fPTBInstanceLabels){
+      art::Handle<std::vector<artdaq::Fragment>> ptbHandle;
+      e.getByLabel(fPTBModuleLabel, PTBInstanceLabel, ptbHandle);
+      foundgate = getGateTime(ptbHandle, gateTime);
+    }
+  }
+
+  if ((timing_type==0) && (islightstream==false)){
     std::vector<double> tdc_etrig_v;
     tdc_etrig_v.reserve(2);
     for(const std::string &SPECTDCInstanceLabel : fSPECTDCInstanceLabels){
@@ -276,6 +299,13 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
     }
     else{
       if (fVerbose>=2) TLOG(TLVL_WARNING) << "No valid TDC timestamp found. Using NTB..." ;
+      timing_type++;
+    }
+  }
+  if ((timing_type==0) && (islightstream)){
+    if (foundgate) refTimestamp = gateTime;
+    else{
+      if (fVerbose>=2) TLOG(TLVL_WARNING) << "No valid PTB gate HLT found. Using NTB..." ;
       timing_type++;
     }
   }
@@ -456,8 +486,10 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
       flash_prelimPE = (flash_baseline-(*std::min_element(wvfm_sum.begin()+prelimStart,wvfm_sum.begin()+windowStartBin)))/fADCtoPE;
       flash_promptPE = (flash_baseline-(*std::min_element(wvfm_sum.begin()+windowStartBin,wvfm_sum.begin()+promptEnd)))/fADCtoPE;
       flash_peakPE   = (flash_baseline-(*std::min_element(wvfm_sum.begin(),wvfm_sum.end())))/fADCtoPE;
-      auto flash_peak_it = std::min_element(wvfm_sum.begin(),wvfm_sum.end());
-
+      // auto flash_peak_it = std::min_element(wvfm_sum.begin(),wvfm_sum.end());
+      // look at only the last 5000 samples of the waveform
+      // important because our "chosen" ftrig may be an extended fragment
+      auto flash_peak_it = std::min_element(wvfm_sum.end()-fWvfmLength,wvfm_sum.end());
       // time is referenced to the end of the waveform; this is correct assuming we grabbed the right fragment!  
       flash_peaktime = (fWvfmLength*fWvfmPostPercent - (wvfm_sum.end() -  flash_peak_it))*ticks_to_us; // us
     }
@@ -524,6 +556,31 @@ bool sbnd::trigger::pmtSoftwareTriggerProducer::getTDCTime(artdaq::Fragment & fr
   return found_timing_ch;
 }
 
+bool sbnd::trigger::pmtSoftwareTriggerProducer::getGateTime(art::Handle<std::vector<artdaq::Fragment> > ptb_handle, double & gateTime){
+  bool foundgate = false;
+  for (auto const& cont : *ptb_handle){ 
+    artdaq::ContainerFragment contf(cont);
+    for (size_t ifrag = 0; ifrag < contf.block_count(); ++ifrag){
+      artdaq::Fragment frag = *contf[ifrag];
+      sbndaq::CTBFragment ctb_frag(frag);   // somehow the name CTBFragment stuck
+      for(size_t word_i = 0; word_i < ctb_frag.NWords(); ++word_i){
+        if(ctb_frag.Trigger(word_i)){
+          auto wt = ctb_frag.Word(word_i)->word_type;
+          if (wt == 2 && ( ctb_frag.Trigger(word_i)->IsTrigger(26) || ctb_frag.Trigger(word_i)->IsTrigger(27) )){
+            foundgate = true;
+            gateTime = double((std::bitset<64>(ctb_frag.Trigger(word_i)->timestamp).to_ullong()*20)%(uint(1e9)) - fPTBDelay);
+            if (fVerbose>=3) TLOG(TLVL_INFO) << "PTB gated FTRIG HLT timestamp: " << uint(gateTime) << " ns";
+            break;
+          }
+        }
+      } //End of loop over the number of trigger words
+      if (foundgate) break;
+    } //End of loop over the number of fragments per container
+    if (foundgate) break;
+  } //End of loop over the number of containers
+  return foundgate;
+}
+
 int8_t sbnd::trigger::pmtSoftwareTriggerProducer::getClosestFTrig(double refTime, std::vector<double> & ftrig_v){
   double min_diff = 1e9;
   int8_t min_idx = -1;
@@ -534,23 +591,12 @@ int8_t sbnd::trigger::pmtSoftwareTriggerProducer::getClosestFTrig(double refTime
     auto iftrig = ftrig_v[i];
     double diff = ftrig_v[i] - refTime;
     diff_v[i] = std::abs(diff);
-
     if (std::abs(diff) < min_diff){
         min_idx = int8_t(i);
         min_diff = std::abs(diff);
     }
   }
-  if ((fStreamType==1) || (fStreamType==3) || (fStreamType==5))
-    // if beam or offbeam zero bias, the closest FTRIG will be the gate FTRIG
-    returned_idx = min_idx;
-
-  if ( (fStreamType==2) || (fStreamType==4)){
-    // if +light stream, the 2nd closest FTRIG will be the gate FTRIG, 
-    // which can be immediately before or after the closest
-    if (min_idx > 0 && (min_idx < (int8_t)ftrig_v.size()-1)){
-      returned_idx = (diff_v[min_idx-1] < diff_v[min_idx+1]) ? min_idx-1 : min_idx+1;
-    } 
-  }
+  returned_idx = min_idx;
   return returned_idx;
 }
 
