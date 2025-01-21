@@ -1,0 +1,23 @@
+#include "crt_standard.fcl"
+
+#include "feb029.fcl"
+
+daq.metrics.brFile.fileName : "/daq/log/metrics/crt01_metrics.log"
+daq.metrics.graphite.namespace: "sbnd.crtminos01."
+
+#daq.fragment_receiver.fragment_ids: [ 29 ]
+daq.fragment_receiver.fragment_ids: [ 0xB81D ]
+
+daq.fragment_receiver.ReaderID: 29
+
+daq.fragment_receiver.ethernet_port: "ens8f1"
+
+daq.fragment_receiver.TurnOnHV : [ true ]
+
+daq.fragment_receiver.PPS_offset_ns : [ 453 ]
+
+daq.fragment_receiver.FEBConfigurationMAC29: @local::FEB029Configuration
+
+daq.fragment_receiver.FEBConfigurationMAC29.charge_threshold: 250
+daq.fragment_receiver.FEBConfigurationMAC29.time_threshold: 250
+
