@@ -246,6 +246,8 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
     for (const std::string &PTBInstanceLabel : fPTBInstanceLabels){
       art::Handle<std::vector<artdaq::Fragment>> ptbHandle;
       e.getByLabel(fPTBModuleLabel, PTBInstanceLabel, ptbHandle);
+      if(!ptbHandle.isValid() || ptbHandle->size() == 0)
+        continue;
       foundgate = getGateTime(ptbHandle, gateTime);
     }
   }
