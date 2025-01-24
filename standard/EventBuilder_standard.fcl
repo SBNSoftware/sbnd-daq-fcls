@@ -265,6 +265,11 @@ physics: {
       module_type: "PMTMetricProducer"
  
     }
+    pmtmetricproducer_bnbzero: @local::pmtmetricproducer
+    pmtmetricproducer_bnblight: @local::pmtmetricproducer
+    pmtmetricproducer_offbeamzero: @local::pmtmetricproducer
+    pmtmetricproducer_offbeamlight: @local::pmtmetricproducer
+    pmtmetricproducer_crossmuon: @local::pmtmetricproducer
   }
   filters: {
     prescale50: {
@@ -318,11 +323,11 @@ physics: {
 
   softwaretrig: [prescale1, crttriggerproducer, pmtmetricproducer] 
   nustream: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer, neutrinostream]
-  bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
-  offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
-  bnblight: [bnblightfilter, crttriggerproducer, pmtmetricproducer] 
-  offbeamlight: [offbeamlightfilter, crttriggerproducer, pmtmetricproducer] 
-  crossingmuon: [crossingmuonfilter, crttriggerproducer, pmtmetricproducer] 
+  bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer_bnbzero] 
+  offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricproducer_offbeamzero] 
+  bnblight: [bnblightfilter, crttriggerproducer, pmtmetricproducer_bnblight] 
+  offbeamlight: [offbeamlightfilter, crttriggerproducer, pmtmetricproducer_offbeamlight] 
+  crossingmuon: [crossingmuonfilter, crttriggerproducer, pmtmetricproducer_crossmuon] 
   #nscrossingmuon: [nscrossingmuonfilter, crttriggerproducer, pmtmetricproducer] 
   filterfail: ["!crossingmuonfilter", "!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter"] 
 
@@ -336,6 +341,12 @@ physics: {
 
   end_paths: [a1, my_output_modules] 
 }
+
+physics.producers.pmtmetricproducer_bnbzero.StreamType: 1
+physics.producers.pmtmetricproducer_bnblight.StreamType: 2
+physics.producers.pmtmetricproducer_offbeamzero.StreamType: 3
+physics.producers.pmtmetricproducer_offbeamlight.StreamType: 4
+physics.producers.pmtmetricproducer_crossmuon.StreamType: 5
 
 source: {
   module_type: ArtdaqInput 
