@@ -18,5 +18,5 @@ daq.fragment_receiver.PPS_offset_ns : [ 453 ]
 
 daq.fragment_receiver.FEBConfigurationMAC4: @local::FEB004Configuration
 
-daq.fragment_receiver.FEBConfigurationMAC4.charge_threshold: 252
+daq.fragment_receiver.FEBConfigurationMAC4.charge_threshold: 250
 daq.fragment_receiver.FEBConfigurationMAC4.time_threshold: 250
