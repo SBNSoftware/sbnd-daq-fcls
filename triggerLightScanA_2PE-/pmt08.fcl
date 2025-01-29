@@ -47,6 +47,6 @@ daq.fragment_receiver.channelEnable15:   true
 #daq.fragment_receiver.Pair_10_11_Logic: 3
 #daq.fragment_receiver.Pair_12_13_Logic: 3
 #daq.fragment_receiver.Pair_14_15_Logic: 1
-daq.fragment_receiver.ovthValue: 1 #I don't think this actually does anything?
+#daq.fragment_receiver.ovthValue: 1 #I don't think this actually does anything?
 
 daq.fragment_receiver.triggerPulseWidth: 12
