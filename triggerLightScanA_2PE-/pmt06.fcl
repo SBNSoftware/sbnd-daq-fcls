@@ -17,7 +17,7 @@ daq.fragment_receiver.triggerThreshold11: 14225
 daq.fragment_receiver.triggerThreshold12: 14225
 daq.fragment_receiver.triggerThreshold13: 14225
 daq.fragment_receiver.triggerThreshold14: 14225
-daq.fragment_receiver.triggerThreshold15: 2000 #set this back to 2000 to prevent weird ghost MON out
+daq.fragment_receiver.triggerThreshold15: 500 #Lowered to 500 to try to prevent channel 15 (trigger copy) from participating in trigger decisions
 
 #May just change waveform saving rather than actual outputs
 daq.fragment_receiver.channelEnable0:    true
@@ -39,14 +39,14 @@ daq.fragment_receiver.channelEnable15:   true
 
 
 #Per pair trigger logics for the MON output
-daq.fragment_receiver.Pair_0_1_Logic: 3
-daq.fragment_receiver.Pair_2_3_Logic: 3
-daq.fragment_receiver.Pair_4_5_Logic: 3
-daq.fragment_receiver.Pair_6_7_Logic: 3
-daq.fragment_receiver.Pair_8_9_Logic: 3
-daq.fragment_receiver.Pair_10_11_Logic: 3
-daq.fragment_receiver.Pair_12_13_Logic: 3
-daq.fragment_receiver.Pair_14_15_Logic: 1
-daq.fragment_receiver.ovthValue: 1
+#daq.fragment_receiver.Pair_0_1_Logic: 3 #Individual pair logic can be written to but the board reader doesn't have the code in place
+#daq.fragment_receiver.Pair_2_3_Logic: 3
+#daq.fragment_receiver.Pair_4_5_Logic: 3
+#daq.fragment_receiver.Pair_6_7_Logic: 3
+#daq.fragment_receiver.Pair_8_9_Logic: 3
+#daq.fragment_receiver.Pair_10_11_Logic: 3
+#daq.fragment_receiver.Pair_12_13_Logic: 3
+#daq.fragment_receiver.Pair_14_15_Logic: 1
+#daq.fragment_receiver.ovthValue: 1 #I don't think this actually does anything?
 
 daq.fragment_receiver.triggerPulseWidth: 12
