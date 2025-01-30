@@ -3,7 +3,7 @@
 #include "feb029.fcl"
 
 daq.metrics.brFile.fileName : "/daq/log/metrics/crt01_metrics.log"
-daq.metrics.graphite.namespace: "sbnd.crtminos01."
+daq.metrics.graphite.namespace: "sbnd.crtflatminos02."
 
 #daq.fragment_receiver.fragment_ids: [ 29 ]
 daq.fragment_receiver.fragment_ids: [ 0xB81D ]
