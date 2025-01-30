@@ -182,7 +182,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
   fStreamType         = p.get<uint8_t>("StreamType", 1); 
   // SPEC TDC ETT (or PTB gate HLT) [0] -> NTB (RawEventHeader) [1]
   fTimingType         = p.get<uint8_t>("TimingType", 0);
-  fAllowNTB           = p.get<bool>("AllowNTB", true);
+  fAllowNTB           = p.get<bool>("AllowNTB", false);
   fNTBDelay           = p.get<uint32_t>("NTBDelay", 365000); // units of ns
 
   fSPECTDCModuleLabel    = p.get<std::string>("SPECTDCModuleLabel", "daq");
@@ -204,7 +204,7 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::reconfigure(fhicl::ParameterSet 
 
   // most likely these will all be off...
   fIncludeExtensions  = p.get<bool>("IncludeExtensions",false);
-  fCalculateBaseline  = p.get<bool>("CalculateBaseline",false);
+  fCalculateBaseline  = p.get<bool>("CalculateBaseline",true);
   fCountPMTs          = p.get<bool>("CountPMTs",false);
   fCalculatePEMetrics = p.get<bool>("CalculatePEMetrics",false);
   fInputBaseline      = p.get<std::vector<float>>("InputBaseline",{14250,2.0});
