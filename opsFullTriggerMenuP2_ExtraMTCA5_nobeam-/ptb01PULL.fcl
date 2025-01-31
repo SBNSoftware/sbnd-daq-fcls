@@ -51,7 +51,7 @@
 
 #=================Light trigger scans====================
 #include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/operations_trigger_menu/ptbmk2_nd_phase2_extra5_event3_flash4_nobeam.fcl"
-"
+
 
 
 daq.fragment_receiver.board_config: @local::board_config 
