@@ -249,22 +249,47 @@ physics: {
     }
 
     pmtmetricproducer: {
-   
-      AllowNTB: false
-      CAENInstanceLabels: [
-         "ContainerCAENV1730"
-      ]
-      CalculateBaseline: true
-      FindFlashInfo: true
-      FragIDs: [ 40960, 40961, 40962, 40963, 40964, 40965, 40966, 40967 ]
-      IncludeExtensions: true
-      SPECTDCDelay: 140
-      TimingType: 0
-      Verbose: 1
-      is_persistable: true
-      module_type: "PMTMetricProducer"
- 
-    }
+			module_type: "PMTMetricProducer" 
+			is_persistable: true 
+			IncludeExtensions: true 
+			Verbose: 1
+			StreamType: 1
+		}
+		pmtmetricbnbzero: {
+			module_type: "PMTMetricProducer" 
+			is_persistable: true 
+			IncludeExtensions: true 
+			Verbose: 1
+			StreamType: 1
+		}
+		pmtmetricbnblight: {
+			module_type: "PMTMetricProducer" 
+			is_persistable: true 
+			IncludeExtensions: true 
+			Verbose: 1
+			StreamType: 2
+		}
+		pmtmetricoffbeamzero: {
+			module_type: "PMTMetricProducer" 
+			is_persistable: true 
+			IncludeExtensions: true 
+			Verbose: 1
+			StreamType: 3
+		}
+		pmtmetricoffbeamlight: {
+			module_type: "PMTMetricProducer" 
+			is_persistable: true 
+			IncludeExtensions: true 
+			Verbose: 1
+			StreamType: 4
+		}
+		pmtmetriccrossingmuon: {
+			module_type: "PMTMetricProducer" 
+			is_persistable: true 
+			IncludeExtensions: true 
+			Verbose: 1
+			StreamType: 5
+		}
   }
   filters: {
     prescale50: {
@@ -318,11 +343,11 @@ physics: {
 
   softwaretrig: [prescale1, crttriggerproducer, pmtmetricproducer] 
   nustream: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer, neutrinostream]
-  bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
-  offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricproducer] 
-  bnblight: [bnblightfilter, crttriggerproducer, pmtmetricproducer] 
-  offbeamlight: [offbeamlightfilter, crttriggerproducer, pmtmetricproducer] 
-  crossingmuon: [crossingmuonfilter, crttriggerproducer, pmtmetricproducer] 
+  bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricbnbzero] 
+  offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricoffbeamzero] 
+  bnblight: [bnblightfilter, crttriggerproducer, pmtmetricbnblight] 
+  offbeamlight: [offbeamlightfilter, crttriggerproducer, pmtmetricoffbeamlight] 
+  crossingmuon: [crossingmuonfilter, crttriggerproducer, pmtmetriccrossingmuon] 
   #nscrossingmuon: [nscrossingmuonfilter, crttriggerproducer, pmtmetricproducer] 
   filterfail: ["!crossingmuonfilter", "!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter"] 
 
