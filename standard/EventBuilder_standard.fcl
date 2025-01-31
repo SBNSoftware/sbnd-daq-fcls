@@ -362,12 +362,6 @@ physics: {
   end_paths: [a1, my_output_modules] 
 }
 
-physics.producers.pmtmetricproducer_bnbzero.StreamType: 1
-physics.producers.pmtmetricproducer_bnblight.StreamType: 2
-physics.producers.pmtmetricproducer_offbeamzero.StreamType: 3
-physics.producers.pmtmetricproducer_offbeamlight.StreamType: 4
-physics.producers.pmtmetricproducer_crossmuon.StreamType: 5
-
 source: {
   module_type: ArtdaqInput 
   waiting_time: 2500000 
