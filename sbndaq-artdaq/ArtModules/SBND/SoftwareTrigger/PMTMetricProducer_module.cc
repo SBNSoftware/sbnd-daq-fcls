@@ -487,12 +487,12 @@ void sbnd::trigger::pmtSoftwareTriggerProducer::produce(art::Event& e)
 
       flash_prelimPE = (flash_baseline-(*std::min_element(wvfm_sum.begin()+prelimStart,wvfm_sum.begin()+windowStartBin)))/fADCtoPE;
       flash_promptPE = (flash_baseline-(*std::min_element(wvfm_sum.begin()+windowStartBin,wvfm_sum.begin()+promptEnd)))/fADCtoPE;
-      flash_peakPE   = (flash_baseline-(*std::min_element(wvfm_sum.begin(),wvfm_sum.end())))/fADCtoPE;
       // auto flash_peak_it = std::min_element(wvfm_sum.begin(),wvfm_sum.end());
       // look at only the last 5000 samples of the waveform
       // important because our "chosen" ftrig may be an extended fragment
       auto flash_peak_it = std::min_element(wvfm_sum.end()-fWvfmLength,wvfm_sum.end());
       // time is referenced to the end of the waveform; this is correct assuming we grabbed the right fragment!  
+      flash_peakPE   = (flash_baseline-(*flash_peak_it))/fADCtoPE;
       flash_peaktime = (fWvfmLength*fWvfmPostPercent - (wvfm_sum.end() -  flash_peak_it))*ticks_to_us; // us
     }
     trig_metrics.nAboveThreshold = nAboveThreshold;
