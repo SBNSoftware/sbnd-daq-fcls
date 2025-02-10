@@ -249,47 +249,47 @@ physics: {
     }
 
     pmtmetricproducer: {
-			module_type: "PMTMetricProducer" 
-			is_persistable: true 
-			IncludeExtensions: true 
-			Verbose: 1
-			StreamType: 1
-		}
-		pmtmetricbnbzero: {
-			module_type: "PMTMetricProducer" 
-			is_persistable: true 
-			IncludeExtensions: true 
-			Verbose: 1
-			StreamType: 1
-		}
-		pmtmetricbnblight: {
-			module_type: "PMTMetricProducer" 
-			is_persistable: true 
-			IncludeExtensions: true 
-			Verbose: 1
-			StreamType: 2
-		}
-		pmtmetricoffbeamzero: {
-			module_type: "PMTMetricProducer" 
-			is_persistable: true 
-			IncludeExtensions: true 
-			Verbose: 1
-			StreamType: 3
-		}
-		pmtmetricoffbeamlight: {
-			module_type: "PMTMetricProducer" 
-			is_persistable: true 
-			IncludeExtensions: true 
-			Verbose: 1
-			StreamType: 4
-		}
-		pmtmetriccrossingmuon: {
-			module_type: "PMTMetricProducer" 
-			is_persistable: true 
-			IncludeExtensions: true 
-			Verbose: 1
-			StreamType: 5
-		}
+      module_type: "PMTMetricProducer" 
+      is_persistable: true 
+      IncludeExtensions: true 
+      Verbose: 1
+      StreamType: 1
+    }
+    pmtmetricbnbzero: {
+      module_type: "PMTMetricProducer" 
+      is_persistable: true 
+      IncludeExtensions: true 
+      Verbose: 1
+      StreamType: 1
+    }
+    pmtmetricbnblight: {
+      module_type: "PMTMetricProducer" 
+      is_persistable: true 
+      IncludeExtensions: true 
+      Verbose: 1
+      StreamType: 2
+    }
+    pmtmetricoffbeamzero: {
+      module_type: "PMTMetricProducer" 
+      is_persistable: true 
+      IncludeExtensions: true 
+      Verbose: 1
+      StreamType: 3
+    }
+    pmtmetricoffbeamlight: {
+      module_type: "PMTMetricProducer" 
+      is_persistable: true 
+      IncludeExtensions: true 
+      Verbose: 1
+      StreamType: 4
+    }
+    pmtmetriccrossingmuon: {
+      module_type: "PMTMetricProducer" 
+      is_persistable: true 
+      IncludeExtensions: true 
+      Verbose: 1
+      StreamType: 5
+    }
   }
   filters: {
     prescale50: {
@@ -342,7 +342,7 @@ physics: {
   p5: [prescale5] 
 
   softwaretrig: [prescale1, crttriggerproducer, pmtmetricproducer] 
-  nustream: [bnbzerobiasfilter, crttriggerproducer, pmtmetricproducer, neutrinostream]
+  nustream: [bnblightfilter, crttriggerproducer,  pmtmetricbnblight, neutrinostream]
   bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricbnbzero] 
   offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricoffbeamzero] 
   bnblight: [bnblightfilter, crttriggerproducer, pmtmetricbnblight] 
@@ -352,12 +352,12 @@ physics: {
   filterfail: ["!crossingmuonfilter", "!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter"] 
 
 
-  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail] #if you change this also change Eventbuilder7
+  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail, nustream] #if you change this also change Eventbuilder7
   a1: [fragWatcher] 
 
 
   #my_output_modules: [ normalOutput , rootNetOutput ]
-  my_output_modules: [rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail ] #if you change this also change Eventbuilder7
+  my_output_modules: [rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail, nustreamOutput ] #if you change this also change Eventbuilder7
 
   end_paths: [a1, my_output_modules] 
 }
