@@ -568,7 +568,10 @@ bool sbnd::trigger::pmtSoftwareTriggerProducer::getGateTime(art::Handle<std::vec
       for(size_t word_i = 0; word_i < ctb_frag.NWords(); ++word_i){
         if(ctb_frag.Trigger(word_i)){
           auto wt = ctb_frag.Word(word_i)->word_type;
-          if (wt == 2 && ( ctb_frag.Trigger(word_i)->IsTrigger(26) || ctb_frag.Trigger(word_i)->IsTrigger(27) )){
+          bool gate_hlt = false;
+          if ((fStreamType == 2 ) && (ctb_frag.Trigger(word_i)->IsTrigger(26))) gate_hlt = true;
+          if ((fStreamType == 4 ) && (ctb_frag.Trigger(word_i)->IsTrigger(27))) gate_hlt = true;
+          if (wt == 2 && gate_hlt){            
             foundgate = true;
             gateTime = double((std::bitset<64>(ctb_frag.Trigger(word_i)->timestamp).to_ullong()*20)%(uint(1e9)) - fPTBDelay);
             if (fVerbose>=3) TLOG(TLVL_INFO) << "PTB gated FTRIG HLT timestamp: " << uint(gateTime) << " ns";
