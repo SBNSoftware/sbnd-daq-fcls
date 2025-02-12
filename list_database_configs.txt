@@ -1,4 +1,3 @@
-opsFullTriggerMenuP3_ExtraMTCA5-
 opsFullTriggerMenuP3_ExtraMTCA5_nobeam-
 triggerLightScanA_2PE-
 triggerLightScanB_2PE-

@@ -9,11 +9,11 @@ daq.fragment_receiver.link: 0
 # boardId is the ID number that will be assigned to the board
 daq.fragment_receiver.boardId: 165 #CAEN ID 
 
-daq.redis_10s.redis_key_prefix: "DABBoardReader:pmt02:" 
+daq.redis_10s.redis_key_prefix: "DABBoardReader:pmt05:" 
 
-daq.redis_testing.redis_key_prefix: "DABBoardReader:pmt02:" 
+daq.redis_testing.redis_key_prefix: "DABBoardReader:pmt05:" 
 
-daq.redis_5m.redis_key_prefix: "DABBoardReader:pmt02:" 
+daq.redis_5m.redis_key_prefix: "DABBoardReader:pmt05:" 
 
 daq.fragment_receiver.channelPedestal0: 10156 #10120 #8299
 daq.fragment_receiver.channelPedestal1: 9941 #9917 #8075
