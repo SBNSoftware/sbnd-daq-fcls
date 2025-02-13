@@ -260,14 +260,14 @@ physics: {
       is_persistable: true 
       IncludeExtensions: true 
       Verbose: 1
-      StreamType: 2
+      StreamType: 1
     }
     pmtmetricbnblight: {
       module_type: "PMTMetricProducer" 
       is_persistable: true 
       IncludeExtensions: true 
       Verbose: 1
-      StreamType: 4
+      StreamType: 2
     }
     pmtmetricoffbeamzero: {
       module_type: "PMTMetricProducer" 
