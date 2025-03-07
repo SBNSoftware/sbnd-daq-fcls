@@ -270,7 +270,7 @@ daq:
     send_process_metrics: true
     graphite:{
       namespace: "sbnd.pmt00."
-      host: "10.226.36.34"
+      host: "10.226.36.45"
       #level: 10
       level_string: "1-10,11-20"
       metricPluginType: "graphite"
