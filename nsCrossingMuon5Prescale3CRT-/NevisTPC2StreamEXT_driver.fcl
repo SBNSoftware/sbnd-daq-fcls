@@ -1,0 +1,3 @@
+#include "NevisTPC2StreamEXT_driver_default.fcl"
+#======Place override parameters below=========
+#daq.fragment_reciever.DumpBinary: true

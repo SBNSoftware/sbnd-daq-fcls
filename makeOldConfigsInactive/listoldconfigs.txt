@@ -1,9 +1,7 @@
-wibsOnly5-00001
-caenPUSHbnbZeroBias5-00001
-offbeamZeroBias5-00001
-nsCrossingMuon5-00001
-ewCrossingMuon5-00001
-bnbZeroBias5-00001
-triggerLightScanF_4PE-5-00001
-opsFullTriggerMenuP3_ExtraMTCA5_nobeam-5-00001
-opsFullTriggerMenuP3_ExtraMTCA5-5-00001
+TEST_opsFullTriggerMenuP3_ExtraMTCA00001
+wibsOnly5-00003
+nsCrossingMuon5-00003
+ewCrossingMuon5-00003
+bnbZeroBias5-00003
+opsFullTriggerMenuP3_ExtraMTCA5_nobeam-5-00003
+opsFullTriggerMenuP3_ExtraMTCA5-5-00003
