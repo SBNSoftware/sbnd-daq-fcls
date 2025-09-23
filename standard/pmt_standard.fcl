@@ -129,7 +129,7 @@ daq:
     # Trigger pulse width for TRG_OUT and MON outputs
     # Width will be (triggerPulseWidth)*8ns
     # Exclusive for SBND
-    triggerPulseWidth: 10
+    triggerPulseWidth: 12
     # SBND: MTC/A input
     # See CAEN User Manual UM2792, page 51
     # trigger majority mode: 0; test mode (saw-tooth signal with 1V amplitude): 1 
