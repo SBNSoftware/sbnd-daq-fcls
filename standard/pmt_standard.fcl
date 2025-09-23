@@ -137,8 +137,7 @@ daq:
     # Never change this value from 0
     analogMode:           0
     
-    
-    CircularBufferSize: 500e6
+    PoolBufferSize: 500e6
     destinations: { }
 
     routing_table_config: {
