@@ -1,0 +1,17 @@
+ 
+#include "tpc_standard.fcl" 
+
+daq.metrics.brFile.fileName: "/daq/log/metrics/tpc14_metrics.log" 
+
+daq.metrics.graphite.namespace: "sbnd.tpc14." 
+
+#E is 14
+daq.fragment_receiver.fragment_ids: [0x9E03, 0x9E04, 0x9E05, 0x9E06, 0x9E07, 0x9E08, 0x9E09, 0x9E0A, 0x9E0B, 0x9E0C, 0x9E0D, 0x9E0E, 0x9E0F, 0x9E10, 0x9E11, 0x9E12] 
+
+#different bus
+daq.fragment_receiver.controller_module.bus: 0x1
+daq.fragment_receiver.nu_xmit_reader.bus: 0xb3
+daq.fragment_receiver.sn_xmit_reader.bus: 0xb4
+
+#tpc14 does not have a zero suppression file so just use tpc crate 9 for now
+daq.fragment_receiver.nevis_crate.zero_suppression_params.config_file: "/home/nfs/sbnd/nevis/tpc_crate_threshold_baseline/crate9_afterHV.txt"
