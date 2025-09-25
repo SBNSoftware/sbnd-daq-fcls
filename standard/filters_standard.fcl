@@ -1,13 +1,15 @@
-#BEGIN_PROLOG
+#BNB: 1, 2, 6, 16
+#offbeam: 3, 4, 17
+#crt: 14, 15
+
 bnbzerobiasfilter: {
 
   module_type: SBNDGateFilter 
 
   raw_data_label: "daq" 
-  #BNB  #zerobias
-  trigger_type: [1] #zerobias
-  #zerobias
-  excluded_triggers: [3, 4, 14, 15] 
+  #BNB  #zero bias
+  trigger_type: [1]
+  excluded_triggers: [3, 4, 17, 14, 15] 
 
 }
 bnblightfilter: {
@@ -15,10 +17,29 @@ bnblightfilter: {
   module_type: SBNDGateFilter 
 
   raw_data_label: "daq" 
-  #BNB
-  trigger_type: [2] #light
-  #light
-  excluded_triggers: [3, 4, 14, 15] 
+  #BNB #light
+  trigger_type: [2]
+  excluded_triggers: [3, 4, 17, 14, 15] 
+
+}
+bnbminbiasfilter: {
+
+  module_type: SBNDGateFilter 
+
+  raw_data_label: "daq" 
+  #BNB #min bias
+  trigger_type: [6] 
+  excluded_triggers: [3, 4, 17, 14, 15] 
+
+}
+bnbpostlightfilter: {
+
+  module_type: SBNDGateFilter 
+
+  raw_data_label: "daq" 
+  #BNB #post light
+  trigger_type: [16] 
+  excluded_triggers: [3, 4, 17, 14, 15] 
 
 }
 offbeamzerobiasfilter: {
@@ -26,10 +47,9 @@ offbeamzerobiasfilter: {
   module_type: SBNDGateFilter 
 
   raw_data_label: "daq" 
-  #OffBeamBNB
-  trigger_type: [3] #zerobias
-  #zerobias
-  excluded_triggers: [1, 2, 14, 15] 
+  #OffBeam #zero bias
+  trigger_type: [3] 
+  excluded_triggers: [1, 2, 6, 16, 14, 15] 
 
 }
 offbeamlightfilter: {
@@ -37,10 +57,19 @@ offbeamlightfilter: {
   module_type: SBNDGateFilter 
 
   raw_data_label: "daq" 
-  #OffBeamBNB
+  #OffBeam #light
   trigger_type: [4] #light
-  #light
-  excluded_triggers: [1, 2, 14, 15] 
+  excluded_triggers: [1, 2, 6, 16, 14, 15] 
+
+}
+offbeampostlightfilter: {
+
+  module_type: SBNDGateFilter 
+
+  raw_data_label: "daq" 
+  #OffBeam #post light
+  trigger_type: [17]
+  excluded_triggers: [1, 2, 6, 16, 14, 15] 
 
 }
 crossingmuonfilter: {
@@ -48,10 +77,10 @@ crossingmuonfilter: {
   module_type: SBNDGateFilter 
 
   raw_data_label: "daq" 
-
-  trigger_type: [14, 15] 
+  #14:NS, 15:EW
   #crossing muon... might need more of these for different subsets of crossing muon
-  excluded_triggers: [1, 2, 3, 4] 
+  trigger_type: [14, 15] 
+  excluded_triggers: [1, 2, 6, 16, 3, 4, 17] 
 
 }
 randomtriggerfilter: {

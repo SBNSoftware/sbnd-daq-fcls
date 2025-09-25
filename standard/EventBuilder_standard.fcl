@@ -12,20 +12,16 @@ services: {
 daq: {
   event_builder: {
     stale_buffer_timeout_usec: 3000000 #1000000 #was commented out and 1000000, Gennadiy said to set high (5s) for debugging
-    #1000000 #was commented out and 1000000, Gennadiy said to set high (5s) for debugging
     expected_fragments_per_event: 0 # Will be set by DAQInterface
     # Will be set by DAQInterface
     use_art: true 
     print_event_store_stats: true 
     buffer_count: 25 #25  #40 #100
-    #25  #40 #100
     max_incomplete_events: 15 #50 # Same as boardreader sync interval
     verbose: true 
     send_requests: true 
     request_address: "227.128.11.129" # Multi-cast request address
-    # Multi-cast request address
     multicast_interface_ip: "10.226.36.0" # needed to send requests successfully through the private network
-    # needed to send requests successfully through the private network
     request_port: 3001 
     art_analyzer_count: 2 #5
     tcp_receive_buffer_size: 64000 
@@ -67,8 +63,7 @@ outputs: {
       maxEvents: 20 #close files out a little faster for the prescaled stream
     }
     fastCloning: false 
-    compressionLevel: 501 #0
-    #0
+    compressionLevel: 501
     SelectEvents: [] #p1
   }
 
@@ -81,23 +76,8 @@ outputs: {
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
     fastCloning: false 
-    compressionLevel: 501 #0
-    #0
+    compressionLevel: 501
     SelectEvents: [bnbzerobias] 
-  }
-
-  normalOutputOffBeamZeroBias: {
-    module_type: RootDAQOut 
-    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmOffBeamZeroBias_%to.root" 
-    fileProperties: {
-      maxSubRuns: 1 
-      maxRuns: 1 
-      maxEvents: 50 #close files out a little faster for the prescaled stream
-    }
-    fastCloning: false 
-    compressionLevel: 501 #0
-    #0
-    SelectEvents: [offbeamzerobias] 
   }
 
   normalOutputBNBLight: {
@@ -109,9 +89,47 @@ outputs: {
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
     fastCloning: false 
-    compressionLevel: 501 #0
-    #0
+    compressionLevel: 501
     SelectEvents: [bnblight] 
+  }
+
+  normalOutputBNBMinBias: {
+    module_type: RootDAQOut 
+    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmBNBMinBias_%to.root" 
+    fileProperties: {
+      maxSubRuns: 1 
+      maxRuns: 1 
+      maxEvents: 50 #close files out a little faster for the prescaled stream
+    }
+    fastCloning: false 
+    compressionLevel: 501
+    SelectEvents: [bnbminbias] 
+  }
+
+  normalOutputBNBPostLight: {
+    module_type: RootDAQOut 
+    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmBNBPostLight_%to.root" 
+    fileProperties: {
+      maxSubRuns: 1 
+      maxRuns: 1 
+      maxEvents: 50 #close files out a little faster for the prescaled stream
+    }
+    fastCloning: false 
+    compressionLevel: 501
+    SelectEvents: [bnbpostlight] 
+  }
+
+  normalOutputOffBeamZeroBias: {
+    module_type: RootDAQOut 
+    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmOffBeamZeroBias_%to.root" 
+    fileProperties: {
+      maxSubRuns: 1 
+      maxRuns: 1 
+      maxEvents: 50 #close files out a little faster for the prescaled stream
+    }
+    fastCloning: false 
+    compressionLevel: 501
+    SelectEvents: [offbeamzerobias] 
   }
 
   normalOutputOffBeamLight: {
@@ -123,23 +141,21 @@ outputs: {
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
     fastCloning: false 
-    compressionLevel: 501 #0
-    #0
+    compressionLevel: 501
     SelectEvents: [offbeamlight] 
   }
 
-  normalOutputNSCrossingMuon: {
+  normalOutputOffBeamPostLight: {
     module_type: RootDAQOut 
-    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmNSCrossingMuon_%to.root" 
+    fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmOffBeamPostLight_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
     fastCloning: false 
-    compressionLevel: 501 #0
-    #0
-    SelectEvents: [nscrossingmuon] 
+    compressionLevel: 501
+    SelectEvents: [offbeampostlight] 
   }
 
   normalOutputCrossingMuon: {
@@ -151,10 +167,10 @@ outputs: {
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
     fastCloning: false 
-    compressionLevel: 501 #0
-    #0
+    compressionLevel: 501
     SelectEvents: [crossingmuon] 
   } 
+
   normalOutputFilterFail: {
     module_type: RootDAQOut 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmUnknown_%to.root" 
@@ -203,9 +219,7 @@ outputs: {
     }
     SelectEvents: [p5] 
     fastCloning: false #true
-    #true
     compressionLevel: 501 #0
-    #0
     host_map: [{
 	rank: -1 
 	host: "sbnd-evb01-daq" 
@@ -255,28 +269,14 @@ physics: {
       Verbose: 1
       StreamType: 1
     }
-    pmtmetricbnbzero: {
+    pmtmetricbnb: {
       module_type: "PMTMetricProducer" 
       is_persistable: true 
       IncludeExtensions: true 
       Verbose: 1
       StreamType: 2
     }
-    pmtmetricbnblight: {
-      module_type: "PMTMetricProducer" 
-      is_persistable: true 
-      IncludeExtensions: true 
-      Verbose: 1
-      StreamType: 2
-    }
-    pmtmetricoffbeamzero: {
-      module_type: "PMTMetricProducer" 
-      is_persistable: true 
-      IncludeExtensions: true 
-      Verbose: 1
-      StreamType: 4
-    }
-    pmtmetricoffbeamlight: {
+    pmtmetricoffbeam: {
       module_type: "PMTMetricProducer" 
       is_persistable: true 
       IncludeExtensions: true 
@@ -318,10 +318,12 @@ physics: {
       prescaleOffset: 0 
     }
     bnbzerobiasfilter: @local::bnbzerobiasfilter 
-    offbeamzerobiasfilter: @local::offbeamzerobiasfilter 
     bnblightfilter: @local::bnblightfilter 
+    bnbminbiasfilter: @local::bnbminbiasfilter
+    bnbpostlightfilter: @local::bnbpostlightfilter
+    offbeamzerobiasfilter: @local::offbeamzerobiasfilter 
     offbeamlightfilter: @local::offbeamlightfilter 
-    #nscrossingmuonfilter: @local::nscrossingmuonfilter 
+    offbeampostlightfilter: @local::offbeampostlightfilter
     crossingmuonfilter: @local::crossingmuonfilter 
     neutrinostream:
     {
@@ -342,22 +344,54 @@ physics: {
   p5: [prescale5] 
 
   softwaretrig: [prescale1, crttriggerproducer, pmtmetricproducer] 
-  nustream: [bnblightfilter, crttriggerproducer,  pmtmetricbnblight, neutrinostream]
-  bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricbnbzero] 
-  offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricoffbeamzero] 
-  bnblight: [bnblightfilter, crttriggerproducer, pmtmetricbnblight] 
-  offbeamlight: [offbeamlightfilter, crttriggerproducer, pmtmetricoffbeamlight] 
+  nustream: [bnblightfilter, crttriggerproducer,  pmtmetricbnb, neutrinostream]
+  bnbzerobias: [bnbzerobiasfilter, crttriggerproducer, pmtmetricbnb] 
+  bnblight: [bnblightfilter, crttriggerproducer, pmtmetricbnb] 
+  bnbminbias: [bnbminbiasfilter, crttriggerproducer, pmtmetricbnb] 
+  bnbpostlight: [bnbpostlightfilter, crttriggerproducer, pmtmetricbnb] 
+  offbeamzerobias: [offbeamzerobiasfilter, crttriggerproducer, pmtmetricoffbeam] 
+  offbeamlight: [offbeamlightfilter, crttriggerproducer, pmtmetricoffbeam] 
+  offbeampostlight: [offbeampostlightfilter, crttriggerproducer, pmtmetricoffbeam] 
   crossingmuon: [crossingmuonfilter, crttriggerproducer, pmtmetriccrossingmuon] 
-  #nscrossingmuon: [nscrossingmuonfilter, crttriggerproducer, pmtmetricproducer] 
-  filterfail: ["!crossingmuonfilter", "!bnbzerobiasfilter", "!offbeamzerobiasfilter", "!bnblightfilter", "!offbeamlightfilter"] 
+  filterfail: ["!crossingmuonfilter"
+		, "!bnbzerobiasfilter"
+		, "!bnblightfilter"
+		, "!bnbminbiasfilter"
+		, "!bnbpostlightfilter"
+		, "!offbeamzerobiasfilter"
+		, "!offbeamlightfilter"
+		, "!offbeampostlightfilter"
+		] 
 
 
-  trigger_paths: [p5, bnbzerobias, offbeamzerobias, bnblight, offbeamlight, crossingmuon, filterfail, nustream] #if you change this also change Eventbuilder7
+  trigger_paths: [p5
+		, bnbzerobias
+		, bnblight
+		, bnbminbias
+		, bnbpostlight
+		, offbeamzerobias
+		, offbeamlight
+		, offbeampostlight
+		, crossingmuon
+		, filterfail
+		, nustream
+		]
+
   a1: [fragWatcher] 
 
-
   #my_output_modules: [ normalOutput , rootNetOutput ]
-  my_output_modules: [rootNetOutput, normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail, nustreamOutput ] #if you change this also change Eventbuilder7
+  my_output_modules: [rootNetOutput
+			, normalOutputBNBZeroBias
+			, normalOutputBNBLight
+			, normalOutputBNBMinBias
+			, normalOutputBNBPostLight
+			, normalOutputOffBeamZeroBias
+			, normalOutputOffBeamLight
+			, normalOutputOffBeamPostLight
+			, normalOutputCrossingMuon
+			, normalOutputFilterFail
+			, nustreamOutput 
+			]
 
   end_paths: [a1, my_output_modules] 
 }
