@@ -19,9 +19,9 @@ daq: {
     request_window_width: 5e6 #10ms window
     request_window_offset: 2.5e6 #5ms offset
     request_windows_are_unique: true #false
-    stale_request_timeout: 3000000000 #3s
-    window_close_timeout_us: 2000000 #2s
-    missing_request_window_timeout_us: 2500000 #2.5s
+    stale_request_timeout: 5000000000 #5s #3000000000 #3s
+    window_close_timeout_us: 4000000 #4s 2000000 #2s
+    missing_request_window_timeout_us: 4500000 #4.5s 2500000 #2.5s
     buffer_mode_keep_latest: true
     circular_buffer_mode: true #false
     poll_hardware_status: true
@@ -30,7 +30,7 @@ daq: {
     separate_monitoring_thread: true
     separate_data_thread: true
     preprocessor_verbose_processing: false
-    preprocessor_nodata_timeout_us: 1250000 #1.25s
+    preprocessor_nodata_timeout_us:  2250000 #2.25s 1250000 #1.25s
     destinations: {
 
     }
