@@ -79,7 +79,7 @@ daq:
     IRQTimeoutMS:         500
     eventCounterWarning:  1       
     memoryAlmostFull:     2    
-    maxEventsPerTransfer: 1
+    maxEventsPerTransfer: 1 #CAENV1730 boardreader is hardcoded for 1. DO NOT CHANGE
     runSyncMode:          0
     
     readoutMode:          0
