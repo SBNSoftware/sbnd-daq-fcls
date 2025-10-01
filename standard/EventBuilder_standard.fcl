@@ -23,7 +23,7 @@ daq: {
     request_address: "227.128.11.129" # Multi-cast request address
     multicast_interface_ip: "10.226.36.0" # needed to send requests successfully through the private network
     request_port: 3001 
-    art_analyzer_count: 2 #5
+    art_analyzer_count: 2 #4 #5
     tcp_receive_buffer_size: 64000 
     routing_token_config: {
       use_routing_master: false 
@@ -56,12 +56,15 @@ daq: {
 outputs: {
   normalOutput: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 20 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501
     SelectEvents: [] #p1
@@ -69,12 +72,15 @@ outputs: {
 
   normalOutputBNBZeroBias: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_strmBNBZeroBias_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmBNBZeroBias_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501
     SelectEvents: [bnbzerobias] 
@@ -82,12 +88,15 @@ outputs: {
 
   normalOutputBNBLight: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_strmBNBLight_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmBNBLight_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501
     SelectEvents: [bnblight] 
@@ -95,12 +104,15 @@ outputs: {
 
   normalOutputBNBMinBias: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_strmBNBMinBias_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmBNBMinBias_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501
     SelectEvents: [bnbminbias] 
@@ -108,12 +120,15 @@ outputs: {
 
   normalOutputBNBPostLight: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_strmBNBPostLight_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmBNBPostLight_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501
     SelectEvents: [bnbpostlight] 
@@ -121,12 +136,15 @@ outputs: {
 
   normalOutputOffBeamZeroBias: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_strmOffBeamZeroBias_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmOffBeamZeroBias_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501
     SelectEvents: [offbeamzerobias] 
@@ -134,12 +152,15 @@ outputs: {
 
   normalOutputOffBeamLight: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_strmOffBeamLight_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmOffBeamLight_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501
     SelectEvents: [offbeamlight] 
@@ -147,12 +168,15 @@ outputs: {
 
   normalOutputOffBeamPostLight: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_strmOffBeamPostLight_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmOffBeamPostLight_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501
     SelectEvents: [offbeampostlight] 
@@ -160,12 +184,15 @@ outputs: {
 
   normalOutputCrossingMuon: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_strmCrossingMuon_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmCrossingMuon_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501
     SelectEvents: [crossingmuon] 
@@ -173,15 +200,17 @@ outputs: {
 
   normalOutputFilterFail: {
     module_type: RootDAQOut 
+    #fileName: "/data/spack_test/data_${app_name}_run%R_%#_strmUnknown_%to.root" 
     fileName: "/data/sbndraw/fts_dropbox/data_${app_name}_run%R_%#_strmUnknown_%to.root" 
     fileProperties: {
       maxSubRuns: 1 
       maxRuns: 1 
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false 
     compressionLevel: 501 #0
-    #0
     SelectEvents: [filterfail] 
   }
   
@@ -194,6 +223,8 @@ outputs: {
       maxRuns: 1
       maxEvents: 50 #close files out a little faster for the prescaled stream
     }
+    freePercent: 20
+    freeMB: 20000
     fastCloning: false
     compressionLevel: 501
     SelectEvents: [ nustream ]
