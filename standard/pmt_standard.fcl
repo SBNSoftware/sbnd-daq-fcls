@@ -201,23 +201,23 @@ daq:
     # SBND: set to O
     dynamicRange: 0 
 
-# units of threshold are ADC counts (to be confirmed) from 0-16,383 (14 bits)
-    triggerThreshold0:  0
-    triggerThreshold1:  0
-    triggerThreshold2:  0
-    triggerThreshold3:  0
-    triggerThreshold4:  0
-    triggerThreshold5:  0
-    triggerThreshold6:  0
-    triggerThreshold7:  0
-    triggerThreshold8:  0
-    triggerThreshold9:  0
-    triggerThreshold10: 0
-    triggerThreshold11: 0
-    triggerThreshold12: 0
-    triggerThreshold13: 0
-    triggerThreshold14: 0
-    triggerThreshold15: 2000
+    # units of threshold are ADC counts (to be confirmed) from 0-16,383 (14 bits)
+    triggerThreshold0: 14200 
+    triggerThreshold1: 14200
+    triggerThreshold2: 14200
+    triggerThreshold3: 14200
+    triggerThreshold4: 14200
+    triggerThreshold5: 14200
+    triggerThreshold6: 14200
+    triggerThreshold7: 14200
+    triggerThreshold8: 14200
+    triggerThreshold9: 14200
+    triggerThreshold10: 14200
+    triggerThreshold11: 14200
+    triggerThreshold12: 14200
+    triggerThreshold13: 14200
+    triggerThreshold14: 14200
+    triggerThreshold15: 500 #Lowered to 500 to prevent channel 15 from participating in trigger decisions
 
 
 
