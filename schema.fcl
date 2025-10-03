@@ -109,6 +109,12 @@ pattern: '(.*/)((fake_|)NevisTPC(2|NU)Stream(CALIB|CTRL|EXT)_driver.*)(\.fcl$)'
 
 }, {
 
+collection: NevisTPCs 
+
+pattern: '(.*/)((fake_|)NevisTPC(2|NU)Stream(CALIB|CTRL|EXT)_run(1|2)_driver.*)(\.fcl$)' 
+
+}, {
+
 collection: EventBuilders 
 
 pattern: '(.*/)(EventBuilder.*)(\.fcl$)' 

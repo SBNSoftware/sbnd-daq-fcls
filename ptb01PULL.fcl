@@ -7,14 +7,10 @@
 #====================================================================
 #====================================================================
 
-#====================Full Commissioning trigger menu==========================
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_full_menu_ewns_flash_20pairs_8Hz.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_full_menu_ewns_flash_20pairs.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_full_menu_ns_flash_20pairs_lowprescales.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_full_menu_ns_flash_20pairs.fcl" #
-
 
 #===================== Beam Zero Bias triggers =====================
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/spack_spare_tests/ptbmk2_nd_BNB_zero_bias_noprescale.fcl" #
+
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_noprescale.fcl" #
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_flash.fcl" #
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias.fcl" #
@@ -52,14 +48,19 @@
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_crossing_muon_allwalls.fcl" #
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_crossing_muon.fcl" #
 
-
 #========================Flash triggers =================
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/light_trigger_testing/ptbmk2_nd_off_beam_zero_bias_20pair_flash_noprescale_noBNBinhibit.fcl" # ~10 flashes/event
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/light_trigger_testing/ptbmk2_nd_off_beam_zero_bias_4pair_flash_noprescale_noBNBinhibit.fcl" # ~20 flashes/event
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/light_trigger_testing/ptbmk2_nd_off_beam_zero_bias_20pair_flash_noprescale_noBNBinhibit.fcl"
 
-#===========Light triggers================
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_both_flash.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_light_off_beam_zero_bias_flash.fcl" #
+#=================Light trigger scans====================
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/operations_trigger_menu/ptbmk2_nd_phase3_extra5_event3_flash4.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/operations_trigger_menu/ptbmk2_nd_phase3_extra5_event3_flash4_nobeam.fcl"
 
+
+#=================Summer 2025====================
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias1_event3_flash4_run2_postbeam4p3us_nobeam.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias1_event3_flash4_run2_postbeam4p3us.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias1_event3_flash6_run2_postbeam4p3us_offbeamprescale4.fcl"
+#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/summer2025/ptbmk2_nd_phase3_minbias1_event3_flash4_run2_postbeam4p3us_offbeamprescale4.fcl"
 
 daq.fragment_receiver.board_config: @local::board_config 
+#daq.fragment_receiver.boardreader_address: "10.226.36.22"

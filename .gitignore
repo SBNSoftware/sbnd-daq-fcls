@@ -5,7 +5,8 @@
 *.log
 amy*
 officalImportNewDatabaseConfigsAll.sh
-makeOldConfigsInactive/
+makeOldConfigsInactive/*
+summer-*/
 
 S Files
 .DS_Store
