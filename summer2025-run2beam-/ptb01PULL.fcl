@@ -59,7 +59,8 @@
 #=================Summer 2025====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias1_event3_flash4_run2_postbeam4p3us_nobeam.fcl"
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias1_event3_flash4_run2_postbeam4p3us.fcl"
-#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias1_event3_flash6_run2_postbeam4p3us_offbeamprescale4.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias1_event3_flash6_run2_postbeam4p3us_offbeamprescale4.fcl"
+#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/summer2025/ptbmk2_nd_phase3_minbias1_event3_flash4_run2_postbeam4p3us_offbeamprescale4.fcl"
 
 daq.fragment_receiver.board_config: @local::board_config 
 #daq.fragment_receiver.boardreader_address: "10.226.36.22"
