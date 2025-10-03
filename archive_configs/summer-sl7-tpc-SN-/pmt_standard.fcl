@@ -1,0 +1,3 @@
+#include "pmt_standard_default.fcl"
+#======Place override parameters below=========
+#daq.fragment_receiver.data_buffer_depth_mb: 50000 

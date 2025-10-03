@@ -1,0 +1,3 @@
+#include "EventBuilder_standard_default.fcl"
+#======Place override parameters below=========
+#physics.my_output_modules: [normalOutputBNBZeroBias, normalOutputOffBeamZeroBias, normalOutputBNBLight, normalOutputOffBeamLight, normalOutputCrossingMuon, normalOutputFilterFail, nustreamOutput ]

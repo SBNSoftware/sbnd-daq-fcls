@@ -1,0 +1,3 @@
+#include "ntb01_default.fcl"
+#======Place override parameters below=========
+daq.fragment_receiver.GPSZMQPortNTB: "tcp://10.226.36.14:11212"  

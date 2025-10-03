@@ -1,0 +1,12 @@
+#include "tpc09_default.fcl"
+#======Place override parameters below=========
+
+daq.fragment_receiver.GPSTimeFrequency: 1 #setting pulse per second parameter for PPS                    
+#setting pulse per second parameter for PPS 
+daq.fragment_receiver.GPSZMQPortNTB: "tcp://10.226.36.14:11212" 
+#TPC crate 01 is connected to tpc09 server therefore, changing 10.226.36.6 for tpc01 to 10.226.36.14 (for tpc09)
+
+daq.fragment_receiver.UseZMQ: true 
+#Use for configuring with 16 FEMS
+daq.fragment_receiver.fragment_ids: [0x9103, 0x9104, 0x9105, 0x9106, 0x9107, 0x9108, 0x9109, 0x910A, 0x910B, 0x910C, 0x910D, 0x910E, 0x910F, 0x9110, 0x9111, 0x9112]
+daq.fragment_receiver.nevis_crate.zero_suppression_params.config_file: "/home/nfs/sbnd/nevis/tpc_crate_threshold_baseline/crate1_afterHV.txt"   

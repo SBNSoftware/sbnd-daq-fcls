@@ -1,0 +1,22 @@
+#include "pmt09_default.fcl"
+#======Place override parameters below=========
+
+#May just change waveform saving rather than actual outputs
+daq.fragment_receiver.channelEnable0:    true
+daq.fragment_receiver.channelEnable1:    true
+daq.fragment_receiver.channelEnable2:    true
+daq.fragment_receiver.channelEnable3:    true
+daq.fragment_receiver.channelEnable4:    true
+daq.fragment_receiver.channelEnable5:    true
+daq.fragment_receiver.channelEnable6:    true
+daq.fragment_receiver.channelEnable7:    true
+daq.fragment_receiver.channelEnable8:    true
+daq.fragment_receiver.channelEnable9:    true
+daq.fragment_receiver.channelEnable10:   true
+daq.fragment_receiver.channelEnable11:   true
+daq.fragment_receiver.channelEnable12:   true
+daq.fragment_receiver.channelEnable13:   true
+daq.fragment_receiver.channelEnable14:   true
+daq.fragment_receiver.channelEnable15:   true
+
+daq.fragment_receiver.triggerPulseWidth: 12

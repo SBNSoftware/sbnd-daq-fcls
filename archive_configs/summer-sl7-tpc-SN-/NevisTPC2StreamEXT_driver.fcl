@@ -1,0 +1,5 @@
+#include "NevisTPC2StreamEXT_driver_default.fcl"
+#======Place override parameters below=========
+daq.fragment_receiver.DumpBinaryDir: "/data/SNComissioning"
+daq.fragment_receiver.DoSNReadout: true
+daq.fragment_receiver.DumpBinary: true
