@@ -49,7 +49,7 @@
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/operations_trigger_menu/ptbmk2_nd_phase3_extra5_event3_flash4_nobeam.fcl"
 
 #=================Run 2====================
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us.fcl"
+#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us.fcl"
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_nobeam.fcl"
 ## include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_run2_zerobias_3_4_2.fcl"
 
