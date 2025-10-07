@@ -1,0 +1,20 @@
+#include "pmt05_default.fcl"
+#======Place override parameters below=========
+# units of threshold are ADC counts (to be confirmed) from 0-16,383 (14 bits)
+#Baseline value is around 14250 ADC, so to set a 30 ADC threshold set the value to 14220
+daq.fragment_receiver.triggerThreshold0: 14188
+daq.fragment_receiver.triggerThreshold1: 14188
+daq.fragment_receiver.triggerThreshold2: 14188
+daq.fragment_receiver.triggerThreshold3: 14188
+daq.fragment_receiver.triggerThreshold4: 14188
+daq.fragment_receiver.triggerThreshold5: 14188
+daq.fragment_receiver.triggerThreshold6: 14188
+daq.fragment_receiver.triggerThreshold7: 14188
+daq.fragment_receiver.triggerThreshold8: 14188
+daq.fragment_receiver.triggerThreshold9: 14188
+daq.fragment_receiver.triggerThreshold10: 14188
+daq.fragment_receiver.triggerThreshold11: 14188
+daq.fragment_receiver.triggerThreshold12: 14188
+daq.fragment_receiver.triggerThreshold13: 14188
+daq.fragment_receiver.triggerThreshold14: 14188
+daq.fragment_receiver.triggerThreshold15: 500 #Lowered to 500 to prevent channel 15 from participating in trigger decisions
