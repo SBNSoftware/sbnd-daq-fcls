@@ -30,7 +30,7 @@ daq: {
     separate_monitoring_thread: true
     separate_data_thread: true
     preprocessor_verbose_processing: false
-    preprocessor_nodata_timeout_us:  1000000 #1s #2250000 #2.25s 1250000 #1.25s
+    preprocessor_nodata_timeout_us:  500000 #0.5s 1000000 #1s #2250000 #2.25s 1250000 #1.25s
     destinations: {
 
     }
@@ -85,7 +85,7 @@ daq: {
 	    time_offset_ps: 0 
 	    monitor_only: false 
 	    terminated: true 
-	    buffer_length: 1024 #expected rate 100Hz
+	    buffer_length: 2048 #expected rate 250Hz
 	  }, {
 	    id: 4 
 	    name: etrig 

@@ -1,9 +1,5 @@
-wibsOnly5-00001
-caenPUSHbnbZeroBias5-00001
-offbeamZeroBias5-00001
-nsCrossingMuon5-00001
-ewCrossingMuon5-00001
-bnbZeroBias5-00001
-triggerLightScanF_4PE-5-00001
-opsFullTriggerMenuP3_ExtraMTCA5_nobeam-5-00001
-opsFullTriggerMenuP3_ExtraMTCA5-5-00001
+BNBZeroBias-5PE-1_TMP2025-10-07-00001
+BNBZeroBias-4PE-1_TMP2025-10-07-00001
+BNBZeroBias-3PE-1_TMP2025-10-07-00001
+run2-beam-SN-1_TMP2025-10-07-00001
+run2-beam-noSN-1_TMP2025-10-07-00001

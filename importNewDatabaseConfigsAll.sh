@@ -23,9 +23,9 @@ for CONFIG in $ALLCONFS; do
 
 done
 read -p 'What changes were made? (git commit message): ' message
-#echo $message
-#read -p 'What are the new configurations/numbers? ' ALLNAMES
-#echo $ALLNAMES 
+echo $message
+read -p 'What are the new configurations/numbers? ' ALLNAMES
+echo $ALLNAMES 
 echo "${message}"
 echo 'git commit -a -m "'${message}'
 Associated database configurations: '${ALLNAMES}'"'
