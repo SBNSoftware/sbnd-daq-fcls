@@ -56,3 +56,5 @@ tpc08
 tpc09
 tpc10
 tpc11
+tpc13
+tpc17
