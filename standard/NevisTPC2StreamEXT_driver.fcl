@@ -97,7 +97,7 @@ daq: {
       device_name: neviscard_sn 
       # DMA settings
       dma_buffer_size: @local::sn_dma_buffer_size 
-      maxpoll: 10e7 
+      maxpoll: 2e7 
       profile_time: false 
     }
     destinations: {

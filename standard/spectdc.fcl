@@ -19,9 +19,9 @@ daq: {
     request_window_width: 5e6 #10ms window
     request_window_offset: 2.5e6 #5ms offset
     request_windows_are_unique: true #false
-    stale_request_timeout:  6000000000 #6s 3000000000 #3s #10000000000 #10s
-    window_close_timeout_us:  5000000 #5s 2000000 #2s #9000000 #9s
-    missing_request_window_timeout_us: 5500000 #5.5s 2500000 #2.5s 9500000 #9.5s 
+    stale_request_timeout: 10000000000 #10s #6000000000 #6s 3000000000 #3s
+    window_close_timeout_us: 9000000 #9s 5000000 #5s 2000000 #2s
+    missing_request_window_timeout_us: 9500000 #9.5s #5500000 #5.5s 2500000 #2.5s 
     buffer_mode_keep_latest: true
     circular_buffer_mode: true #false
     poll_hardware_status: true
@@ -85,7 +85,7 @@ daq: {
 	    time_offset_ps: 0 
 	    monitor_only: false 
 	    terminated: true 
-	    buffer_length: 2048 #expected rate 250Hz
+	    buffer_length: 2048 #expected rate 250Hz, run 1: 100Hz
 	  }, {
 	    id: 4 
 	    name: etrig 
