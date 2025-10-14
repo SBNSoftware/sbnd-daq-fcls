@@ -51,7 +51,7 @@ daq: {
 	}
 	calibration_data: none 
 	polltime_ms: 10 
-	blocking_reads: true 
+	blocking_reads: false #true 
 	monitor: {
 	  temperature: true 
 	  timestamps: true 
