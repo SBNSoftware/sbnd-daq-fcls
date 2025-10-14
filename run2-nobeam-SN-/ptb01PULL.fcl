@@ -7,23 +7,8 @@
 #====================================================================
 #====================================================================
 
-
 #===================== Beam Zero Bias triggers =====================
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/spack_spare_tests/ptbmk2_nd_BNB_zero_bias_noprescale.fcl" #
-
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_noprescale.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_flash.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_BNB_zero_bias_flash_noprescale.fcl" 
-
-#===================== Off beam triggers =====================
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_off_beam_zero_bias_noprescale.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_off_beam_zero_bias.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_off_beam_zero_bias_flash.fcl" #
-
-#===================== Off beam triggers without BNB inhibits (for specific tests generally)  =====================
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_off_beam_zero_bias_noprescale_noBNBinhibit.fcl" #
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_off_beam_zero_bias_flash_noprescale_noBNBinhibit.fcl" #
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_run2_zerobias_3_4_2.fcl"
 
 #===================== Crossing Muon Triggers  =====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/bslater/ptbmk2_crt_5_prescale7.fcl" # W&E -- prescale 7 (generally default prescale)
@@ -34,6 +19,7 @@
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/bslater/ptbmk2_crt_5.fcl" # W&E -- prescale 2
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/crt/ptbmk2_crt_14.fcl" #N&S but no top or other sides-- prescale 1
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/crt/ptbmk2_crt_15.fcl" #W&E but no top or other sides -- prescale 4
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/crt/ptbmk2_crt_14_prescale6.fcl" #NS
 
 #===================== Strobe Triggers  =====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_1hz.fcl" #
@@ -51,7 +37,6 @@
 #=================Run 2====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us.fcl"
 #include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_nobeam.fcl"
-## include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_run2_zerobias_3_4_2.fcl"
 
 daq.fragment_receiver.board_config: @local::board_config 
 #daq.fragment_receiver.boardreader_address: "10.226.36.22"
