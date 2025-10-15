@@ -1,7 +1,2 @@
-run2-beam-SN-1_TMP2025-10-03-20sSNWaitTime-00001
-run2-beam-noSN-1_TMP2025-10-09-00003
-run2-beam-noSN-1_TMP2025-10-09-00002
-test-tpc-al9driver-00002
-test-tpc-al9driver-00001
-run2-beam-noSN-1_TMP2025-10-09-00001
-run2-beam-noSN-1_TMP2025-10-08-00001
+run2-nobeam-SN-50Mbps-00001
+run2-nobeam-SN-200Mbps-00001
