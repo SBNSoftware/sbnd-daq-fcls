@@ -20,8 +20,8 @@ daq: {
 
     DumpBinaryDir: "/data/SNCommissioning" 
     DumpBinary: false # Write binary file before the artdaq back-end
-    DumpSNBinary: false # Write binary file for SN continuous readout
-    DoSNReadout: false # Do continuous readout
+    DumpSNBinary: true # Write binary file for SN continuous readout
+    DoSNReadout: true # Do continuous readout
 
     SNChunkSize: @local::sn_dma_buffer_size 
     framesize: @local::framesize_16MHz_ticks 
