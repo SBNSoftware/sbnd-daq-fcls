@@ -45,7 +45,7 @@ daq:
     # Each bit enables/disables one channel
     # 65535: all channels are enabled
     # 32768: ch0-14 enabled, to be verified
-#    SelfTriggerMask: 65535
+    #SelfTriggerMask: 65535
     SelfTriggerMask: 32768 
 
     # Majority mode logic
@@ -96,7 +96,7 @@ daq:
     
     boardId: 0
 
-# default waveform length and postpercent
+    # default waveform length and postpercent
     recordLength:         5000   
     postPercent:          80  
     #Use Trigger Time Tag (TTT) from CAEN header, which is a PPS counter 8ns/tick, to construct fragment timestamp. Default: true for ICARUS, false for SBND
@@ -202,21 +202,21 @@ daq:
     dynamicRange: 0 
 
     # units of threshold are ADC counts (to be confirmed) from 0-16,383 (14 bits)
-    triggerThreshold0:  14207 #14200 #14210 #14203 
-    triggerThreshold1:  14207 #14200 #14210 #14203
-    triggerThreshold2:  14207 #14200 #14210 #14203
-    triggerThreshold3:  14207 #14200 #14210 #14203
-    triggerThreshold4:  14207 #14200 #14210 #14203
-    triggerThreshold5:  14207 #14200 #14210 #14203
-    triggerThreshold6:  14207 #14200 #14210 #14203
-    triggerThreshold7:  14207 #14200 #14210 #14203
-    triggerThreshold8:  14207 #14200 #14210 #14203
-    triggerThreshold9:  14207 #14200 #14210 #14203
-    triggerThreshold10: 14207 #14200 #14210 #14203
-    triggerThreshold11: 14207 #14200 #14210 #14203
-    triggerThreshold12: 14207 #14200 #14210 #14203
-    triggerThreshold13: 14207 #14200 #14210 #14203
-    triggerThreshold14: 14207 #14200 #14210 #14203
+    triggerThreshold0:  14207 
+    triggerThreshold1:  14207
+    triggerThreshold2:  14207
+    triggerThreshold3:  14207
+    triggerThreshold4:  14207
+    triggerThreshold5:  14207
+    triggerThreshold6:  14207
+    triggerThreshold7:  14207
+    triggerThreshold8:  14207
+    triggerThreshold9:  14207
+    triggerThreshold10: 14207
+    triggerThreshold11: 14207
+    triggerThreshold12: 14207
+    triggerThreshold13: 14207
+    triggerThreshold14: 14207
     triggerThreshold15: 500 #Lowered to 500 to prevent channel 15 from participating in trigger decisions
 
 
