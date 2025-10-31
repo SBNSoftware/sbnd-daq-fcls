@@ -202,21 +202,21 @@ daq:
     dynamicRange: 0 
 
     # units of threshold are ADC counts (to be confirmed) from 0-16,383 (14 bits)
-    triggerThreshold0: 14203 
-    triggerThreshold1: 14203
-    triggerThreshold2: 14203
-    triggerThreshold3: 14203
-    triggerThreshold4: 14203
-    triggerThreshold5: 14203
-    triggerThreshold6: 14203
-    triggerThreshold7: 14203
-    triggerThreshold8: 14203
-    triggerThreshold9: 14203
-    triggerThreshold10: 14203
-    triggerThreshold11: 14203
-    triggerThreshold12: 14203
-    triggerThreshold13: 14203
-    triggerThreshold14: 14203
+    triggerThreshold0:  14207 #14200 #14210 #14203 
+    triggerThreshold1:  14207 #14200 #14210 #14203
+    triggerThreshold2:  14207 #14200 #14210 #14203
+    triggerThreshold3:  14207 #14200 #14210 #14203
+    triggerThreshold4:  14207 #14200 #14210 #14203
+    triggerThreshold5:  14207 #14200 #14210 #14203
+    triggerThreshold6:  14207 #14200 #14210 #14203
+    triggerThreshold7:  14207 #14200 #14210 #14203
+    triggerThreshold8:  14207 #14200 #14210 #14203
+    triggerThreshold9:  14207 #14200 #14210 #14203
+    triggerThreshold10: 14207 #14200 #14210 #14203
+    triggerThreshold11: 14207 #14200 #14210 #14203
+    triggerThreshold12: 14207 #14200 #14210 #14203
+    triggerThreshold13: 14207 #14200 #14210 #14203
+    triggerThreshold14: 14207 #14200 #14210 #14203
     triggerThreshold15: 500 #Lowered to 500 to prevent channel 15 from participating in trigger decisions
 
 

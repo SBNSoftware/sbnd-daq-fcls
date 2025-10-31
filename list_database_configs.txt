@@ -1,1 +1,4 @@
-BNBZeroBias-4PE-PlusLightEnabled-
+run2-beam-noSN-
+run2-beam-SN-
+run2-nobeam-noSN-
+run2-nobeam-SN-
