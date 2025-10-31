@@ -13,6 +13,8 @@
 
 #===================== Beam Zero Bias + BNBPlusLight triggers =====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_run2_zerobias_4_5_3_pluslighthltenable.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_run2_zerobias_3_4_2_run1MTCAbaseline_pluslighthltenable.fcl"
+
 
 #===================== Crossing Muon Triggers  =====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/bslater/ptbmk2_crt_5_prescale7.fcl" # W&E -- prescale 7 (generally default prescale)
@@ -39,11 +41,8 @@
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/operations_trigger_menu/ptbmk2_nd_phase3_extra5_event3_flash4_nobeam.fcl"
 
 #=================Run 2====================
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us.fcl"
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_nobeam.fcl"
-
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event4_flash5_run2_postbeam7p3us.fcl"
-#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event4_flash5_run2_postbeam7p3us_nobeam.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_run1MTCAbaseline.fcl"
+#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_run1MTCAbaseline_nobeam.fcl"
 
 daq.fragment_receiver.board_config: @local::board_config 
 #daq.fragment_receiver.boardreader_address: "10.226.36.22"
