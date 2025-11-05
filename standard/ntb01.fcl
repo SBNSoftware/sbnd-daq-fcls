@@ -18,7 +18,7 @@ daq: {
       vendor_id: 0x1172 # Altera (Nevis  PCIe card)
       # Altera (Nevis  PCIe card)
       device_id: 0x4 
-      bus: 0x66 
+      bus: 0x01 #tpc18 #0x66 #tpc12
       device_name: neviscard_controller 
     }
     destinations: {
