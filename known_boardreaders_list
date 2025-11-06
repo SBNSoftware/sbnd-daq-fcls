@@ -6,8 +6,8 @@ tpc03 sbnd-tpc03-daq -1 1
 tpc04 sbnd-tpc04-daq -1 1
 tpc05 sbnd-tpc05-daq -1 1
 tpc06 sbnd-tpc06-daq -1 1
-tpc07 sbnd-tpc07-daq -1 1
-#tpc12 sbnd-tpc12-daq -1 1
+#tpc07 sbnd-tpc07-daq -1 1
+tpc12 sbnd-tpc12-daq -1 1
 tpc08 sbnd-tpc08-daq -1 1
 tpc09 sbnd-tpc09-daq -1 1
 tpc10 sbnd-tpc10-daq -1 1
