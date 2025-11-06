@@ -1,0 +1,3 @@
+#include "ntb01_default.fcl"
+#======Place override parameters below=========
+daq.fragment_receiver.ntb_pciecard.bus: 0x01 #tpc18
