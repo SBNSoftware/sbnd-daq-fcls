@@ -280,6 +280,13 @@ physics: {
     fragWatcher: {
       module_type: "FragmentWatcher" 
     }
+
+    TPCmetricanalyzer: {
+      module_type: "TPCMetricAnalyzer"
+      tpc_data_label: "daq:NEVISTPC"
+      ntb_data_label: "daq:NEVISTB"
+    } 
+
   }
 
   producers: {
@@ -407,7 +414,7 @@ physics: {
 		, nustream
 		]
 
-  a1: [fragWatcher] 
+  a1: [ fragWatcher, TPCmetricanalyzer ]
 
   #my_output_modules: [ normalOutput , rootNetOutput ]
   my_output_modules: [rootNetOutput
