@@ -9,6 +9,8 @@ fragment_receiver: {
    fragment_type: PTB        # Make sure downstream modules know about this fragment_type!
    fragment_id: 8        # Make sure downstream modules know about this fragment_type!
 
+   isVerbose: false # Enable verbosity for log messages
+
    ##------------------------------------------------------------------------------
    ## Variable of interest for the new PTB Fragment Generator
    ##------------------------------------------------------------------------------
