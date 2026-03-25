@@ -4,11 +4,11 @@ daq.metrics.brFile.fileName: "/daq/log/metrics/tpc20_metrics.log"
 
 daq.metrics.graphite.namespace: "sbnd.tpc20." 
 
-daq.fragment_receiver.controller_module.bus: 0x66 
+daq.fragment_receiver.controller_module.bus: 0x66
 
-daq.fragment_receiver.nu_xmit_reader.bus: 0xb3 
+daq.fragment_receiver.nu_xmit_reader.bus: 0xb4
 
-daq.fragment_receiver.sn_xmit_reader.bus: 0xb4 
+daq.fragment_receiver.sn_xmit_reader.bus: 0xb3
 
 daq.fragment_receiver.GPSTimeFrequency: 1 #setting pulse per second parameter for PPS 
 #setting pulse per second parameter for PPS 
