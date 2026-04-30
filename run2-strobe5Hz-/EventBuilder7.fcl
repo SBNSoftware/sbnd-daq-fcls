@@ -1,0 +1,3 @@
+#include "EventBuilder7_default.fcl"
+#======Place override parameters below=========
+physics.a1: [ fragWatcher ]

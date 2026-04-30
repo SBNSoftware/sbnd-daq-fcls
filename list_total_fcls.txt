@@ -237,6 +237,7 @@ EventBuilder4
 EventBuilder5
 EventBuilder6
 EventBuilder7
+EventBuilder8
 EventBuilder1_p2
 EventBuilder2_p2
 EventBuilder3_p2
@@ -244,6 +245,7 @@ EventBuilder4_p2
 EventBuilder5_p2
 EventBuilder6_p2
 EventBuilder7_p2
+EventBuilder8_p2
 EventBuilder_standard
 
 NevisTPC2StreamEXT_driver
