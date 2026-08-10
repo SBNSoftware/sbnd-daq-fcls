@@ -1,0 +1,3 @@
+#include "pmt09_default.fcl"
+#======Place override parameters below=========
+daq.fragment_receiver.receive_requests: false

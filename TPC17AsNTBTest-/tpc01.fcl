@@ -1,0 +1,8 @@
+#include "tpc01_default.fcl"
+#======Place override parameters below=========
+daq.fragment_receiver.controller_module.bus: 0x66 
+daq.fragment_receiver.nu_xmit_reader.bus: 0xb3 
+daq.fragment_receiver.sn_xmit_reader.bus: 0xb4 
+daq.fragment_receiver.GPSTimeFrequency: 1 #setting pulse per second parameter for PPS 
+#setting pulse per second parameter for PPS 
+daq.fragment_receiver.GPSZMQPortNTB: "tcp://10.226.36.49:11212" 

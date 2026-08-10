@@ -1,0 +1,4 @@
+#include "ntb01_default.fcl"
+#======Place override parameters below=========
+daq.fragment_receiver.ntb_pciecard.bus:0xb3 #for tpc17
+daq.fragment_receiver.GPSZMQPortNTB: "tcp://10.226.36.49:11212"  
