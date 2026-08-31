@@ -5,7 +5,7 @@ daq:
 
     generator:   CAENV1730Readout
     fragment_type: CAENV1730
-    max_fragment_size_bytes: 1000000
+    max_fragment_size_bytes: 40000000 #1000000 1Mb
     GetNextFragmentBunchSize: 20
 
     fragment_id: 0

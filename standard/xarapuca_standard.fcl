@@ -5,7 +5,7 @@ daq:
 
     generator:   CAENV1740Readout
     fragment_type: CAENV1740
-    max_fragment_size_bytes: 1000000
+    max_fragment_size_bytes: 1000000 #10000001 Mb
     GetNextFragmentBunchSize: 20
 
     DumpBinary: false # Dump binary before artdaq back-end
