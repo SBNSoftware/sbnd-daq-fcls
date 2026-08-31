@@ -6,7 +6,7 @@
 amy*
 officalImportNewDatabaseConfigsAll.sh
 makeOldConfigsInactive/*
-ZeroBiasCampaign/
+makeOldConfigsInactive/listoldconfigs.txt
 
 S Files
 .DS_Store
