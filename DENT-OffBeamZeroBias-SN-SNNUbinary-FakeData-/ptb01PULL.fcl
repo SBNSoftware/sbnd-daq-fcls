@@ -42,7 +42,7 @@
 
 #=================Run 2====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_run1MTCAbaseline.fcl"
-##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_run1MTCAbaseline_nobeam.fcl"
-#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/summer2026/DENT_OffBeamZeroBias_FewFlash.fcl"
+#include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_run1MTCAbaseline_nobeam.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/summer2026/DENT_OffBeamZeroBias_FewFlash.fcl"
 daq.fragment_receiver.board_config: @local::board_config 
 #daq.fragment_receiver.boardreader_address: "10.226.36.22"

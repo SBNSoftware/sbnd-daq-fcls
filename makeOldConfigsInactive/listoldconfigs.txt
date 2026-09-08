@@ -1,2 +1,1 @@
-TPC17AsNTBTest-00002
-summer2026-Strobe-7Hz-PMT09Push-00001
+summer2026-run3test-DENT-SN-00005
