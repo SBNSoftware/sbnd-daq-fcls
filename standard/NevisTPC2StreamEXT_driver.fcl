@@ -22,7 +22,7 @@ daq: {
     DumpBinary: false # Write binary file before the artdaq back-end
     DumpSNBinary: false # Write binary file for SN continuous readout
     DoSNReadout: false # Do continuous readout
-    EnableSNFailover: True # Stop SN stream when SN DMA timed out
+    EnableSNFailover: true # Stop SN stream when SN DMA timed out
     DisableNUStream: false # Do SN-only config if set to true
 
     SNChunkSize: @local::sn_dma_buffer_size 
