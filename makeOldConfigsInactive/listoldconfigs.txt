@@ -1,1 +1,12 @@
-summer2026-run3test-DENT-SN-00005
+nsCrossingMuon-noSN--00009
+ewCrossingMuon-noSN--00009
+BNBZeroBias-noSN--00009
+run3-nobeam-SN--00001
+run3-nobeam-noSN--00001
+run3-beam-SN--00001
+run3-beam-noSN--00001
+summer2026-run3test-beam-SNonly-00001
+summer2026-run3test-beam-SN-00001
+summer2026-run3test-beam-noSN-00001
+summer2026-run3test-nobeam-SN-00002
+summer2026-run3test-nobeam-noSN-00003
