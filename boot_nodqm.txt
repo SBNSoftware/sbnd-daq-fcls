@@ -52,6 +52,6 @@ EventBuilder label: EventBuilder7_p2
 #EventBuilder host: sbnd-evb08-daq
 #EventBuilder label: EventBuilder8_p2
 
-Dispatcher host: sbnd-evb08-daq
-Dispatcher label: Dispatcher1
-Dispatcher port: 6021
+#Dispatcher host: sbnd-evb08-daq
+#Dispatcher label: Dispatcher1
+#Dispatcher port: 6021
