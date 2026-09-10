@@ -10,6 +10,8 @@
 #===================== Beam Zero Bias triggers =====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_run2_zerobias_3_4_2.fcl"
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_run2_zerobias_4_5_3.fcl"
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_run1MTCAbaseline_zerobias.fcl" # bnb zero bias, no prescale, with run 2 trigger setting enabled
+
 
 #===================== Beam Zero Bias + BNBPlusLight triggers =====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_run2_zerobias_4_5_3_pluslighthltenable.fcl"
@@ -30,6 +32,7 @@
 #===================== Strobe Triggers  =====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_1hz.fcl" #
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_5hz.fcl" #
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_7hz.fcl" #
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/nevis_fixed_freq/ptbmk2_nd_0p38115998028hz.fcl" #
 
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/commissioning_trigger_menu/ptbmk2_nd_sunset_ntb_delay.fcl" # --no don't try to run sunset configs out of a standard area the pmts need special record lengths!
@@ -43,6 +46,10 @@
 #=================Run 2====================
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_run1MTCAbaseline.fcl"
 ##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/run2_operations_trigger_menu/ptbmk2_nd_phase3_minbias2_event3_flash4_run2_postbeam7p3us_run1MTCAbaseline_nobeam.fcl"
+
+#=================Summer 2026====================
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/summer2026/summer2026_DENT_OffBeam1Hz_EW12Hz_noFlashTriggers.fcl" ##ETRIG=12Hz(1Hz offbeam 0bias + 11Hz EW)
+##include "/home/nfs/sbnd/ptb_sacred_configs/sbnd_config/summer2026/summer2026_DENT_OffBeam1Hz_EW6Hz_noFlashTriggers.fcl"
 
 daq.fragment_receiver.board_config: @local::board_config 
 #daq.fragment_receiver.boardreader_address: "10.226.36.22"

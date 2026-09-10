@@ -60,8 +60,8 @@ daq:
     boardId: 0 # jcrespo: used by artdaq?
 
     # default waveform length and postpercent
-    recordLength:         768 # Good: 636, 768, 1536 # In samples where 1 sample=16 ns. For V1740 it must be an integer multiple of 3
-    postPercent:         80 # Any number between 0 and 100
+    recordLength:         1536  # Good: 636, 768, 1536 # In samples where 1 sample=16 ns. For V1740 it must be an integer multiple of 3
+    postPercent:         90 # Any number between 0 and 100
     #Use Trigger Time Tag (TTT) from CAEN header, which is a PPS counter 8ns/tick, to construct fragment timestamp. Default: true for ICARUS, false for SBND
     UseTimeTagForTimeStamp: false #True is using the PPS information
     # adds an offset to the fragment timestamp, set to 0 for SBND
@@ -104,14 +104,14 @@ daq:
     # Offset make the baseline decrease. The range of the DAC is about 5% (typ.) larger than the ADC range, hence DAC
     #  settings close to 0 and 64K correspond to ADC respectively over and under range.
     #
-    groupPedestal0:  54394
-    groupPedestal1:  54394
-    groupPedestal2:  54394
-    groupPedestal3:  54394
-    groupPedestal4:  54394
-    groupPedestal5:  54394
-    groupPedestal6:  54394
-    groupPedestal7:  54394
+    groupPedestal0:  9363
+    groupPedestal1:  9363
+    groupPedestal2:  9363
+    groupPedestal3:  9363
+    groupPedestal4:  9363
+    groupPedestal5:  9363
+    groupPedestal6:  9363
+    groupPedestal7:  9363
     
     # Set to true to save the waveform
     groupEnable0:    true
